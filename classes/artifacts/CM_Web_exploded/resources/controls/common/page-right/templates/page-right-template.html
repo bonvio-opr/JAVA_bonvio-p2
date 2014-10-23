@@ -1,0 +1,68 @@
+
+<!-- start: Content -->
+<div class="main" style="padding: 60px 30px 0 280px; height: 100%;">
+
+    <!--ko with:  parentUnit.currentWs -->
+    <div data-bind="visible: wsOpenUnit.unitName===''">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <div data-bind="foreach: wsUnits">
+                <div class="unitIcon" style="border-radius: 10px; padding: 10px; width: 200px; float: left;" data-bind="click: function() {$parents[1].parentUnit.openUnit($data.unitCode, $parents[1].parentUnit.currentWs().wsId);}">
+                    <img style="width: 100px;" src="/CM/resources/images/menu/pereplet.jpeg" alt="..." />
+                    <p data-bind="text: $data.unitName"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!--ko with:  parentUnit.currentWs -->
+    <div style="width: 100%; border: 0px; height: 100%;" data-bind="visible: !(wsOpenUnit.unitName==='')">
+        <div class="row">
+            <div class="col-lg-11">
+                <!-- ko with:  wsOpenUnit -->
+                <h2 data-bind="text: unitName"></h2>
+                <!-- /ko -->
+            </div>
+            <div class="col-lg-1" style="padding-top: 20px; text-align: right;">
+                <span class="glyphicon glyphicon-minus" style="color:blue" data-bind="click: function() {$parents[0].parentUnit.minimizeUnit();}"/>
+                <span class="glyphicon glyphicon-remove" style="color:red" data-bind="click: function() {$parents[0].parentUnit.closeUnit();}"/>
+            </div>
+        </div>
+
+        <div class="row" style="height: 100%;">
+
+            <div class="col-lg-12">
+                <table style="width: 100%; height: 100%" cellspacing="0"  cellpadding="0">
+                    <tr>
+                        <td valign="top" align="left" height="100%">
+                            <!-- ko with:  wsOpenUnit -->
+                            <iframe style="overflow:hidden; height:220%; width:100%" data-bind="attr: {src: unitName+'/'}">
+                                <!-- 000 -->
+                            </iframe>
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+<!--            <script type="text/javascript">
+                function calcHeight()
+                {
+                    //find the height of the internal page
+                    var the_height=
+
+                    document.getElementById('the_iframe').contentWindow.
+                                    document.body.scrollHeight;
+
+                    //change the height of the iframe
+                    document.getElementById('the_iframe').height=
+                            the_height;
+                }
+            </script>-->
+
+        </div>
+    </div>
+    <!-- /ko -->
+
+</div>
+<!-- end: Content -->

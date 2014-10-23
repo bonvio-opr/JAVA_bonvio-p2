@@ -1,0 +1,41 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "authors": [
+    "mil <milomory@gmail.com>"
+  ],
+  "description": "My awesome jQuery plugin.",
+  "main": "main.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vandor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.25",
+    "angularjs": "~1.2.25",
+    "angular-resource": "~1.2.25",
+    "angular-route": "~1.2.25",
+    "backbone": "~1.1.2",
+    "bootstrap": "~3.2.0",
+    "fotorama": "~4.6.2",
+    "jquery": "~2.1.1",
+    "jquery-hashchange": "*",
+    "jquery-icheck": "~1.0.2",
+    "jquery-mobile": "~1.4.4",
+    "jquery-ui": "~1.11.1",
+    "jquery-validation": "~1.13.0",
+    "jqueryui": "~1.11.1",
+    "require": "*",
+    "requirejs": "~2.1.15",
+    "social-likes": "~3.0.4",
+    "underscore": "~1.7.0",
+    "underscore-amd": "~1.5.2",
+    "wijmo": "~1.0.0",
+    "font-awesome": "~4.2.0"
+  }
+}

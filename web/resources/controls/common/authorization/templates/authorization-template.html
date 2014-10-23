@@ -1,0 +1,25 @@
+<div style="width: 300px;" align="center">
+    <fieldset>
+        <form name='f' action='j_spring_security_check' method='post'>
+            <table>
+                <tr>
+                    <td>Пользователь:</td>
+                    <td><input type='text' name='j_username' value='' placeholder="Пользователь..." /></td>
+                </tr>
+                <tr>
+                    <td>Пароль:</td>
+                    <td><input type='password' name='j_password' placeholder="Пароль..."/></td>
+                </tr>
+                <tr>
+                    <td><input id="remember_me" name="j_spring_security_remember_me" type="checkbox"/></td>
+                    <td><label for="remember_me" class="inline">Запомнить</label></td>
+                </tr>
+                <tr>
+                    <td><input name="submit" type="submit" title="Войти" /></td>
+                    <td><input name="reset" type="reset" title="Очистить"/></td>
+                </tr>
+            </table>
+        </form>
+        <a href="register"><h4>Создать учетную запись</h4></a>
+    </fieldset>
+</div>
