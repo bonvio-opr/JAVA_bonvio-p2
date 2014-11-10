@@ -106,11 +106,11 @@
 
 <![endif]-->
 
-<!-- scripts-->
+<!-- scripts- ->
 <script src="http://bootstrapmaster.com/live/origin-ajax/assets/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="http://bootstrapmaster.com/live/origin-ajax/assets/js/bootstrap.min.js"></script>
 
-<!-- theme scripts -->
+<!-- theme scripts - ->
 <script src="http://bootstrapmaster.com/live/origin-ajax/assets/plugins/pace/pace.min.js"></script>
 <script src="resources/themes/tm_workspace/js/jquery.mmenu.min.js"></script>
 <script src="resources/themes/tm_workspace/js/core.min.js"></script>

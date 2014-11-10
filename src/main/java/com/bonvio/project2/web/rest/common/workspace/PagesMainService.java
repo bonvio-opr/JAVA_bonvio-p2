@@ -31,7 +31,7 @@ public class PagesMainService {
         ModelAndView modelAndView = new ModelAndView();
         try {
             if(session.getAttribute("userid").toString().length()>1) {
-                modelAndView.setViewName("workspace/workspace");
+                modelAndView.setViewName("workspace/workspace_");
                 return modelAndView;
             }
         } catch(Exception ignored) {}
@@ -40,6 +40,29 @@ public class PagesMainService {
         return modelAndView;
     }
 
+
+
+    //==================================================================================
+    @RequestMapping(value="/ok", method = RequestMethod.GET)
+    public ModelAndView ok() {
+        HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
+        ModelAndView model = new ModelAndView();
+        try{
+            if (session.getAttribute("userId") != null ) {
+                model.setViewName("workspace/workspace_");
+                return model;
+            } else {
+                model.setViewName("workspace/go");
+                return model;
+            }
+        } catch (Exception e){
+            return model;
+        }
+
+    }
+
+
+
     @RequestMapping(value="/check", method = RequestMethod.POST)
     public ModelAndView goCheck(@RequestParam("usrnum") String number, @RequestParam("usrpwd") String password, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -47,7 +70,8 @@ public class PagesMainService {
         try {
             if (session.getAttribute("userId").toString().length()*session.getAttribute("userPhoneNumber").toString().length() > 0) {
                 //Already authorized
-                model.setViewName("workspace/workspace");
+                System.out.println( "/check"  + " сработала авторизашка");
+                model.setViewName("workspace/go2");
                 return model;
             }
         } catch (Exception e) {}
@@ -60,7 +84,7 @@ public class PagesMainService {
                 if(userId != 0) {
                     session.setAttribute("userId", userId);
                     session.setAttribute("userPhoneNumber", optimizeNumber(number));
-                    model.setViewName("workspace/workspace");
+                    model.setViewName("workspace/go2");
                 } else {
                     session.invalidate();
                     session.setAttribute("userId", userId);
@@ -95,6 +119,68 @@ public class PagesMainService {
         model.setViewName("workspace/login");
         return model;
     }
+
+
+    /*==================================================================================
+    */
+
+
+
+    /*@RequestMapping(value="/check", method = RequestMethod.POST)
+    public ModelAndView goCheck(@RequestParam("usrnum") String number, @RequestParam("usrpwd") String password, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ModelAndView model = new ModelAndView();
+        try {
+            if (session.getAttribute("userId").toString().length()*session.getAttribute("userPhoneNumber").toString().length() > 0) {
+                //Already authorized
+                model.setViewName("workspace/workspace_");
+                return model;
+            }
+        } catch (Exception e) {}
+        try {
+            String optimizedNumber = optimizeNumber(number);
+//            String sha = getSha1(password);
+            int checkResult = dao.checkCredentials(optimizedNumber, password);
+            if (checkResult == 1) {
+                Integer userId = dao.getUserIdByPhoneNumber(optimizedNumber);
+                if(userId != 0) {
+                    session.setAttribute("userId", userId);
+                    session.setAttribute("userPhoneNumber", optimizeNumber(number));
+                    model.setViewName("workspace/workspace_");
+                } else {
+                    session.invalidate();
+                    session.setAttribute("userId", userId);
+                    session.setAttribute("userPhoneNumber", optimizeNumber(number));
+                    model.setViewName("workspace/login");
+                }
+                return model;
+            } else if (checkResult == 2) {
+                model.addObject("loginError", "Неверно указан пароль <a>(восстановление пароля)</a>");
+                model.setViewName("workspace/login");
+                return model;
+            } else if (checkResult == 3) {
+//                session.invalidate();
+                model.addObject("loginError", "Ваша учетная запись заблокирована.");
+                model.setViewName("workspace/login");
+                return model;
+            } else if (checkResult == 4) {
+                model.addObject("lastconfirmationnum", optimizedNumber);
+                model.addObject("lastconfirmationdate", new java.util.Date());
+                model.setViewName("workspace/confirm");
+                return model;
+            } else if (checkResult == 5) {
+                session.setAttribute("error", "Ошибка SMS-сервера, попробуйте позже");
+                //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+                model.setViewName("workspace/login");
+                return model;
+            }
+        } catch (Exception e) {
+            return new ModelAndView("workspace/login");
+        }
+        //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+        model.setViewName("workspace/login");
+        return model;
+    }*/
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String login() {
@@ -132,7 +218,7 @@ public class PagesMainService {
             Integer userId = dao.getUserIdByPhoneNumber(number);
             session.setAttribute("userId", userId);
             session.setAttribute("userPhoneNumber", optimizeNumber(number));
-            modelAndView.setViewName("workspace/workspace");
+            modelAndView.setViewName("workspace/workspace_");
         }
         return modelAndView;
     }
@@ -191,10 +277,10 @@ public class PagesMainService {
     private String optimizeNumber(String s) {
         //Переводит номер в необходимый формат вида ЖЖЖЖЖЖЖЖЖЖ, вместо +7(ЖЖЖ)ЖЖЖ-ЖЖ-ЖЖ
         s = s.replace("(", "")
-            .replace(")", "")
-            .replace("+7", "")
-            .replace(" ", "")
-            .replace("-", "");
+                .replace(")", "")
+                .replace("+7", "")
+                .replace(" ", "")
+                .replace("-", "");
         if (s.startsWith("8") && s.length() > 10)
             s = s.substring(1);
         return s;
