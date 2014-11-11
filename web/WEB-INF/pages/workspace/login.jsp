@@ -32,20 +32,31 @@
                     <span>.net</span>
                 </div>
                 <!--placeholder="Email или телефон"--><!--placeholder="Пароль"-->
-                <input type="text" value="+79219094954" name="usrnum" class="form-control"  required autofocus />
-                <input type="password" value="qwerty" name="usrpwd" class="form-control"  required />
+                <input type="text" value="+79219094954" name="usrnum" class="form-control" required autofocus/>
+                <input type="password" value="qwerty" name="usrpwd" class="form-control" required/>
+
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span>Если Вы впервые пользуетесь сервисом <i>BONVIO.NET</i> - введите любой пароль.</span>
-                    </div>
+                    <c:choose>
+                        <c:when test="${error != null}">
+                            <div class="panel-heading">
+                                <span>${error}</span>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="panel-heading">
+                                <span>Если Вы впервые пользуетесь сервисом <i>BONVIO.NET</i> - введите любой пароль.</span>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block"  name="submit" type="submit">Войти</button>
+                <button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Войти</button>
             </form>
         </fieldset>
-    </div> <!-- /container -->
-    <div>
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
 </body>
 </html>

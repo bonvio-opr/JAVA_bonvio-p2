@@ -2,6 +2,7 @@ package com.bonvio.project2.dao.common.workspace.implementation;
 
 import com.bonvio.project2.classes.common.workspace.Application;
 import com.bonvio.project2.classes.common.workspace.UserCredentials;
+import com.bonvio.project2.classes.common.workspace.WorkspaceApplicationsWithType;
 import com.bonvio.project2.classes.common.workspace.WorkspaceWithApplications;
 import com.bonvio.project2.classes.common.workspace.extractors.WorkspaceWithApplicationsDBExtractor;
 import com.bonvio.project2.dao.BaseDao;
@@ -21,6 +22,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -35,23 +37,24 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public int checkCredentials(String number, String password) {
 
-        if(getJdbcTemplate().queryForInt("select count (*) from "+defaultSchema+".s_users where s_phonenumber=?", number)>0) {
+        if (getJdbcTemplate().queryForInt("select count (*) from " + defaultSchema + ".s_users where s_phonenumber=?", number) > 0) {
             //Integer exists = getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=? and s_password=?", number, password);
             try {
                 Integer exists = getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=? and s_password=?", number, password);
+                System.out.println("exists = " + exists);
                 if (exists == 1) {
                     System.out.println(number + ": успешная авторизация");
                     return 1;
-                } else if(exists != 1.0D){
+               /* } else if(exists != 1.0D){
                     System.out.println(number + ": учетная запись заблокирована администратором");
-                    return 3;
+                    return 3;*/
                 } else {
                     System.out.println(number + ": неверный пароль");
                     return 2;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(number+": неверный пароль: "+password);
+                System.out.println(number + ": неверный пароль: " + password);
                 return 2;
             }
         } else {
@@ -64,10 +67,10 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 //        int regState = dao.checkUserData(name, phone);
         String url = "http://api.prostor-sms.ru/messages/v2/send.json";
         String pCode = genPass();
-        String msgText = pCode+" - для продолжения регистрации используйте этот четырёхзначный код. С уважением, ваш BONVIO.net";
+        String msgText = pCode + " - для продолжения регистрации используйте этот четырёхзначный код. С уважением, ваш BONVIO.net";
 //        String msgText = "Добро пожаловать на BONVIO.net! Для авторизации используйте следующий пароль: "+pCode;
         StringBuffer response = new StringBuffer();
-        String result="";
+        String result = "";
         try {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -76,7 +79,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
             object.put("password", "175319");
             object.put("statusQueueName", "myQueue1");
             JSONObject message = new JSONObject();
-            message.put("phone", "+7"+phone);
+            message.put("phone", "+7" + phone);
             message.put("sender", "BONVIO.net");
             message.put("clientId", "2");
             message.put("text", msgText);
@@ -101,18 +104,18 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
             JSONParser parser = new JSONParser();
             Object r = parser.parse(response.toString());
             JSONObject jsonObj = (JSONObject) r;
-            JSONArray array = (JSONArray)jsonObj.get("messages");
+            JSONArray array = (JSONArray) jsonObj.get("messages");
             String status = ((JSONObject) parser.parse(array.get(0).toString())).get("status").toString();
             in.close();
-            if(status.equals("accepted")) {
+            if (status.equals("accepted")) {
 //                insertUserTempCode(phone, pCode, password);
-                if(getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=?", phone)>0) {
-                    getJdbcTemplate().update("UPDATE "+defaultSchema+".S_USERS_UNCONFIRMED SET S_CODE=?, S_DATE=SYSDATE, S_PWD=? WHERE S_USER_PHONE = ?", pCode, password, phone);
+                if (getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=?", phone) > 0) {
+                    getJdbcTemplate().update("UPDATE " + defaultSchema + ".S_USERS_UNCONFIRMED SET S_CODE=?, S_DATE=SYSDATE, S_PWD=? WHERE S_USER_PHONE = ?", pCode, password, phone);
                 } else {
-                    getJdbcTemplate().update("INSERT INTO "+defaultSchema+".S_USERS_UNCONFIRMED (S_USER_PHONE, S_CODE, S_PWD) VALUES (?,?,?)", phone, pCode, password);
+                    getJdbcTemplate().update("INSERT INTO " + defaultSchema + ".S_USERS_UNCONFIRMED (S_USER_PHONE, S_CODE, S_PWD) VALUES (?,?,?)", phone, pCode, password);
                 }
                 return 4;
-            } else if(status.equals("invalid mobile phone")) {
+            } else if (status.equals("invalid mobile phone")) {
                 return 5;
             } else {
                 return 6;
@@ -125,7 +128,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public int checkConfirmationCode(String number, String code) {
         try {
-            return (getJdbcTemplate().queryForInt("select count (*) from "+defaultSchema+".s_users_unconfirmed where s_user_phone=? and s_code=?", number, code));
+            return (getJdbcTemplate().queryForInt("select count (*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=? and s_code=?", number, code));
         } catch (Exception e) {
             return 0;
         }
@@ -140,9 +143,9 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
             }
         }, number));
         getJdbcTemplate().update("insert into " + defaultSchema + ".s_users (s_phonenumber, s_password) values (?,?)", number, pList.get(0));
-        getJdbcTemplate().update("delete from "+defaultSchema+".s_users_unconfirmed where s_user_phone=?", number);
-        Integer s_user_id = getJdbcTemplate().queryForInt("select s_id from "+defaultSchema+".s_users where s_phonenumber=?", number);
-        getJdbcTemplate().update("insert into "+defaultSchema+".s_u_ws (s_user_id, s_ws_name) values (?,'Моя навигация')", s_user_id);
+        getJdbcTemplate().update("delete from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=?", number);
+        Integer s_user_id = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_users where s_phonenumber=?", number);
+        getJdbcTemplate().update("insert into " + defaultSchema + ".s_u_ws (s_user_id, s_ws_name) values (?,'Моя навигация')", s_user_id);
     }
 
     private String genPass() {
@@ -156,46 +159,150 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         return sb.toString();
     }
 
+    public List <WorkspaceApplicationsWithType> getWorkspaces(String userId) {
+
+        if(userId == null) return null;
+
+        ArrayList<WorkspaceApplicationsWithType> workspaceApplicationsWithTypes = new ArrayList<>();
+        workspaceApplicationsWithTypes.addAll(getJdbcTemplate().query(
+                "select " +
+                        "UWS.S_ID as WSID, " +
+                        "UWS.S_WS_NAME as WSNAME, " +
+                        "'p' as WSTYPE " +
+                        "from s_u_ws UWS " +
+                        "left join s_users U " +
+                        "on U.S_ID=UWS.S_USER_ID " +
+                        "where U.S_ID=? " +
+                        "union " +
+                        "select gws.S_ID as WSID, " +
+                        "gws.S_WS_NAME as WSNAME, " +
+                        "'a' as WSTYPE " +
+                        "from " +
+                        "s_g_ws gws " +
+                        "where gws.S_USER_ID=? ",
+                new RowMapper<WorkspaceApplicationsWithType>() {
+                    @Override
+                    public WorkspaceApplicationsWithType mapRow(ResultSet r, int i) throws SQLException {
+                        return new WorkspaceApplicationsWithType(
+                                r.getInt("WSID"),
+                                r.getString("WSNAME"),
+                                r.getString("WSTYPE")
+                        );
+                    }
+                }, userId, userId));
+
+        return workspaceApplicationsWithTypes;
+    }
+
+
+
+    public List <Application> getPrivateApplications(String wsId, String userId) {
+
+        if(wsId == null) return null;
+
+        ArrayList<Application> applications = new ArrayList<>();
+        applications.addAll(getJdbcTemplate().query(
+                "select " +
+                        "APPS.S_NAME as APPNAME, " +
+                        "APPS.S_CODE as APPCODE, " +
+                        "APPS.S_APP_ADDRESS as IMGPATH " +
+                        "from s_u_ws UWS " +
+                        "left join s_users U " +
+                        "on U.S_ID=UWS.S_USER_ID " +
+                        "left join S_U_WS_APPS UWSAPPS " +
+                        "on UWS.S_ID=UWSAPPS.S_WS_ID " +
+                        "left join S_WS_APPS APPS " +
+                        "on UWSAPPS.S_APP_ID=APPS.S_ID " +
+                        "where UWS.S_ID=? and U.S_ID=?",
+                new RowMapper<Application>() {
+                    @Override
+                    public Application mapRow(ResultSet r, int i) throws SQLException {
+                        return new Application(
+                                r.getString("APPNAME"),
+                                r.getString("APPCODE"),
+                                r.getString("IMGPATH")
+                        );
+                    }
+                }, wsId, userId));
+
+        return applications;
+    }
+
+    public List <Application> getAdditionalApplications(String wsId, String userId) {
+
+        if(wsId == null) return null;
+
+        ArrayList<Application> applications = new ArrayList<>();
+        applications.addAll(getJdbcTemplate().query(
+                "select \n" +
+                        "APPS.S_NAME as APPNAME, " +
+                        "APPS.S_CODE as APPCODE, " +
+                        "APPS.S_APP_ADDRESS as IMGPATH  " +
+                        "from " +
+                        "s_g_ws gws " +
+                        "left join S_G_WS_APPS ga " +
+                        "on gws.S_ID=ga.S_GWS_ID " +
+                        "left join S_WS_APPS APPS " +
+                        "on ga.S_APP_ID=APPS.S_ID " +
+                        "left join s_users U " +
+                        "on U.S_ID=gws.S_USER_ID " +
+                        "where gws.S_ID=? and U.S_ID=?",
+                new RowMapper<Application>() {
+                    @Override
+                    public Application mapRow(ResultSet r, int i) throws SQLException {
+                        return new Application(
+                                r.getString("APPNAME"),
+                                r.getString("APPCODE"),
+                                r.getString("IMGPATH")
+                        );
+                    }
+                }, wsId, userId));
+
+        return applications;
+    }
+
+
+//old
     public ArrayList<WorkspaceWithApplications> getUserPrivateWorkspace(String userId, String userPhoneNumber) {
 //    public WorkspaceWithApplications getUserPrivateWorkspace(String userNum) {
         ArrayList<WorkspaceWithApplications> wList = new ArrayList<>();
         ArrayList<WorkspaceWithApplicationsDBExtractor> wdb = new ArrayList<>();
         wdb.addAll(getJdbcTemplate().query(
-            "select " +
-                "UWS.S_ID as WSID, " +
-                "UWS.S_WS_NAME as WSNAME, " +
-                "APPS.S_NAME as APPNAME, " +
-                "APPS.S_CODE as APPCODE, " +
+                "select " +
+                        "UWS.S_ID as WSID, " +
+                        "UWS.S_WS_NAME as WSNAME, " +
+                        "APPS.S_NAME as APPNAME, " +
+                        "APPS.S_CODE as APPCODE, " +
 //                "concat(concat('resources/image/icons/',APPS.S_CODE),'.png') as IMGPATH " +
-                "APPS.S_CODE as IMGPATH " +
-            "from "+defaultSchema+".s_u_ws UWS " +
-            "left join "+defaultSchema+".s_users U " +
-            "on U.S_ID=UWS.S_USER_ID " +
-            "left join "+defaultSchema+".S_U_WS_APPS UWSAPPS " +
-            "on UWS.S_ID=UWSAPPS.S_WS_ID " +
-            "left join "+defaultSchema+".S_WS_APPS APPS " +
-            "on UWSAPPS.S_APP_ID=APPS.S_ID " +
-            "where U.S_ID=? and U.S_PHONENUMBER=? " +
-            "group by UWS.S_ID, UWS.S_WS_NAME, APPS.S_NAME, APPS.S_CODE order by UWS.S_ID",
-            new RowMapper<WorkspaceWithApplicationsDBExtractor>() {
-            @Override
-            public WorkspaceWithApplicationsDBExtractor mapRow(ResultSet r, int i) throws SQLException {
-                return new WorkspaceWithApplicationsDBExtractor(
-                    r.getInt("WSID"),
-                    r.getString("WSNAME"),
-                    r.getString("APPNAME"),
-                    r.getString("APPCODE"),
-                    r.getString("IMGPATH")
-                );
-            }
-        }, userId, userPhoneNumber));
+                        "APPS.S_CODE as IMGPATH " +
+                        "from " + defaultSchema + ".s_u_ws UWS " +
+                        "left join " + defaultSchema + ".s_users U " +
+                        "on U.S_ID=UWS.S_USER_ID " +
+                        "left join " + defaultSchema + ".S_U_WS_APPS UWSAPPS " +
+                        "on UWS.S_ID=UWSAPPS.S_WS_ID " +
+                        "left join " + defaultSchema + ".S_WS_APPS APPS " +
+                        "on UWSAPPS.S_APP_ID=APPS.S_ID " +
+                        "where U.S_ID=? and U.S_PHONENUMBER=? " +
+                        "group by UWS.S_ID, UWS.S_WS_NAME, APPS.S_NAME, APPS.S_CODE order by UWS.S_ID",
+                new RowMapper<WorkspaceWithApplicationsDBExtractor>() {
+                    @Override
+                    public WorkspaceWithApplicationsDBExtractor mapRow(ResultSet r, int i) throws SQLException {
+                        return new WorkspaceWithApplicationsDBExtractor(
+                                r.getInt("WSID"),
+                                r.getString("WSNAME"),
+                                r.getString("APPNAME"),
+                                r.getString("APPCODE"),
+                                r.getString("IMGPATH")
+                        );
+                    }
+                }, userId, userPhoneNumber));
         //WorkspaceWithApplicationsDBExtractor -> WorkspaceWithApplications
         WorkspaceWithApplications w = new WorkspaceWithApplications();
-        if(wdb.size()>0) {
+        if (wdb.size() > 0) {
             w.setWsId(wdb.get(0).getWorkspaceId());
             w.setWsName(wdb.get(0).getWorkspaceName());
             ArrayList<Application> appList = new ArrayList<>();
-            for (int i=0; i<wdb.size(); i++) {
+            for (int i = 0; i < wdb.size(); i++) {
                 appList.add(new Application(wdb.get(i).getUnitName(), wdb.get(i).getUnitCode(), wdb.get(i).getUnitImgPath()));
             }
             w.setWsUnits(appList);
@@ -205,25 +312,27 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
             return null;
     }
 
+
+    //old
     public ArrayList<WorkspaceWithApplications> getUserAdditionalWorkspaces(String userId, String userPhoneNumber) {
         ArrayList<WorkspaceWithApplications> list = new ArrayList<>();
         ArrayList<WorkspaceWithApplicationsDBExtractor> extractor = new ArrayList<>();
         String q =
-            "select " +
-                "gws.S_ID, gws.S_WS_NAME, APPS.S_NAME, APPS.S_CODE, APPS.S_APP_ADDRESS " +
-            "from " +
-                "s_g_ws gws " +
-            "left join S_G_WS_APPS ga " +
-            "on gws.S_ID=ga.S_GWS_ID " +
-            "left join S_WS_APPS APPS " +
-            "on ga.S_APP_ID=APPS.S_ID " +
-            "left join s_users U " +
-            "on U.S_ID=gws.S_USER_ID " +
-            "where " +
-                "GWS.S_USER_ID=? and U.S_PHONENUMBER=? and GWS.S_ACTIVE>0 " +
-            "group by " +
-                "gws.s_id, gws.S_WS_NAME, APPS.S_NAME, APPS.S_CODE, APPS.S_APP_ADDRESS " +
-            "order by APPS.S_NAME";
+                "select " +
+                        "gws.S_ID, gws.S_WS_NAME, APPS.S_NAME, APPS.S_CODE, APPS.S_APP_ADDRESS " +
+                        "from " +
+                        "s_g_ws gws " +
+                        "left join S_G_WS_APPS ga " +
+                        "on gws.S_ID=ga.S_GWS_ID " +
+                        "left join S_WS_APPS APPS " +
+                        "on ga.S_APP_ID=APPS.S_ID " +
+                        "left join s_users U " +
+                        "on U.S_ID=gws.S_USER_ID " +
+                        "where " +
+                        "GWS.S_USER_ID=? and U.S_PHONENUMBER=? and GWS.S_ACTIVE>0 " +
+                        "group by " +
+                        "gws.s_id, gws.S_WS_NAME, APPS.S_NAME, APPS.S_CODE, APPS.S_APP_ADDRESS " +
+                        "order by APPS.S_NAME";
         extractor.addAll(getJdbcTemplate().query(q, new RowMapper<WorkspaceWithApplicationsDBExtractor>() {
             @Override
             public WorkspaceWithApplicationsDBExtractor mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -240,14 +349,14 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         int currWsid = -1;
         String currWsName = "";
         ArrayList<Application> appList = new ArrayList<>();
-        for(int i=0; i<extractor.size()-1; i++) {
+        for (int i = 0; i < extractor.size() - 1; i++) {
             w = extractor.get(i);
-            if(i==0) {
+            if (i == 0) {
                 currWsid = w.getWorkspaceId();
                 currWsName = w.getWorkspaceName();
                 appList.add(new Application(w.getUnitName(), w.getUnitCode(), w.getUnitImgPath()));
             } else {
-                if(w.getWorkspaceId() == currWsid) {
+                if (w.getWorkspaceId() == currWsid) {
                     appList.add(new Application(w.getUnitName(), w.getUnitCode(), w.getUnitImgPath()));
                 } else {
                     list.add(new WorkspaceWithApplications(
@@ -262,7 +371,8 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                 }
             }
         }
-        appList.add(new Application(extractor.get(extractor.size()-1).getUnitName(), extractor.get(extractor.size()-1).getUnitCode(), extractor.get(extractor.size()-1).getUnitImgPath()));
+        System.out.println(extractor.size());
+        appList.add(new Application(extractor.get(extractor.size() - 1).getUnitName(), extractor.get(extractor.size() - 1).getUnitCode(), extractor.get(extractor.size() - 1).getUnitImgPath()));
         list.add(new WorkspaceWithApplications(
                 currWsid,
                 currWsName,
@@ -304,19 +414,19 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         try {
             q =
                     "select " +
-                        "count (*) " +
-                    "from "+defaultSchema+".s_g_ws gws " +
-                    "left join "+defaultSchema+".S_G_WS_APPS ga " +
-                    "on " +
-                        "gws.S_ID=ga.S_GWS_ID " +
-                    "left join "+defaultSchema+".S_WS_APPS APPS " +
-                    "on " +
-                        "ga.S_APP_ID=APPS.S_ID " +
-                    "left join "+defaultSchema+".s_users USRS " +
-                    "on " +
-                        "USRS.S_ID=gws.S_USER_ID " +
-                    "where " +
-                        "GWS.S_ID=? and APPS.S_CODE=? and USRS.S_ID=?";
+                            "count (*) " +
+                            "from " + defaultSchema + ".s_g_ws gws " +
+                            "left join " + defaultSchema + ".S_G_WS_APPS ga " +
+                            "on " +
+                            "gws.S_ID=ga.S_GWS_ID " +
+                            "left join " + defaultSchema + ".S_WS_APPS APPS " +
+                            "on " +
+                            "ga.S_APP_ID=APPS.S_ID " +
+                            "left join " + defaultSchema + ".s_users USRS " +
+                            "on " +
+                            "USRS.S_ID=gws.S_USER_ID " +
+                            "where " +
+                            "GWS.S_ID=? and APPS.S_CODE=? and USRS.S_ID=?";
 
 
 
@@ -349,7 +459,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                 }
             }, wsId, unitCode, Integer.parseInt(userId)));
             System.out.println(q);
-            return (iList.get(0)>0) ? 1 : 0;
+            return (iList.get(0) > 0) ? 1 : 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -357,7 +467,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
     }
 
     public int getUserIdByPhoneNumber(String number) {
-        String q = "select s_id from "+defaultSchema+".s_users where s_phonenumber=?";
+        String q = "select s_id from " + defaultSchema + ".s_users where s_phonenumber=?";
         try {
             ArrayList<Integer> gList = new ArrayList<>();
             gList.addAll(getJdbcTemplate().query(q, new RowMapper<Integer>() {
@@ -373,34 +483,3 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

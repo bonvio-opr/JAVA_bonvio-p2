@@ -23,9 +23,9 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
           <file>file://$MODULE_DIR$/web/WEB-INF/rest-dispatcher-servlet.xml</file>
           <file>file://$MODULE_DIR$/web/WEB-INF/config/rest-services-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
         </fileset>
       </configuration>
     </facet>
