@@ -1,0 +1,22 @@
+.wsUnit {
+    width: 100px;
+    height: 120px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    margin: 10px;
+    cursor: pointer;
+}
+.wsUnit img {
+    width: 100px;
+}
+.wsIframe {
+    width: 100%;
+    height: 100%;
+    overflow: hidden ; /* Добавляем полосы прокрутки */
+}
+.wsIframe iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}

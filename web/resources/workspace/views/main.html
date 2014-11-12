@@ -1,0 +1,14 @@
+<!-- itemsWs -->
+<div ng-repeat="i in itemsWs">
+    <div  ng-show="itemsWsShow" ng-class="{'itemsWs':true, 'animated':animatedTrueFalse, 'fadeIn':true}" ng-click="getItemWs({{$index}}, i.unitName, i.unitCode)">
+        <img ng-src="{{i.unitImgPath}}{{hash}}">
+        <p>{{i.unitName}}</p>
+    </div>
+</div>
+<!-- /itemsWs -->
+<!-- itemIframe -->
+<div ng-show="itemIframeShow" ng-class="{'itemIframe':true}">
+    <h4>{{itemWsName}}</h4>
+    <iframe ng-src="{{itemWsSomeUrl}}" height="100%" width="100%"></iframe>
+</div>
+<!-- /itemIframe -->

@@ -1,6 +1,122 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!doctype html>
+<html class="no-js" ng-app>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>BONVIO.net</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="author" content="bonvio">
+    <meta name="keyword" content="admin">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="resources/workspace/styles/wsItems.css">
+    <link rel="stylesheet" href="resources/workspace/styles/style.css">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="resources/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="resources/bower_components/animate.css/animate.min.css">
+
+</head>
+<body ng-app="p2DashboardApp">
+
+<div ng-controller = "MainCtrl">
+
+    <!-- start: Header - ->
+    <section data-ng-include=" 'views/header.html' " ></section>
+    <!-- end: Header -->
+    <!-- start: Nav -->
+    <section data-ng-include=" 'resources/workspace/views/nav.html' " ></section>
+    <!-- end: Nav -->
+    <!-- start: Content -->
+    <div class="main">
+
+        <div id="content-wrapper"
+             id="content"
+             data-ng-controller="ContentCtrl"
+             data-collapse-nav
+             data-slim-scroll
+             data-highlight-active>
+
+            <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+
+            <!-- Add your site or application content here -->
+            <div ng-view></div>
+
+        </div>
+
+    </div>
+    <!-- end: Content -->
+    <!-- end: Footer - ->
+    <section data-ng-include=" 'resources/workspace/views/footer.html' " ></section>
+    <!-- end: Footer -->
+
+</div>
+
+<!-- build:js(.) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
+<script src="resources/bower_components/es5-shim/es5-shim.js"></script>
+<script src="resources/bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<script src="resources/bower_components/requirejs/require.js" data-main="resources/workspace/scripts/main.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%--
+old
 <!DOCTYPE HTML>
 
 <html lang="en">
@@ -106,18 +222,18 @@
 
 <![endif]-->
 
-<!-- scripts- ->
-<script src="http://bootstrapmaster.com/live/origin-ajax/assets/js/jquery-migrate-1.2.1.min.js"></script>
+<!-- scripts-->
+&lt;%&ndash;<script src="http://bootstrapmaster.com/live/origin-ajax/assets/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="http://bootstrapmaster.com/live/origin-ajax/assets/js/bootstrap.min.js"></script>
 
-<!-- theme scripts - ->
+<!-- theme scripts -->
 <script src="http://bootstrapmaster.com/live/origin-ajax/assets/plugins/pace/pace.min.js"></script>
 <script src="resources/themes/tm_workspace/js/jquery.mmenu.min.js"></script>
 <script src="resources/themes/tm_workspace/js/core.min.js"></script>
 <script src="resources/themes/tm_workspace/plugins/jquery-cookie/jquery.cookie.min.js"></script>
-<script src="resources/themes/tm_workspace/js/demo.min.js"></script>
+<script src="resources/themes/tm_workspace/js/demo.min.js"></script>&ndash;%&gt;
 
 <!-- end: JavaScript-->
 
 </body>
-</html>
+</html>--%>

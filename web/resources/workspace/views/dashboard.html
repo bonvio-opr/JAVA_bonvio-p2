@@ -1,0 +1,10 @@
+<!-- itemsWs -->
+<div ng-class="{'animated':true, 'fadeIn':true}">
+    <div ng-repeat="i in wsUnits">
+        <a class="wsUnit" ng-href="/CM/#/{{selectedWsId}}/frame/{{$index}}">
+            <img ng-src="{{i.unitImgPath}}{{hash}}">
+            <p>{{i.unitName}}</p>
+        </a>
+    </div>
+</div>
+<!-- /itemsWs -->
