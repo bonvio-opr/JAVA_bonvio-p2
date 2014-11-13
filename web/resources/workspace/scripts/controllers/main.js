@@ -21,6 +21,12 @@ define(['angular'], function (angular) {
                 localStorage.setItem('CurrentUserWorkspaces', JSON.stringify(data));
             });
 
+            $scope.custom = false;
+            $scope.toggleCustom = function() {
+                $scope.custom = $scope.custom === true ? false: true;
+            };
+
+
         }]);// endMainCtrl
 
 });
