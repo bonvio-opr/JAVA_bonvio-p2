@@ -3,6 +3,7 @@ require.config({
     paths: {
         //jquery
         'jquery': '/CM/resources/bower_components/jquery/dist/jquery',
+        'modernizr': '/CM/resources/bower_components/modernizr/modernizr.js',
         //angular
         'angular' : '/CM/resources/bower_components/angular/angular.min',
         'angular-route': '/CM/resources/bower_components/angular-route/angular-route.min',
