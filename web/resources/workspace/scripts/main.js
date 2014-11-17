@@ -3,7 +3,9 @@ require.config({
     paths: {
         //jquery
         'jquery': '/CM/resources/bower_components/jquery/dist/jquery',
-        'modernizr': '/CM/resources/bower_components/modernizr/modernizr.js',
+        'jquery-ui': '/CM/resources/bower_components/jquery-ui/jquery-ui.min',
+        'modernizr': '/CM/resources/bower_components/modernizr/modernizr',
+        'desktop':'/CM/resources/workspace/js/jquery.desktop',
         //angular
         'angular' : '/CM/resources/bower_components/angular/angular.min',
         'angular-route': '/CM/resources/bower_components/angular-route/angular-route.min',
@@ -20,6 +22,11 @@ require.config({
 
     },
     shim: {
+        //jquery
+        'jquery-ui': {'exports' : 'jquery'},
+        'modernizr': {'exports' : 'jquery'},
+        'desktop': {'exports' : 'jquery'},
+        //angular
         'angular' : {'exports' : 'angular'},
         'angular-route': ['angular'],
         'angular-cookies': ['angular'],
@@ -31,6 +38,7 @@ require.config({
             deps: ['angular'],
             'exports': 'angular.mock'
         },
+        //bootstrap
         'bootstrap': ['jquery'],
         'ui.bootstrap':['angular'],
         'angular-strap':['angular']
@@ -43,6 +51,7 @@ window.name = 'NG_DEFER_BOOTSTRAP!';
 
 require([
     'jquery',
+    'jquery-ui',
     'angular',
     'app',
     'angular-route',
@@ -53,9 +62,12 @@ require([
     'angular-touch',
     'bootstrap',
     'ui.bootstrap',
-    'angular-strap'
+    'angular-strap',
 
-], function($, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, angular_strap) {
+    'modernizr',
+    'desktop'
+
+], function($, $_ui, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, angular_strap) {
     'use strict';
     /* jshint ignore:start */
     var $html = angular.element(document.getElementsByTagName('html')[0]);
