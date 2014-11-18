@@ -376,6 +376,7 @@ th.shrink {
   text-shadow: #000 0 1px 1px;
   height: 30px;
   bottom: 0;
+    height: 41px!important;
 }
 
 /* `Bar >> Links
@@ -393,13 +394,14 @@ th.shrink {
 }
 
 #bar_top li a {
-  background-image: url(../images/gui/bar_top_link.png);
+  background-image: url('../images/gui/bar_top_link.png');
   background-repeat: no-repeat;
   background-position: -99999px -99999px;
   color: #000;
   overflow: hidden;
   height: 25px;
   min-height: 1px;
+  text-decoration: none!important;
 }
 
 #bar_top a.active {
@@ -421,9 +423,8 @@ th.shrink {
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-background-clip: padding-box;
-  display: none;
   font-weight: normal;
-  margin: 1px 0 0 -1px;
+  margin: 0;
   padding: 1px 1px 0;
   position: absolute;
   min-width: 200px;
@@ -512,7 +513,7 @@ th.shrink {
 
 #desktop {
   overflow: hidden;
-  top: 26px;
+  top: 25px;
   left: 0;
   right: 0;
   bottom: 41px;
@@ -523,6 +524,6 @@ th.shrink {
   left: 0;
   right: 0;
   bottom: 0;
-  min-width: 700px;
-  min-height: 500px;
+/*  min-width: 700px;
+  min-height: 500px;*/
 }

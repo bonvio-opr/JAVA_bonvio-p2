@@ -12,7 +12,7 @@ define(['angular'], function (angular) {
 
         .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
 
-            console.log('mainCtrl it work');
+            console.log('MainCtrl it work');
 
             $http.get('getCurrentUserCredentials').success(function(data) {
                 localStorage.setItem('CurrentUserCredentials', JSON.stringify(data));
@@ -21,9 +21,17 @@ define(['angular'], function (angular) {
                 localStorage.setItem('CurrentUserWorkspaces', JSON.stringify(data));
             });
 
-            $scope.custom = false;
-            $scope.toggleCustom = function() {
-                $scope.custom = $scope.custom === true ? false: true;
+
+            $scope.toggleHideMenuDesktops = function() {
+                $scope.viewMenu = false;
+                $scope.animatedMenu = 'fadeOut';
+            };
+
+            $scope.viewMenu = false;
+            $scope.animatedMenu = 'fadeOut';
+            $scope.toggleViewMenu = function() {
+                $scope.viewMenu = $scope.viewMenu === true ? false: true;
+                $scope.animatedMenu = $scope.animatedMenu === 'fadeOut' ? 'fadeIn': 'fadeOut';
             };
 
 

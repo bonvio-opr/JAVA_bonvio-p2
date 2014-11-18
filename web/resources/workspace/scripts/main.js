@@ -5,10 +5,11 @@ require.config({
         'jquery': '/CM/resources/bower_components/jquery/dist/jquery',
         'jquery-ui': '/CM/resources/bower_components/jquery-ui/jquery-ui.min',
         'modernizr': '/CM/resources/bower_components/modernizr/modernizr',
-        'desktop':'/CM/resources/workspace/js/jquery.desktop',
+
         //angular
         'angular' : '/CM/resources/bower_components/angular/angular.min',
         'angular-route': '/CM/resources/bower_components/angular-route/angular-route.min',
+
         'angular-cookies': '/CM/resources/bower_components/angular-cookies/angular-cookies.min',
         'angular-sanitize': '/CM/resources/bower_components/angular-sanitize/angular-sanitize.min',
         'angular-resource': '/CM/resources/bower_components/angular-resource/angular-resource.min',
@@ -18,7 +19,9 @@ require.config({
         //bootstrap
         'bootstrap': '/CM/resources/bower_components/bootstrap/dist/js/bootstrap.min',
         'ui.bootstrap': '/CM/resources/bower_components/angular-bootstrap/ui-bootstrap.min',
-        'angular-strap': '/CM/resources/bower_components/angular-strap/dist/angular-strap.min'
+        'angular-strap': '/CM/resources/bower_components/angular-strap/dist/angular-strap.min',
+
+        'desktop':'/CM/resources/workspace/js/jquery.desktop'
 
     },
     shim: {
@@ -64,8 +67,8 @@ require([
     'ui.bootstrap',
     'angular-strap',
 
-    'modernizr',
-    'desktop'
+    'modernizr'/*,
+    'desktop'*/
 
 ], function($, $_ui, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, angular_strap) {
     'use strict';

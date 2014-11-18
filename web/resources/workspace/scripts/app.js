@@ -3,12 +3,15 @@ define([
     'angular',
     //controllers
     'controllers/main',
+    'controllers/desktop',
+    'controllers/bar_top',
+    'controllers/bar_bottom',
     'controllers/nav',
     'controllers/content',
     'controllers/dashboard',
     'controllers/application',
     'controllers/about'
-]/*deps*/, function (angular, MainCtrl, NavCtrl, ContentCtrl, DashboardCtrl, ApplicationCrtl, AboutCtrl)/*invoke*/ {
+]/*deps*/, function (angular, MainCtrl, DesktopCtrl, Bar_topCtrl, Bar_bottomCtrl, NavCtrl, ContentCtrl, DashboardCtrl, ApplicationCrtl, AboutCtrl)/*invoke*/ {
     'use strict';
 
     /**
@@ -22,6 +25,9 @@ define([
     return angular
         .module('p2DashboardApp', [
             'MainCtrl',
+            'DesktopCtrl',
+            'Bar_topCtrl',
+            'Bar_bottomCtrl',
             'NavCtrl',
             'ContentCtrl',
             'DashboardCtrl',
@@ -42,12 +48,18 @@ define([
             var partialsPath = 'resources/workspace/views';
             $routeProvider
 
+                //DesktopCtrl
+                .when('/:desktopId', {
+                    templateUrl: partialsPath+'/desktop.html',
+                    controller: 'DesktopCtrl'
+                })
+
                 //AboutCtrl
                 .when('/about', {
                     templateUrl: partialsPath+'/about.html',
                     controller: 'AboutCtrl'
                 })
-                //DashboardCtrl
+/*                //DashboardCtrl
                 .when('/:wsId', {
                     templateUrl: partialsPath+'/dashboard.html',
                     controller: 'DashboardCtrl'
@@ -58,7 +70,7 @@ define([
                     templateUrl: partialsPath+'/application.html',
                     controller: 'ApplicationCtrl'
 
-                })
+                })*/
 
                 .otherwise({
                     redirectTo: '/'
