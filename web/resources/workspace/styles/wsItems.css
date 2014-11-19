@@ -1,14 +1,13 @@
 #float_right ui li {
-    float: left;
+    /*float: left;*/
+    display: inline-block;
 }
 
 
 
 .wsUnit {
-    /*width: 100px!important;
-    *//*height: 120px!important;*/
     display: inline-block;
-    float: left!important;
+    /*float: left!important;*/
     text-align: center;
     margin: 10px;
     cursor: pointer;

@@ -10,17 +10,9 @@ define(['angular'], function (angular) {
      */
     angular.module('MainCtrl', [])
 
-        .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+        .controller('MainCtrl', ['$scope', function ($scope) {
 
             console.log('MainCtrl it work');
-
-            $http.get('getCurrentUserCredentials').success(function(data) {
-                localStorage.setItem('CurrentUserCredentials', JSON.stringify(data));
-            });
-            $http.get('getWorkspaces').success(function(data) {
-                localStorage.setItem('CurrentUserWorkspaces', JSON.stringify(data));
-            });
-
 
             $scope.toggleHideMenuDesktops = function() {
                 $scope.viewMenu = false;

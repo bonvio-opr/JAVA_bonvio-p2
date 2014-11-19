@@ -66,8 +66,9 @@ require([
     'bootstrap',
     'ui.bootstrap',
     'angular-strap',
-
+    //modernizr
     'modernizr'/*,
+    //---
     'desktop'*/
 
 ], function($, $_ui, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, angular_strap) {
