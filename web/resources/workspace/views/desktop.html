@@ -8,7 +8,7 @@
             <p>{{i.unitName}}</p>
         </a>
 
-        <div draggable id="window_" class="abs" ng-class="(selectedIndex_$index)?'window':'window_full'" ng-show="windowShow == i.unitCode">
+        <div ng-model="draggable" id="window_" class="abs" ng-class="(selectedIndex_$index)?'window':'window_full'" ng-show="windowShow == i.unitCode">
             <div class="abs window_inner">
                 <div class="window_top">
                   <span class="float_left">

@@ -113,7 +113,7 @@ div.ui-resizable-handle {
 
 .window {
   background: #fff;
-  border: 1px solid #000;
+  border: 0px solid #000;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -151,13 +151,16 @@ div.ui-resizable-handle {
 }
 
 .window_full {
-  border: 0;
+    background: #fff;
+    border: 0px solid #000;
   border-radius: 0;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   -webkit-background-clip: padding-box;
+    color: #000;
   width: 100%;
   height: 100%;
+    z-index: 2;
 }
 
 .window_full .ui-resizable-se {

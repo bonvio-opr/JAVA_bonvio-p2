@@ -12,13 +12,13 @@
     <li>
         <!--<a class="menu_trigger" href ng-click="viewMenu = !viewMenu">Desktops</a>-->
         <a class="menu_trigger" href ng-click="toggleViewMenu()">Desktops</a>
-        <ul class="menu animated {{animatedMenu}}" ng-show="viewMenu">
+        <ul class="menu <!--animated {{animatedMenu}}-->" ng-show="viewMenu">
 
             <li ng-repeat="i in CurrentUserPrivateWorkspaces">
-                <a ng-href="/CM/#/p{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
+                <a ng-mouseup="toggleHideMenuDesktops()" ng-href="/CM/#/p{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
             </li>
             <li ng-repeat="i in CurrentUserAdditionWorkspaces">
-                <a ng-href="/CM/#/a{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
+                <a ng-mouseup="toggleHideMenuDesktops()" ng-href="/CM/#/a{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
             </li>
 
         </ul>
