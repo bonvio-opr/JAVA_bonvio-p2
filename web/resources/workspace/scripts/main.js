@@ -19,6 +19,7 @@ require.config({
         //bootstrap
         'bootstrap': '/CM/resources/bower_components/bootstrap/dist/js/bootstrap.min',
         'ui.bootstrap': '/CM/resources/bower_components/angular-bootstrap/ui-bootstrap.min',
+        'ui.bootstrap-tpls': '/CM/resources/bower_components/angular-bootstrap/ui-bootstrap-tpls',
         'angular-strap': '/CM/resources/bower_components/angular-strap/dist/angular-strap.min',
 
         'desktop':'/CM/resources/workspace/js/jquery.desktop'
@@ -44,6 +45,7 @@ require.config({
         //bootstrap
         'bootstrap': ['jquery'],
         'ui.bootstrap':['angular'],
+        'ui.bootstrap-tpls':['angular'],
         'angular-strap':['angular']
     },
     priority: ['angular']
@@ -65,13 +67,11 @@ require([
     'angular-touch',
     'bootstrap',
     'ui.bootstrap',
+    'ui.bootstrap-tpls',
     'angular-strap',
-    //modernizr
-    'modernizr'/*,
-    //---
-    'desktop'*/
+    'modernizr'
 
-], function($, $_ui, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, angular_strap) {
+], function($, $_ui, angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch, bootstrap, ui_bootstrap, ui_bootstrap_tpls, angular_strap) {
     'use strict';
     /* jshint ignore:start */
     var $html = angular.element(document.getElementsByTagName('html')[0]);

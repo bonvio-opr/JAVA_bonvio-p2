@@ -16,5 +16,8 @@ define(['angular'], function (angular) {
 
             console.log('Bar_bottomCtrl it work');
 
+            //$scope.format = 'M/d/yy h:mm:ss a';
+            $scope.format = 'H:mm:ss';
+
         }]);
 });

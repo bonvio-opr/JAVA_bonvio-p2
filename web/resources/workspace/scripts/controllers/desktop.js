@@ -1,4 +1,8 @@
-define(['angular'], function (angular) {
+define([
+    'angular',
+    'directives/windows'
+],
+    function (angular) {
     'use strict';
 
     /**
@@ -8,7 +12,10 @@ define(['angular'], function (angular) {
      * # DesktopCtrl
      * Controller of the generatorAngularRequireApp
      */
-    angular.module('DesktopCtrl', ['ngSanitize'])
+    angular
+        .module('DesktopCtrl', [
+            'windows'
+        ])
         .controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', function ($scope, $http, $sce, $routeParams) {
             console.log('DesktopCtrl it work');
 
@@ -65,11 +72,7 @@ define(['angular'], function (angular) {
 
                 localStorage.setItem("applicationStatus", JSON.stringify(openedApp));
                 $scope.windowShow = data;
-            }
-
-            //var selectedWsUnits = JSON.parse(localStorage.getItem("selectedWsUnits"));
-
-            //$scope.applicationUrl = $sce.trustAsResourceUrl(selectedWsUnits[$routeParams.unitIndex].unitCode);
+            };
 
         }]);
 });
