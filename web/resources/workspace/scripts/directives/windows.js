@@ -19,8 +19,8 @@ define([
 
     angular.module('windows',[
         'ngAnimate',
-        'itsADrag',
-        'resizeIt'
+        'itsADrag'//,
+        //'resizeIt'
     ])
         .directive('window',['$animate',function($animate){
             return {

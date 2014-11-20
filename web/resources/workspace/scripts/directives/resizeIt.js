@@ -25,7 +25,7 @@ define(['angular'], function (angular) {
                     scope.obj = {
                         el : null,
                         id : null,
-                        size : null // {width,height}
+                        size : null // {width,height}s
                     };
 
                     /*** Setup ***/
@@ -66,7 +66,7 @@ define(['angular'], function (angular) {
                     }; // end evts
 
                     var options = angular.extend({},opts,evts);
-                //    el.resizable(options);
+                    //el.resizable(options);
 
 
                     /*** Listeners ***/

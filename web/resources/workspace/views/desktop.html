@@ -8,7 +8,7 @@
             <p>{{i.unitName}}</p>
         </a>
 
-        <div draggable id="window_" class="abs" ng-class="(selectedIndex_$index)?'window':'window_full'" ng-show="windowShow == i.unitCode">
+        <div draggable resizable id="window_" class="abs" ng-class="(selectedIndex_$index)?'window':'window_full'" ng-show="windowShow == i.unitCode">
             <div class="abs window_inner">
                 <div class="window_top">
                   <span class="float_left">
@@ -26,7 +26,7 @@
                         Storage in use: 119.1 GB
                     </div>-->
                     <div class="window_iframe window_main_without_aside">
-                        <iframe ng-src="{{applicationUrl}}"></iframe>
+                        <embed ng-src="{{applicationUrl}}"></embed>
                     </div>
                 </div>
                 <div class="abs window_bottom">
@@ -40,6 +40,3 @@
 </div>
 <!-- /desktopHTML -->
 
-<window id="adminMenu" title="Administrative Menu">
-    fgdgfd
-</window>
