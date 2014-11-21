@@ -20,6 +20,7 @@ define([
         .module('DesktopCtrl', [
             //'windows'
             //'drag',
+            //'resizeIt',
             'itsADrag',
             'resizable'
 

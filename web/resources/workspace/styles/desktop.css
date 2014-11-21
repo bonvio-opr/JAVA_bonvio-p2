@@ -133,13 +133,25 @@ div.ui-resizable-handle {
 }
 
 .window.ui-draggable-dragging {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 .window.ui-draggable-dragging .window_content,
 .window.ui-draggable-dragging .window_bottom {
   display: none;
 }
+
+
+
+.window.ui-resizable-resizing {
+    opacity: 0.8;
+}
+
+.window.ui-resizable-resizing embed {
+    opacity: 0.8;
+    display: none;
+}
+
 
 .window_full.ui-draggable-dragging {
   opacity: 1;
