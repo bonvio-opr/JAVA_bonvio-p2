@@ -1,6 +1,10 @@
 define([
-    'angular',
-    'directives/windows'
+        'angular',
+        //'directives/windows'
+        'directives/itsADrag',
+        'directives/drag',
+        //'directives/resizeIt'
+        'directives/resizable'
 ],
     function (angular) {
     'use strict';
@@ -14,10 +18,16 @@ define([
      */
     angular
         .module('DesktopCtrl', [
-            'windows'
+            //'windows'
+            //'drag',
+            'itsADrag',
+            'resizable'
+
         ])
         .controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', function ($scope, $http, $sce, $routeParams) {
             console.log('DesktopCtrl it work');
+
+            localStorage.setItem("selectedURL", $routeParams.desktopId);
 
             console.log("selected selectedDesktopId: "+$routeParams.desktopId);
 
@@ -75,18 +85,92 @@ define([
             };
 
         }])
-        .directive('resizable', function () {
+/*        .directive('resizable', function () {
+         return {
+         restrict: 'A',
+         scope: {
+         callback: '&onResize'
+         },
+         link: function postLink(scope, elem, attrs) {
+         elem.resizable();
+         elem.on('resizestop', function (evt, ui) {
+         if (scope.callback) { scope.callback(); }
+         });
+         }
+         };
+         });*/
+        /*.directive('resizeable',[function(){
             return {
-                restrict: 'A',
-                scope: {
-                    callback: '&onResize'
-                },
-                link: function postLink(scope, elem, attrs) {
-                    elem.resizable();
-                    elem.on('resizestop', function (evt, ui) {
-                        if (scope.callback) { scope.callback(); }
-                    });
-                }
-            };
-        });
+                restrict : 'A',
+                link : function(scope,el,attrs,ctrlr){
+                    scope.obj = {
+                        el : null,
+                        id : null,
+                        size : null // {width,height}
+                    };
+
+                    *//*** Setup ***//*
+
+                    scope.obj.el = el; // save handle to element
+
+                    if(angular.isDefined(attrs.id))
+                        scope.obj.id = attrs.id;
+
+                    var opts = (angular.isDefined(attrs.resizeable)) ? scope.$eval(attrs.resizeable) : {};
+
+                    var evts = {
+                        create : function(evt,ui){
+                            scope.$apply(function(){
+                                scope.$emit('resizeable.create',{obj: scope.obj});
+                            });
+                        }, // end create
+
+                        start : function(evt,ui){
+                            scope.$apply(function(){
+                                scope.$emit('resizeable.start',{obj: scope.obj});
+                            });
+                        }, // end start
+
+                        stop : function(evt,ui){
+                            scope.$apply(function(){
+                                scope.$emit('resizeable.stop',{'ui': ui});
+                                scope.obj.size = angular.copy(ui.size);
+                                console.log(scope.obj.size);
+                            });
+                        }, // end stop
+
+                        resize : function(evt,ui){
+                            scope.$apply(function(){
+                                scope.$emit('resizeable.resizing');
+                            });
+                        } // end resize
+                    }; // end evts
+
+                    var options = angular.extend({},opts,evts);
+                    el.resizable(options);
+
+                    *//*** Listeners ***//*
+
+                    scope.$on('resizeable.set.height',function(evt,params){
+                        if(angular.isDefined(params.height))
+                            el.css('height',parseInt(params.height) + 'px');
+                    }); // end on(resizeable.set.height)
+
+                    scope.$on('resizeable.set.width',function(evt,params){
+                        if(angular.isDefined(params.width))
+                            el.css('width',parseInt(params.width) + 'px');
+                    }); // end on(resizeable.set.width
+
+                    scope.$on('resizeable.reset.height',function(evt){
+                        if(angular.isDefined(scope.obj.size))
+                            el.css('height',scope.obj.size.height + 'px');
+                    }); // end on(resizeable.reset.height)
+
+                    scope.$on('resizeable.reset.width',function(evt){
+                        if(angular.isDefined(scope.obj.size))
+                            el.css('width',scope.obj.size.width + 'px');
+                    }); // end on(resizeable.reset.width)
+                } // end link
+            }; // end return
+        }]); // end resizeable*/
 });

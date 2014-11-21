@@ -17,7 +17,8 @@ define(['angular'], function (angular) {
             return function(scope, element, attr) {
                 var startX = 0, startY = 0, x = 0, y = 0;
                 element.css({
-                    position: 'relative'
+                    position: 'relative',
+                    opasity: '0.5'
                 });
                 element.on('mousedown', function(event) {
                     // Prevent default dragging of selected content
@@ -42,5 +43,9 @@ define(['angular'], function (angular) {
                     $document.off('mouseup', mouseup);
                 }
             };
-        });
+        })
+
+        .run(['$templateCache',function($templateCache){
+            $templateCache.put('/tmpls/draggable/default','<div ng-transclude></div>');
+        }]); // end itsADrag.run
 });

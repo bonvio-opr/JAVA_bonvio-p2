@@ -9,9 +9,10 @@ define(['angular'], function (angular) {
      * Controller of the generatorAngularRequireApp
      */
     angular.module('AboutCtrl', [])
-        .controller('AboutCtrl', ['$scope', function ($scope) {
+        .controller('AboutCtrl', ['$scope', '$location', function ($scope, $location) {
 
-            console.log('aboutCtrl it work');
+            console.log('AboutCtrl it work');
+            localStorage.setItem("selectedURL", "about");
 
             //localStorage.setItem('p2DashboardAppUrl', '/about');
             //$scope.phoneId = $routeParams.phoneId;

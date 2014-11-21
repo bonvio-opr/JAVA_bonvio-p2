@@ -10,9 +10,17 @@ define(['angular'], function (angular) {
      */
     angular.module('MainCtrl', [])
 
-        .controller('MainCtrl', ['$scope', function ($scope) {
+        .controller('MainCtrl', ['$scope', '$location', function ($scope, $location) {
 
             console.log('MainCtrl it work');
+            /**
+             * selectedURL
+             */
+            if (localStorage.getItem("selectedURL") != undefined){
+                $location.path(localStorage.getItem("selectedURL"));
+            } else {
+                localStorage.setItem("selectedURL", "/");
+            }
 
             $scope.toggleHideMenuDesktops = function() {
                 $scope.viewMenu = false;

@@ -37,6 +37,7 @@ define([
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
             var partialsPath = 'resources/workspace/views';
+
             $routeProvider
 
                 //AboutCtrl
@@ -56,6 +57,5 @@ define([
                 });
             //$locationProvider.html5Mode(true);
         }]);
-
 
 });

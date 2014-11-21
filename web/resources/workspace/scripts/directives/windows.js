@@ -52,7 +52,7 @@ define([
 
         .run(['$templateCache',function($templateCache){
             $templateCache.put('/tmpls/window',
-                '<div class="floating-window" id="{{id}}"  draggable="{handle: \'div.panel-heading\',opacity: 0.5}">' +
+                '<div class="floating-window" id="{{id}}" draggable="{handle: \'div.panel-heading\',opacity: 0.5}">' +
                     '<div class="panel panel-primary" resizeable="{handles: \'se\', alsoResize: \'#windowBodyContent\'}">' +
                         '<div class="panel-heading cursor-move" id="windowHeading">' +
                             '<span class="pull-right">' +

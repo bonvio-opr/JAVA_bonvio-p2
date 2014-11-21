@@ -6,9 +6,9 @@ define(['angular'], function (angular) {
 
     /**
      * @ngdoc function
-     * @name draggable
+     * @name
      * @description
-     * # draggable
+     * #
      * Controller of the generatorAngularRequireApp
      */
 

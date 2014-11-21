@@ -18,7 +18,7 @@ define(['angular'], function (angular) {
     /**
      jQuery UI resizable adds exact pixel width and heights to the element via a style tag.
      **/
-        .directive('resizeable',[function(){
+        .directive('resizable',[function(){
             return {
                 restrict : 'A',
                 link : function(scope,el,attrs,ctrlr){
