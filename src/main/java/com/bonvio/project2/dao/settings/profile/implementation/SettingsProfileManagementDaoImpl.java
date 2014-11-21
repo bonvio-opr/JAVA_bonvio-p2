@@ -22,9 +22,8 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
         super(dataSource);
     }
 
-
     public FullUserProfile getMyFullUserProfile(String userId, String userPhone) {
-        LinkedList<FullUserProfile> profile = new LinkedList<>();
+        LinkedList<FullUserProfile> profile = new LinkedList<FullUserProfile>();
         String q = "select " +
                 "s_id, " +
                 "s_email, " +
@@ -36,9 +35,9 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
                 "s_doccode, " +
                 "s_city, " +
                 "s_country " +
-                " from "+defaultSchema+".s_users where s_id = "+Integer.parseInt(userId)+" and s_phonenumber = ? and s_enabled = 1";
+                " from " + defaultSchema + ".s_users where s_id = " + Integer.parseInt(userId) + " and s_phonenumber = ? and s_enabled = 1";
         try {
-            profile.addAll( getJdbcTemplate().query(q, new RowMapper<FullUserProfile>() {
+            profile.addAll(getJdbcTemplate().query(q, new RowMapper<FullUserProfile>() {
                 @Override
                 public FullUserProfile mapRow(ResultSet r, int i) throws SQLException {
                     return new FullUserProfile(
@@ -51,49 +50,72 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
                             r.getString("S_PHONENUMBER"),
                             r.getInt("S_DOCTYPE"),
                             r.getString("S_DOCCODE"),
-                            r.getString("S_COUNTRY"),
-                            r.getString("S_CITY")
+                            r.getString("S_CITY"),
+                            r.getString("S_COUNTRY")
                     );
+
                 }
             }, userPhone));
             return profile.get(0);
-        } catch(EmptyResultDataAccessException ep) {
+        } catch (EmptyResultDataAccessException ep) {
             ep.printStackTrace();
             return null;
         }
     }
 
-    public int refreshMyFullUserProfile(String userId, String userPhone, FullUserProfile f) {
-        String q = "update "+defaultSchema+".s_users set(" +
-                "s_email, " +
-                "s_first_name, " +
-                "s_second_name, " +
-                "s_patronymic," +
-                "s_phonenumber, " +
-                "s_doctype, " +
-                "s_doccode, " +
-                "s_city, " +
-                "s_country) " +
-                "values (?,?,?,?,?,?,?,?,?) " +
-                "where s_id = "+Integer.parseInt(userId)+" and s_phonenumber = ?";
+    public int refreshMyFullUserProfile(String userId, String userPhone, FullUserProfile userProfile) {
+        String query =
+                "UPDATE S_USERS SET " +
+                        "S_EMAIL = ?, " +
+                        "S_FIRST_NAME = ?, " +
+                        "S_SECOND_NAME = ?, " +
+                        "S_PATRONYMIC = ?, " +
+                        "S_DOCTYPE = ?, " +
+                        "S_DOCCODE = ?, " +
+                        "S_CITY = ?, " +
+                        "S_COUNTRY = ? " +
+                        "WHERE S_ID = ?";
         try {
             getJdbcTemplate().update(
-                    q,
-                    f.getProfileEmail(),
-                    f.getProfileName(),
-                    f.getProfileSurname(),
-                    f.getProfilePatronymic(),
-                    f.getProfilePhoneNumber(),
-                    f.getProfileDocType(),
-                    f.getProfileDocCode(),
-                    f.getProfileCity(),
-                    f.getProfileCountry(),
-                    userPhone
+                    query,
+                    new Object[]{
+                            userProfile.getProfileEmail(),
+                            userProfile.getProfileName(),
+                            userProfile.getProfileSurname(),
+                            userProfile.getProfilePatronymic(),
+                            userProfile.getProfileDocType(),
+                            userProfile.getProfileDocCode(),
+                            userProfile.getProfileCity(),
+                            userProfile.getProfileCountry(),
+                            userId}
             );
             return 1;
-        } catch(Exception ept) {
+        } catch (Exception ept) {
             ept.printStackTrace();
             return 0;
         }
     }
+
+    public int refreshUserPassAndPhone(String userId, FullUserProfile userProfile) {
+        String query =
+                "UPDATE S_USERS SET " +
+                        "S_PHONENUMBER = ?, " +
+                        "S_PASSWORD = ? " +
+                        "WHERE S_ID = ?";
+        try {
+            getJdbcTemplate().update(
+                    query,
+                    new Object[]{
+                            userProfile.getProfilePhoneNumber(),
+                            userProfile.getProfilePassword(),
+                            userId}
+            );
+            return 1;
+        } catch (Exception ept) {
+            ept.printStackTrace();
+            return 0;
+        }
+    }
+
+
 }
