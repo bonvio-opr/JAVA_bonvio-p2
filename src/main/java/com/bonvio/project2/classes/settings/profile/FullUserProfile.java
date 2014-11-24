@@ -18,6 +18,7 @@ public class FullUserProfile {
     private String profileCity;
     private String profileCountry;
 
+
     @Override
     public String toString() {
         return "FullUserProfile{" +

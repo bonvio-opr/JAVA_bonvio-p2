@@ -12,12 +12,25 @@ define(['angular'], function (angular) {
      * Controller of the generatorAngularRequireApp
      */
     angular.module('Bar_bottomCtrl', [])
-        .controller('Bar_bottomCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+        .controller('Bar_bottomCtrl', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
 
             console.log('Bar_bottomCtrl it work');
 
+            /**
+             * tabsUI
+             */
+
+
+
+            /**
+             * rightPanel
+             * @type {string}
+             */
             //$scope.format = 'M/d/yy h:mm:ss a';
             $scope.format = 'H:mm:ss';
+
+
+
 
         }]);
 });

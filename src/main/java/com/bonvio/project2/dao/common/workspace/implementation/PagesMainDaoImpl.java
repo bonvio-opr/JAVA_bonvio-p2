@@ -195,6 +195,30 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
     }
 
 
+    public int updateApplicationPosition( Application application) {
+        System.out.println(application.toString());
+        String query =
+                "UPDATE S_WS_APPS SET " +
+                        "S_APP_POSITION_X = ?, " +
+                        "S_APP_POSITION_Y = ? " +
+                        "WHERE S_ID = ?";
+        try {
+            getJdbcTemplate().update(
+                    query,
+                    new Object[]{
+                            application.getUnitPositionX(),
+                            application.getUnitPositionY(),
+                            application.getUniteID()}
+            );
+            return 1;
+        } catch (Exception ept) {
+            ept.printStackTrace();
+            return 0;
+        }
+    }
+
+
+
 
     public List <Application> getPrivateApplications(String wsId, String userId) {
 
@@ -203,6 +227,23 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         ArrayList<Application> applications = new ArrayList<>();
         applications.addAll(getJdbcTemplate().query(
                 "select " +
+                        "APPS.S_NAME as APPNAME, " +
+                        "APPS.S_CODE as APPCODE, " +
+                        "APPS.S_APP_ADDRESS as IMGPATH, " +
+                        "APPS.S_ID as APPID, " +
+                        "APPS.S_APP_IMAGE as APPIMAGE, " +
+                        "APPS.S_APP_POSITION_X as APPX, " +
+                        "APPS.S_APP_POSITION_Y as APPY " +
+                        "from s_u_ws UWS " +
+                        "left join s_users U " +
+                        "on U.S_ID=UWS.S_USER_ID " +
+                        "left join S_U_WS_APPS UWSAPPS " +
+                        "on UWS.S_ID=UWSAPPS.S_WS_ID " +
+                        "left join S_WS_APPS APPS " +
+                        "on UWSAPPS.S_APP_ID=APPS.S_ID " +
+                        "where UWS.S_ID=? and U.S_ID=?",
+
+             /*   "select " +
                         "APPS.S_NAME as APPNAME, " +
                         "APPS.S_CODE as APPCODE, " +
                         "APPS.S_APP_ADDRESS as IMGPATH " +
@@ -214,13 +255,25 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                         "left join S_WS_APPS APPS " +
                         "on UWSAPPS.S_APP_ID=APPS.S_ID " +
                         "where UWS.S_ID=? and U.S_ID=?",
+
+        this.uniteID = uniteID;
+        this.unitName = unitName;
+        this.unitCode = unitCode;
+        this.unitImgPath = unitImgPath;
+        this.unitPositionX = unitPositionX;
+        this.unitPositionY = unitPositionY;
+                */
+
                 new RowMapper<Application>() {
                     @Override
                     public Application mapRow(ResultSet r, int i) throws SQLException {
                         return new Application(
+                                r.getLong("APPID"),
                                 r.getString("APPNAME"),
                                 r.getString("APPCODE"),
-                                r.getString("IMGPATH")
+                                r.getString("IMGPATH"),
+                                r.getInt("APPX"),
+                                r.getInt("APPY")
                         );
                     }
                 }, wsId, userId));

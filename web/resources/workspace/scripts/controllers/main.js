@@ -10,29 +10,61 @@ define(['angular'], function (angular) {
      */
     angular.module('MainCtrl', [])
 
-        .controller('MainCtrl', ['$scope', '$location', function ($scope, $location) {
+        .controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', function ($scope, $location, $http, $sce, $routeParams) {
 
             console.log('MainCtrl it work');
             /**
              * selectedURL
              */
-            if (localStorage.getItem("selectedURL") != undefined){
+            /*if (localStorage.getItem("selectedURL") != undefined){
                 $location.path(localStorage.getItem("selectedURL"));
             } else {
                 localStorage.setItem("selectedURL", "/");
-            }
+            }*/
 
             $scope.toggleHideMenuDesktops = function() {
                 $scope.viewMenu = false;
-                $scope.animatedMenu = 'fadeOut';
             };
 
             $scope.viewMenu = false;
-            $scope.animatedMenu = 'fadeOut';
-            $scope.toggleViewMenu = function() {
+
+            $scope.toggleViewMenu = function(ggg) {
                 $scope.viewMenu = $scope.viewMenu === true ? false: true;
-                $scope.animatedMenu = $scope.animatedMenu === 'fadeOut' ? 'fadeIn': 'fadeOut';
+                //$scope.viewMenu = false;
+                //alert(ggg);
             };
+
+            /**
+             * unit
+             */
+
+//           $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
+//                localStorage.setItem('getApplicationsById', JSON.stringify(data));
+//                $scope.applicationUnits = data;
+//            });
+
+            $http.get('resources/workspace/JSON/p1.json').success(function(data) {
+                localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                $scope.applicationUnits = data;
+            });
+
+
+            $scope.iconUpdate = function(unit) {
+
+                delete unit.unitActive;
+                $http.post('updateApplicationPosition/', unit).success(function (data) {
+                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    //$scope.applicationUnits = data;
+                    console.log("good - " + data);
+                });
+            };
+            /*            $scope.windowUpdate = function(activeWindow) {
+             $http.post('#', activeWindow).success(function (data) {
+             localStorage.setItem('getApplicationsById', JSON.stringify(data));
+             //$scope.applicationUnits = data;
+             console.log("good - " + data);
+             });
+             };*/
 
 
         }]);// endMainCtrl

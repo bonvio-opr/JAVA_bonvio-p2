@@ -179,6 +179,12 @@ public class PagesMainService {
         return "workspace/login";
     }
 
+    @RequestMapping(value="/updateApplicationPosition", method=RequestMethod.POST)
+    @ResponseBody
+    public int updateApplicationPosition (@RequestBody Application application) {
+        return dao.updateApplicationPosition(application);
+    }
+
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logout() {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();

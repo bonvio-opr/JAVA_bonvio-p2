@@ -6,6 +6,10 @@ import com.bonvio.project2.dao.settings.profile.SettingsProfileManagementDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -116,6 +120,27 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
             return 0;
         }
     }
+
+    public int addImage (String userId, MultipartFile file) {
+        LobHandler lobHandler = new DefaultLobHandler();
+        String query =
+                "UPDATE S_USERS SET " +
+                        "S_IMAGE = ? " +
+                        "WHERE S_ID = ?";
+        try {
+            getJdbcTemplate().update(
+                    query,
+                    new Object[]{
+                            new SqlLobValue(file.getInputStream(), (int) file.getSize(), lobHandler),
+                            userId}
+            );
+            return 1;
+        } catch (Exception ept) {
+            ept.printStackTrace();
+            return 0;
+        }
+    }
+
 
 
 }
