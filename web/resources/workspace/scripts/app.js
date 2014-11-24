@@ -51,7 +51,7 @@ define([
                 //DesktopCtrl
                 .when('/:desktopId', {
                     templateUrl: partialsPath+'/desktop.html',
-                    controller: 'DesktopCtrl'
+                    controller: 'MainCtrl'
                 })
 
                 .otherwise({
