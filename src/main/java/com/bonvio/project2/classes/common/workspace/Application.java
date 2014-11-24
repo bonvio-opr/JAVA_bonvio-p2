@@ -7,13 +7,13 @@ import java.util.List;
  */
 public class Application {
 
-    private long uniteID;
+    private int uniteID;
     private int unitPositionX;
     private int unitPositionY;
     private String unitName;
     private String unitCode;
     private String unitImgPath;
-    private List <Application> windows = null;
+    private List <Window> windows = null;
 
     @Override
     public String toString() {
@@ -52,12 +52,20 @@ public class Application {
         this.unitImgPath = unitImgPath;
     }
 
-    public long getUniteID() {
+    public int getUniteID() {
         return uniteID;
     }
 
-    public void setUniteID(long uniteID) {
+    public void setUniteID(int uniteID) {
         this.uniteID = uniteID;
+    }
+
+    public List<Window> getWindows() {
+        return windows;
+    }
+
+    public void setWindows(List<Window> windows) {
+        this.windows = windows;
     }
 
     public int getUnitPositionX() {
@@ -87,7 +95,7 @@ public class Application {
         this.unitImgPath = unitImgPath;
     }
 
-    public Application(long uniteID, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY) {
+    public Application(int uniteID, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY) {
         this.uniteID = uniteID;
         this.unitName = unitName;
         this.unitCode = unitCode;

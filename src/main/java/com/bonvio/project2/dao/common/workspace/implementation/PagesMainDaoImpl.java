@@ -1,9 +1,6 @@
 package com.bonvio.project2.dao.common.workspace.implementation;
 
-import com.bonvio.project2.classes.common.workspace.Application;
-import com.bonvio.project2.classes.common.workspace.UserCredentials;
-import com.bonvio.project2.classes.common.workspace.WorkspaceApplicationsWithType;
-import com.bonvio.project2.classes.common.workspace.WorkspaceWithApplications;
+import com.bonvio.project2.classes.common.workspace.*;
 import com.bonvio.project2.classes.common.workspace.extractors.WorkspaceWithApplicationsDBExtractor;
 import com.bonvio.project2.dao.BaseDao;
 import com.bonvio.project2.dao.common.workspace.PagesMainDao;
@@ -195,8 +192,69 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
     }
 
 
+    public int createWindow ( Window window) {
+        try {
+
+        getJdbcTemplate().update("insert into " + defaultSchema + ".s_window " +
+                "(windowid, ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex) " +
+                "values (?,?,?,?,?,?,?,?,?,?,?)", new Object []{
+                window.getWindowId(),
+                window.getOwnerUnitId(),
+                window.getWindowPositionX(),
+                window.getWindowPositionY(),
+                window.getWindowWidth(),
+                window.getWindowHeight(),
+                window.getTitle(),
+                window.getState(),
+                window.getIsMax(),
+                window.getIsMin(),
+                window.getzIndex()
+        });
+
+            return 1;
+
+        } catch (Exception ept) {
+            System.out.println("ошибка в создании окна");
+            return 0;
+        }
+    }
+
+    public int updateWindow ( Window window) {
+
+        String query =
+                "UPDATE s_window SET " +
+                        "ownerunitid = ?, windowpositionx = ?, windowpositiony = ?, windowwidth = ?, windowheight = ?, windowtitle = ?, windowstate = ?, ismax = ?, ismin = ?, zindex = ? " +
+                        "WHERE windowid = ?";
+        try {
+            getJdbcTemplate().update(
+                    query,
+                    new Object []{
+                            window.getOwnerUnitId(),
+                            window.getWindowPositionX(),
+                            window.getWindowPositionY(),
+                            window.getWindowWidth(),
+                            window.getWindowHeight(),
+                            window.getTitle(),
+                            window.getState(),
+                            window.getIsMax(),
+                            window.getIsMin(),
+                            window.getzIndex(),
+                            window.getWindowId()
+                    }
+            );
+            return 1;
+        } catch (Exception ept) {
+            System.out.println("ошибка при обновлении окна!");
+            ept.printStackTrace();
+            return 0;
+        }
+    }
+
+
+
+
     public int updateApplicationPosition( Application application) {
-        System.out.println(application.toString());
+
         String query =
                 "UPDATE S_WS_APPS SET " +
                         "S_APP_POSITION_X = ?, " +
@@ -217,7 +275,32 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         }
     }
 
+    public List<Window> getWindowByOwnerWindowId( int id) {
 
+        List<Window> applications = new ArrayList<Window>();
+        applications.addAll(getJdbcTemplate().query(
+                "select * from s_window  where ownerunitid = ?" ,
+                new RowMapper<Window>() {
+                    @Override
+                    public Window mapRow(ResultSet r, int i) throws SQLException {
+                        return new Window(
+                                r.getInt("WINDOWID"),
+                                r.getInt("OWNERUNITID"),
+                                r.getInt("WINDOWPOSITIONX"),
+                                r.getInt("WINDOWPOSITIONY"),
+                                r.getInt("WINDOWWIDTH"),
+                                r.getInt("WINDOWHEIGHT"),
+                                r.getString("WINDOWTITLE"),
+                                r.getString("WINDOWSTATE"),
+                                r.getInt("ISMAX"),
+                                r.getInt("ISMIN"),
+                                r.getInt("ZINDEX")
+                        );
+                    }
+                },id));
+
+        return applications;
+    }
 
 
     public List <Application> getPrivateApplications(String wsId, String userId) {
@@ -255,20 +338,13 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                         "left join S_WS_APPS APPS " +
                         "on UWSAPPS.S_APP_ID=APPS.S_ID " +
                         "where UWS.S_ID=? and U.S_ID=?",
-
-        this.uniteID = uniteID;
-        this.unitName = unitName;
-        this.unitCode = unitCode;
-        this.unitImgPath = unitImgPath;
-        this.unitPositionX = unitPositionX;
-        this.unitPositionY = unitPositionY;
                 */
 
                 new RowMapper<Application>() {
                     @Override
                     public Application mapRow(ResultSet r, int i) throws SQLException {
                         return new Application(
-                                r.getLong("APPID"),
+                                r.getInt("APPID"),
                                 r.getString("APPNAME"),
                                 r.getString("APPCODE"),
                                 r.getString("IMGPATH"),
@@ -277,6 +353,10 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                         );
                     }
                 }, wsId, userId));
+
+        for(int i = 0; i < applications.size(); i++) {
+            applications.get(i).setWindows(getWindowByOwnerWindowId(applications.get(i).getUniteID()));
+        }
 
         return applications;
     }
