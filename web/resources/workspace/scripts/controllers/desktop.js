@@ -35,32 +35,7 @@ define([
             localStorage.setItem("selectedDesktopId", $routeParams.desktopId);
 
 
-/*            $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
-                localStorage.setItem('getApplicationsById', JSON.stringify(data));
-                $scope.applicationUnits = data;
-            });*/
 
-            $http.get('resources/workspace/JSON/p1.json').success(function(data) {
-                localStorage.setItem('getApplicationsById', JSON.stringify(data));
-                $scope.applicationUnits = data;
-            });
-
-
-//            $scope.iconUpdate = function(unit) {
-//                delete unit.unitActive;
-//                $http.post('#', unit).success(function (data) {
-//                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
-//                    //$scope.applicationUnits = data;
-//                    console.log("good - " + data);
-//                });
-//            };
-//            $scope.windowUpdate = function(activeWindow) {
-//                $http.post('#', activeWindow).success(function (data) {
-//                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
-//                    //$scope.applicationUnits = data;
-//                    console.log("good - " + data);
-//                });
-//            };
 
 
 

@@ -20,9 +20,6 @@ define(['angular'], function (angular) {
              * tabsUI
              */
 
-            $http.get('getApplicationsById/'+localStorage.getItem("selectedDesktopId")).success(function(data) {
-                $scope.applicationUnits = data;
-            });
 
 
             /**

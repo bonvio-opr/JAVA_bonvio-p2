@@ -3,16 +3,21 @@
 <div ng-class="{'animated':true, 'fadeIn':true}">
     <div ng-repeat="i in applicationUnits">
 
-        <a draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href ng-mouseup="iconUpdate(i)" ng-click="toggleApplicationOpen(i.unitCode)">
+        <a draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
+           unit-icon ng-model="i"
+           ng-mouseup="iconUpdate(i)"
+           ng-click="toggleApplicationOpen(i.unitCode)">
             <img ng-src="{{i.unitImgPath}}{{hash}}" />
-            <p>{{i.unitName}}</p>
+            <p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
+            <span></span>
         </a>
 
-        <div ng-repeat="win in i.unitActive">
+        <div ng-repeat="win in i.unitActive" ng-if="!win.isMin">
 
-            <div draggable resizable id="window" class="abs" style="position: absolute; left:{{win.windowPositionX}}px;top:{{win.windowPositionY}}px; width: {{win.windowWidth}}px;Height: {{win.windowHeight}}px;"
+            <div draggable resizable id="window" class="abs"
+                 style="position: absolute; left:{{win.windowPositionX}}px;top:{{win.windowPositionY}}px; width: {{win.windowWidth}}px;Height: {{win.windowHeight}}px;"
                  ng-mouseup="windowUpdate(win)"
-                 ng-class="(win.windowState === 'normal')?'window':'window_full'">
+                 ng-class="(!win.isMax)?'window':'window_full'">
                 <div class="abs window_inner">
                     <div class="window_top">
                       <span class="float_left">
@@ -20,9 +25,9 @@
                         {{win.windowTitle}} - {{i.unitName}}
                       </span>
                       <span class="float_right">
-                        <a href class="window_min"></a>
-                        <a href class="window_resize" ng-click="selectedIndex_$index=!selectedIndex_$index"></a>
-                        <a href class="window_close"></a>
+                        <a href class="window_min" ng-click="win.isMin = true"></a>
+                        <a href class="window_resize" ng-click="win.isMax = !win.isMax"></a>
+                        <a href class="window_close" ng-click="i.unitActive.splice($index, 1)"></a>
                       </span>
                     </div>
                     <div class="abs window_content">

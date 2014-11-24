@@ -6,7 +6,8 @@ define([
     'controllers/bar_top',
     'controllers/bar_bottom',
     'controllers/about',
-    'directives/myCurrentTime'
+    'directives/myCurrentTime',
+    'directives/unitIcon'
 ]/*deps*/, function (angular, MainCtrl, DesktopCtrl, Bar_topCtrl, Bar_bottomCtrl, AboutCtrl)/*invoke*/ {
     'use strict';
     /**
@@ -31,7 +32,8 @@ define([
             'ngRoute',
             'ngAnimate',
             'ngTouch',
-            'myCurrentTime'
+            'myCurrentTime',
+            "unitIcon"
         ]
     )
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -53,7 +55,7 @@ define([
                 })
 
                 .otherwise({
-                    redirectTo: '/p1'
+                    redirectTo: '/'
                 });
             //$locationProvider.html5Mode(true);
         }]);

@@ -11,10 +11,25 @@
                 "windowId": "1",
                 "windowPositionX" : "100",
                 "windowPositionY" : "100",
-                "windowWidth": "200",
-                "windowHeight": "200",
-                "windowTitle": "unit 1",
-                "windowState": "normal"
+                "windowWidth": "500",
+                "windowHeight": "300",
+                "windowTitle": "unit 11",
+                "windowState": "min",
+                "isMax": false,
+                "isMin": true,
+                "zIndex" : "1"
+            },
+            {
+                "windowId": "2",
+                "windowPositionX" : "100",
+                "windowPositionY" : "100",
+                "windowWidth": "500",
+                "windowHeight": "300",
+                "windowTitle": "unit 12",
+                "windowState": "min",
+                "isMax": false,
+                "isMin": true,
+                "zIndex" : "1"
             }
 
         ]
