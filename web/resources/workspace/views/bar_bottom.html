@@ -2,16 +2,19 @@
     <!--<img src="resources/workspace/images/icons/icon_22_desktop.png" />-->
     <img width="80" src="resources/workspace/images/logo-bonvio_transparant.png" />
 </a>
-<ul id="dock">
 
-    <li id="icon_dock_drive">
-        <a href="#window_drive">
-            <img src="resources/workspace/images/icons/icon_16_drive.png" />
-            Hard Drive
+
+<ul id="dock" ng-repeat="i in applicationUnits">
+
+    <li id="icon_dock">
+        <a href>
+            <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
+            {{i.unitName}}
         </a>
     </li>
 
 </ul>
+
 <a class="float_right" href>
     <span class="glyphicon glyphicon-time"></span> <span my-current-time="format"></span>
 </a>

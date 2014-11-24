@@ -24,14 +24,14 @@ define(['angular'], function (angular) {
 
             $scope.toggleHideMenuDesktops = function() {
                 $scope.viewMenu = false;
-                $scope.animatedMenu = 'fadeOut';
             };
 
             $scope.viewMenu = false;
-            $scope.animatedMenu = 'fadeOut';
-            $scope.toggleViewMenu = function() {
+
+            $scope.toggleViewMenu = function(ggg) {
                 $scope.viewMenu = $scope.viewMenu === true ? false: true;
-                $scope.animatedMenu = $scope.animatedMenu === 'fadeOut' ? 'fadeIn': 'fadeOut';
+                //$scope.viewMenu = false;
+                //alert(ggg);
             };
 
 

@@ -53,7 +53,7 @@ define([
                 })
 
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/p1'
                 });
             //$locationProvider.html5Mode(true);
         }]);

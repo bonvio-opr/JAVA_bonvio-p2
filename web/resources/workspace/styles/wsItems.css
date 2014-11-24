@@ -3,7 +3,9 @@
     display: inline-block;
 }
 
-
+.glyphicon-b-logo:before {
+    content: url('../images/svg/b-logo.svg');
+}
 
 .wsUnit {
     display: inline-block;

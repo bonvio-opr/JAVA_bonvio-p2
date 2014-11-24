@@ -38,20 +38,20 @@
 
 <div data-ng-controller="MainCtrl" >
 
-    <div class="abs" id="wrapper">
+    <div class="abs" id="wrapper" ng-mouseup="toggleHideMenuDesktops()">
 
-        <div data-ng-controller="Bar_topCtrl" class="abs" id="bar_top" ng-mouseup="toggleHideMenuDesktops()">
+        <div data-ng-controller="Bar_topCtrl" class="abs" id="bar_top">
             <!-- start: bar_top -->
             <section data-ng-include=" 'resources/workspace/views/bar_top.html' " ></section>
             <!-- end: bar_top -->
         </div>
-        <div data-ng-controller="Bar_bottomCtrl" class="abs" id="bar_bottom"  ng-mouseup="toggleHideMenuDesktops()">
+        <div data-ng-controller="Bar_bottomCtrl" class="abs" id="bar_bottom">
             <!-- start: bar_bottom -->
             <section data-ng-include=" 'resources/workspace/views/bar_bottom.html' " ></section>
             <!-- end: bar_bottom -->
         </div>
 
-        <div class="abs" id="desktop" ng-mouseup="toggleHideMenuDesktops()">
+        <div class="abs" id="desktop">
             <!-- Add your site or application content here -->
             <div ng-view=""></div>
         </div>

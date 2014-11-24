@@ -10,9 +10,9 @@
 
 <ul>
     <li>
-        <!--<a class="menu_trigger" href ng-click="viewMenu = !viewMenu">Desktops</a>-->
-        <a class="menu_trigger" href ng-click="toggleViewMenu()">Desktops</a>
-        <ul class="menu <!--animated {{animatedMenu}}-->" ng-show="viewMenu" >
+        <!-- class="glyphicon glyphicon-b-logo" -->
+        <a class="menu_trigger" href ng-click="toggleViewMenu(viewMenu)"><span class="glyphicon glyphicon-off"></span> Desktops</a>
+        <ul class="menu" ng-show="(viewMenu == true)?true:false" >
 
             <li ng-repeat="i in CurrentUserPrivateWorkspaces">
                 <a ng-href="/CM/#/p{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
