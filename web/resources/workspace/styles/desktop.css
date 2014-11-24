@@ -127,8 +127,13 @@ div.ui-resizable-handle {
   z-index: 2;
 }
 
-.window.window_stack {
+.window.window_stack,
+.window.ui-draggable-dragging {
   z-index: 10;
+}
+
+.window.ui-draggable-dragging {
+  opacity: 0.8;
 }
 
 .window.ui-draggable-dragging .window_content,
@@ -136,12 +141,20 @@ div.ui-resizable-handle {
   display: none;
 }
 
-.window.ui-draggable-dragging, .window.ui-resizable-resizing, .window_full.ui-draggable-dragging, .window_full.ui-resizable-resizing{
+
+
+.window.ui-resizable-resizing {
     opacity: 0.8;
 }
 
-.window.ui-draggable-dragging embed, .window.ui-resizable-resizing embed, .window_full.ui-draggable-dragging embed, .window_full.ui-resizable-resizing embed {
+.window.ui-resizable-resizing embed {
+    opacity: 0.8;
     display: none;
+}
+
+
+.window_full.ui-draggable-dragging {
+  opacity: 1;
 }
 
 .window_full.ui-draggable-dragging .window_content,
