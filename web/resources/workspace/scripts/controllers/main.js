@@ -49,7 +49,7 @@ define(['angular'], function (angular) {
             });
 
 
-            $scope.iconUpdate = function(unit) {
+/*            $scope.iconUpdate = function(unit) {
 
                 delete unit.unitActive;
                 $http.post('updateApplicationPosition/', unit).success(function (data) {
@@ -57,7 +57,7 @@ define(['angular'], function (angular) {
                     //$scope.applicationUnits = data;
                     console.log("good - " + data);
                 });
-            };
+            };*/
             /*            $scope.windowUpdate = function(activeWindow) {
              $http.post('#', activeWindow).success(function (data) {
              localStorage.setItem('getApplicationsById', JSON.stringify(data));

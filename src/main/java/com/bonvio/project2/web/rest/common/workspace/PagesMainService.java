@@ -1,9 +1,6 @@
 package com.bonvio.project2.web.rest.common.workspace;
 
-import com.bonvio.project2.classes.common.workspace.Application;
-import com.bonvio.project2.classes.common.workspace.UserCredentials;
-import com.bonvio.project2.classes.common.workspace.WorkspaceApplicationsWithType;
-import com.bonvio.project2.classes.common.workspace.WorkspaceWithApplications;
+import com.bonvio.project2.classes.common.workspace.*;
 import com.bonvio.project2.dao.common.workspace.implementation.PagesMainDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -180,11 +177,22 @@ public class PagesMainService {
     }
 
     @RequestMapping(value="/updateApplicationPosition", method=RequestMethod.POST)
-    @ResponseBody
-    public int updateApplicationPosition (@RequestBody Application application) {
+         @ResponseBody
+         public int updateApplicationPosition (@RequestBody Application application) {
         return dao.updateApplicationPosition(application);
     }
 
+    @RequestMapping(value="/createWindow", method=RequestMethod.POST)
+    @ResponseBody
+    public int createWindow (@RequestBody Window window) {
+        return dao.createWindow(window);
+    }
+
+    @RequestMapping(value="/updateWindow", method=RequestMethod.POST)
+    @ResponseBody
+    public int updateWindow (@RequestBody Window window) {
+        return dao.updateWindow(window);
+    }
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logout() {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();

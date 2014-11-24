@@ -8,19 +8,8 @@
         "unitPositionY":"100",
         "unitActive": [
             {
-                "windowId": "1",
-                "windowPositionX" : "100",
-                "windowPositionY" : "100",
-                "windowWidth": "500",
-                "windowHeight": "300",
-                "windowTitle": "unit 11",
-                "windowState": "min",
-                "isMax": false,
-                "isMin": true,
-                "zIndex" : "1"
-            },
-            {
                 "windowId": "2",
+                "ownerUnitId":"1",
                 "windowPositionX" : "100",
                 "windowPositionY" : "100",
                 "windowWidth": "500",
@@ -43,6 +32,19 @@
         "unitImgPath":"resources/workspace/icons/application-x-java.png",
         "unitPositionX":"400",
         "unitPositionY":"400",
-        "unitActive": []
+        "unitActive": [
+            {
+                "windowId": "562",
+                "windowPositionX" : "500",
+                "windowPositionY" : "500",
+                "windowWidth": "300",
+                "windowHeight": "300",
+                "windowTitle": "unit 21",
+                "windowState": "min",
+                "isMax": false,
+                "isMin": true,
+                "zIndex" : "13"
+            }
+        ]
     }
 ]
