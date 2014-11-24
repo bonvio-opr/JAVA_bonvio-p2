@@ -17,19 +17,19 @@ define(['angular'], function (angular) {
              * selectedURL
              */
             /*if (localStorage.getItem("selectedURL") != undefined){
-                $location.path(localStorage.getItem("selectedURL"));
-            } else {
-                localStorage.setItem("selectedURL", "/");
-            }*/
+             $location.path(localStorage.getItem("selectedURL"));
+             } else {
+             localStorage.setItem("selectedURL", "/");
+             }*/
 
-            $scope.toggleHideMenuDesktops = function() {
+            $scope.toggleHideMenuDesktops = function () {
                 $scope.viewMenu = false;
             };
 
             $scope.viewMenu = false;
 
-            $scope.toggleViewMenu = function(ggg) {
-                $scope.viewMenu = $scope.viewMenu === true ? false: true;
+            $scope.toggleViewMenu = function (ggg) {
+                $scope.viewMenu = $scope.viewMenu === true ? false : true;
                 //$scope.viewMenu = false;
                 //alert(ggg);
             };
@@ -38,19 +38,19 @@ define(['angular'], function (angular) {
              * unit
              */
 
-//           $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
-//                localStorage.setItem('getApplicationsById', JSON.stringify(data));
-//                $scope.applicationUnits = data;
-//            });
-
-            $http.get('resources/workspace/JSON/p1.json').success(function(data) {
+           $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
                 localStorage.setItem('getApplicationsById', JSON.stringify(data));
                 $scope.applicationUnits = data;
             });
 
+/*            $http.get('resources/workspace/JSON/p1.json').success(function (data) {
+                localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                $scope.applicationUnits = data;
+            });*/
 
-            $scope.iconUpdate = function(unit) {
 
+            // icon
+            $scope.iconUpdate = function (unit) {
                 delete unit.unitActive;
                 $http.post('updateApplicationPosition/', unit).success(function (data) {
                     localStorage.setItem('getApplicationsById', JSON.stringify(data));
@@ -58,13 +58,13 @@ define(['angular'], function (angular) {
                     console.log("good - " + data);
                 });
             };
-            /*            $scope.windowUpdate = function(activeWindow) {
-             $http.post('#', activeWindow).success(function (data) {
-             localStorage.setItem('getApplicationsById', JSON.stringify(data));
-             //$scope.applicationUnits = data;
-             console.log("good - " + data);
-             });
-             };*/
+
+            $scope.windowUpdate = function (activeWindow) {
+                $http.post('createWindow/', activeWindow).success(function (data) {
+//                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    console.log("good - " + data);
+                });
+            };
 
 
         }]);// endMainCtrl

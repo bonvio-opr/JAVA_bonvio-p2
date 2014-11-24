@@ -25,9 +25,9 @@
                         {{win.windowTitle}} - {{i.unitName}}
                       </span>
                       <span class="float_right">
-                        <a href class="window_min" ng-click="win.isMin = true"></a>
-                        <a href class="window_resize" ng-click="win.isMax = !win.isMax"></a>
-                        <a href class="window_close" ng-click="i.unitActive.splice($index, 1)"></a>
+                        <a href class="window_min" ng-click="win.isMin = true" ng-mouseup="windowUpdate(win)"></a>
+                        <a href class="window_resize" ng-click="win.isMax = !win.isMax" ng-mouseup="windowUpdate(win)"></a>
+                        <a href class="window_close" ng-click="i.unitActive.splice($index, 1)" ng-mouseup="windowUpdate(win)"></a>
                       </span>
                     </div>
                     <div class="abs window_content">
