@@ -18,6 +18,25 @@
 
         var app = angular.module('ProfileApp', []);
 
+        app.directive('myUpload', [function () {
+            return {
+                restrict: 'A',
+                link: function (scope, elem, attrs) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        scope.image = e.target.result;
+                        scope.$apply();
+                    }
+
+                    elem.on('change', function() {
+                        reader.readAsDataURL(elem[0].files[0]);
+                    });
+                }
+            };
+        }]);
+
+
+
         app.controller('ProfileCTRL', ['$scope', '$http', function($scope, $http) {
 
             $http.post('/CM/settings/profile/getProfile', null).success(function(data) {
@@ -66,6 +85,13 @@
                 });
             }
 
+            $scope.addImg = function(){
+                var data = $scope.image;
+
+                $http.post('/CM/settings/profile/refreshUserPassAndPhone', data).success(function(data) {
+                    $scope.profilePassword = null;
+                });
+            }
 
         }]);
 
@@ -147,11 +173,18 @@
             </td>
         </tr>
     </table>
+    <br>
+
+
+Тут будет аватар:
+<br>
+    <input my-upload type="file" name="upload">
+    <br>
+    <img style="width: 300px; height: 200px;"   ng-if="image" src="{{image}}" alt="">
+
 
 
 
 </div>
-
-
 </body>
 </html>
