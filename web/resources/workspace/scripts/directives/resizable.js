@@ -22,6 +22,7 @@ define(['angular'], function (angular) {
             },
             link: function postLink(scope, elem, attrs) {
                 elem.resizable();
+                console.log(123);
                 elem.on('resizestop', function (evt, ui) {
                     if (scope.callback) { scope.callback(); }
                 });

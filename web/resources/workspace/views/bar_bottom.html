@@ -3,18 +3,18 @@
     <img width="80" src="resources/workspace/images/logo-bonvio_transparant.png" />
 </a>
 
-
-<div id="dock" ng-repeat="i in applicationUnits">
-    <ul ng-repeat="tab in i.unitActive">
-        <li id="icon_dock">
-            <a href ng-click="tab.isMin = !tab.isMin">
+<div ng-init="update()">
+<div  id="dock" ng-repeat="i in applicationUnits">
+    <ul ng-repeat="tab in i.windows">
+        <li>
+            <a href ng-click="tab.isMin = !tab.isMin" ng-class="!tab.isMin ? 'active':''">
                 <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
             {{i.unitName}} - {{tab.windowTitle}}
             </a>
         </li>
     </ul>
 </div>
-
+</div>
 <a class="float_right" href>
     <span class="glyphicon glyphicon-time"></span> <span my-current-time="format"></span>
 </a>
