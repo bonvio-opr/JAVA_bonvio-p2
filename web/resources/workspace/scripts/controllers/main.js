@@ -52,7 +52,7 @@ define(['angular'], function (angular) {
             // icon
             $scope.iconUpdate = function (unit) {
                 delete unit.unitActive;
-                $http.post('updateApplicationPosition/', unit).success(function (data) {
+                $http.post('updateApplicationPosition', unit).success(function (data) {
                     localStorage.setItem('getApplicationsById', JSON.stringify(data));
                     //$scope.applicationUnits = data;
                     console.log("good - " + data);
@@ -60,7 +60,7 @@ define(['angular'], function (angular) {
             };
 
             $scope.windowUpdate = function (activeWindow) {
-                $http.post('createWindow/', activeWindow).success(function (data) {
+                $http.post('createWindow', activeWindow).success(function (data) {
 //                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
                     console.log("good - " + data);
                 });
