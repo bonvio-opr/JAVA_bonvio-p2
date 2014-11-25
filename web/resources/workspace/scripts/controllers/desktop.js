@@ -35,6 +35,34 @@ define([
             localStorage.setItem("selectedDesktopId", $routeParams.desktopId);
 
 
+            /**
+             * unit
+             */
+
+            $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
+                localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                $scope.applicationUnits = data;
+            });
+
+            // icon
+            $scope.iconUpdate = function (unit) {
+                delete unit.unitActive;
+                $http.post('updateApplicationPosition/', unit).success(function (data) {
+                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    //$scope.applicationUnits = data;
+                    console.log("good - " + data);
+                });
+            };
+
+            $scope.windowUpdate = function (activeWindow) {
+                $http.post('createWindow/', activeWindow).success(function (data) {
+//                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    console.log("good - " + data);
+                });
+            };
+
+
+
 
 
 
