@@ -182,17 +182,27 @@ public class PagesMainService {
         return dao.updateApplicationPosition(application);
     }
 
-    @RequestMapping(value="/createWindow", method=RequestMethod.POST)
+
+    @RequestMapping(value="/getwindow/{unitId}", method=RequestMethod.POST)
     @ResponseBody
-    public int createWindow (@RequestBody Window window) {
-        return dao.createWindow(window);
+    public Window getWindow (@RequestParam("unitId") int unitId) {
+        return dao.getWindow(unitId);
     }
 
-    @RequestMapping(value="/updateWindow", method=RequestMethod.POST)
+    @RequestMapping(value="/updatewindow", method=RequestMethod.POST)
     @ResponseBody
     public int updateWindow (@RequestBody Window window) {
         return dao.updateWindow(window);
     }
+
+    @RequestMapping(value="/deletewindow", method=RequestMethod.POST)
+    @ResponseBody
+    public int deleteWindow (@RequestBody Window window) {
+        return dao.deleteWindow(window);
+    }
+
+
+
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logout() {
         HttpSession session = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest().getSession();

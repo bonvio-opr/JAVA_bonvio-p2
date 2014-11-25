@@ -13,7 +13,6 @@ define(['angular'], function (angular) {
         .controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', function ($scope, $location, $http, $sce, $routeParams) {
 
             console.log('MainCtrl it work');
-
             /**
              * selectedURL
              */
@@ -22,11 +21,7 @@ define(['angular'], function (angular) {
              } else {
              localStorage.setItem("selectedURL", "/");
              }*/
-            // end selectedURL
 
-            /**
-             * Menu
-             */
             $scope.toggleHideMenuDesktops = function () {
                 $scope.viewMenu = false;
             };
@@ -35,8 +30,42 @@ define(['angular'], function (angular) {
 
             $scope.toggleViewMenu = function (ggg) {
                 $scope.viewMenu = $scope.viewMenu === true ? false : true;
+                //$scope.viewMenu = false;
+                //alert(ggg);
             };
-            // end Menu
+
+            /**
+             * unit
+             */
+
+            $http.get('getApplicationsById/'+$routeParams.desktopId).success(function(data) {
+                localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                $scope.applicationUnits = data;
+            });
+
+            /*            $http.get('resources/workspace/JSON/p1.json').success(function (data) {
+             localStorage.setItem('getApplicationsById', JSON.stringify(data));
+             $scope.applicationUnits = data;
+             });*/
+
+
+            // icon
+            $scope.iconUpdate = function (unit) {
+                delete unit.unitActive;
+                $http.post('updateApplicationPosition', unit).success(function (data) {
+                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    //$scope.applicationUnits = data;
+                    console.log("good - " + data);
+                });
+            };
+
+            $scope.windowUpdate = function (activeWindow) {
+                $http.post('createWindow', activeWindow).success(function (data) {
+//                    localStorage.setItem('getApplicationsById', JSON.stringify(data));
+                    console.log("good - " + data);
+                });
+            };
+
 
         }]);// endMainCtrl
 

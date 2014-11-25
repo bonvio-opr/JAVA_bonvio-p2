@@ -13,6 +13,7 @@ public class Application {
     private String unitName;
     private String unitCode;
     private String unitImgPath;
+    private int unitType;
     private List <Window> windows = null;
 
     @Override
@@ -26,6 +27,30 @@ public class Application {
                 ", unitImgPath='" + unitImgPath + '\'' +
                 ", windows=" + windows +
                 '}';
+    }
+
+    public int getUniteID() {
+        return uniteID;
+    }
+
+    public void setUniteID(int uniteID) {
+        this.uniteID = uniteID;
+    }
+
+    public int getUnitPositionX() {
+        return unitPositionX;
+    }
+
+    public void setUnitPositionX(int unitPositionX) {
+        this.unitPositionX = unitPositionX;
+    }
+
+    public int getUnitPositionY() {
+        return unitPositionY;
+    }
+
+    public void setUnitPositionY(int unitPositionY) {
+        this.unitPositionY = unitPositionY;
     }
 
     public String getUnitName() {
@@ -52,12 +77,12 @@ public class Application {
         this.unitImgPath = unitImgPath;
     }
 
-    public int getUniteID() {
-        return uniteID;
+    public int getUnitType() {
+        return unitType;
     }
 
-    public void setUniteID(int uniteID) {
-        this.uniteID = uniteID;
+    public void setUnitType(int unitType) {
+        this.unitType = unitType;
     }
 
     public List<Window> getWindows() {
@@ -66,22 +91,6 @@ public class Application {
 
     public void setWindows(List<Window> windows) {
         this.windows = windows;
-    }
-
-    public int getUnitPositionX() {
-        return unitPositionX;
-    }
-
-    public void setUnitPositionX(int unitPositionX) {
-        this.unitPositionX = unitPositionX;
-    }
-
-    public int getUnitPositionY() {
-        return unitPositionY;
-    }
-
-    public void setUnitPositionY(int unitPositionY) {
-        this.unitPositionY = unitPositionY;
     }
 
     public Application() {
@@ -95,12 +104,13 @@ public class Application {
         this.unitImgPath = unitImgPath;
     }
 
-    public Application(int uniteID, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY) {
+    public Application(int uniteID, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY, int unitType) {
         this.uniteID = uniteID;
         this.unitName = unitName;
         this.unitCode = unitCode;
         this.unitImgPath = unitImgPath;
         this.unitPositionX = unitPositionX;
         this.unitPositionY = unitPositionY;
+        this.unitType = unitType;
     }
 }
