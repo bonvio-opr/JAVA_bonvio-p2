@@ -185,7 +185,9 @@ public class PagesMainService {
 
     @RequestMapping(value="/getwindow/{unitId}", method=RequestMethod.POST)
     @ResponseBody
-    public Window getWindow (@RequestParam("unitId") int unitId) {
+    public Window getWindow (@PathVariable("unitId") int unitId) {
+        System.out.println("НЛО прилетело");
+
         return dao.getWindow(unitId);
     }
 
