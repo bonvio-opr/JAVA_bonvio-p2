@@ -205,12 +205,16 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         window.setTitle("Дефолтное название");
         window.setState("Че за state?");
         window.setzIndex(0);
-
+/*
+insert into s_window (ownerunitid, windowpositionx, windowpositiony, WINDOWWIDTH, WINDOWHEIGHT, windowtitle, windowstate, ismax, ismin, zindex) values (1,1,2,2,5,'df','df',5,5,5);
+COMMIT;
+select S_WINDOW_SEQ.currval from dual;*/
 
         try {
             int windowId = getJdbcTemplate().queryForInt("insert into " + defaultSchema + ".s_window " +
                     "(windowid, ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex) " +
-                    "values (?,?,?,?,?,?,?,?,?,?,?)  RETURNING windowid into windowid ", new Object[]{
+                    "values (?,?,?,?,?,?,?,?,?,?,?) ",
+                    new Object[]{
                     window.getWindowId(),
                     window.getOwnerUnitId(),
                     window.getWindowPositionX(),
@@ -223,12 +227,19 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
                     window.getIsMin(),
                     window.getzIndex()
             });
-
-            window.setWindowId(windowId);
         } catch (Exception ept) {
             System.out.println("ошибка в создании окна");
-            return window;
         }
+
+
+        try {
+            int windowId = getJdbcTemplate().queryForInt("select S_WINDOW_SEQ.currval as ownerunitid from dual");
+            window.setWindowId(windowId);
+        } catch (Exception ept) {
+            System.out.println("ошибка в присвоении Ид окна");
+        }
+
+
 
         return window;
 
@@ -332,29 +343,38 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public List<Window> getWindowByOwnerWindowId(int id) {
 
-        List<Window> applications = new ArrayList<Window>();
-        applications.addAll(getJdbcTemplate().query(
-                "select * from s_window  where ownerunitid = ?",
-                new RowMapper<Window>() {
-                    @Override
-                    public Window mapRow(ResultSet r, int i) throws SQLException {
-                        return new Window(
-                                r.getInt("WINDOWID"),
-                                r.getInt("OWNERUNITID"),
-                                r.getInt("WINDOWPOSITIONX"),
-                                r.getInt("WINDOWPOSITIONY"),
-                                r.getInt("WINDOWWIDTH"),
-                                r.getInt("WINDOWHEIGHT"),
-                                r.getString("WINDOWTITLE"),
-                                r.getString("WINDOWSTATE"),
-                                r.getInt("ISMAX"),
-                                r.getInt("ISMIN"),
-                                r.getInt("ZINDEX")
-                        );
-                    }
-                }, id));
 
-        return applications;
+        try {
+            List<Window> applications = new ArrayList<Window>();
+            applications.addAll(getJdbcTemplate().query(
+                    "select * from s_window  where ownerunitid = ?",
+                    new RowMapper<Window>() {
+                        @Override
+                        public Window mapRow(ResultSet r, int i) throws SQLException {
+                            return new Window(
+                                    r.getInt("WINDOWID"),
+                                    r.getInt("OWNERUNITID"),
+                                    r.getInt("WINDOWPOSITIONX"),
+                                    r.getInt("WINDOWPOSITIONY"),
+                                    r.getInt("WINDOWWIDTH"),
+                                    r.getInt("WINDOWHEIGHT"),
+                                    r.getString("WINDOWTITLE"),
+                                    r.getString("WINDOWSTATE"),
+                                    r.getInt("ISMAX"),
+                                    r.getInt("ISMIN"),
+                                    r.getInt("ZINDEX")
+                            );
+                        }
+                    }, id));
+
+            return applications;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+
     }
 
 
