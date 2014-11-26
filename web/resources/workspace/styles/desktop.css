@@ -507,7 +507,7 @@ th.shrink {
 #bar_bottom a:hover {
   background: #000;
 }
-
+#bar_bottom a.active,
 #bar_bottom a:active {
   background: #c60;
   border: 1px solid #fff;

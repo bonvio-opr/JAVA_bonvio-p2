@@ -20,9 +20,7 @@ require.config({
         'bootstrap': '/CM/resources/bower_components/bootstrap/dist/js/bootstrap.min',
         'ui.bootstrap': '/CM/resources/bower_components/angular-bootstrap/ui-bootstrap.min',
         'ui.bootstrap-tpls': '/CM/resources/bower_components/angular-bootstrap/ui-bootstrap-tpls',
-        'angular-strap': '/CM/resources/bower_components/angular-strap/dist/angular-strap.min',
-
-        'desktop':'/CM/resources/workspace/js/jquery.desktop'
+        'angular-strap': '/CM/resources/bower_components/angular-strap/dist/angular-strap.min'
 
     },
     shim: {
