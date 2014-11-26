@@ -211,11 +211,10 @@ COMMIT;
 select S_WINDOW_SEQ.currval from dual;*/
 
         try {
-            int windowId = getJdbcTemplate().queryForInt("insert into " + defaultSchema + ".s_window " +
-                    "(windowid, ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex) " +
-                    "values (?,?,?,?,?,?,?,?,?,?,?) ",
+            getJdbcTemplate().update("insert into " + defaultSchema + ".s_window " +
+                    "(ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex) " +
+                    "values (?,?,?,?,?,?,?,?,?,?) ",
                     new Object[]{
-                    window.getWindowId(),
                     window.getOwnerUnitId(),
                     window.getWindowPositionX(),
                     window.getWindowPositionY(),
