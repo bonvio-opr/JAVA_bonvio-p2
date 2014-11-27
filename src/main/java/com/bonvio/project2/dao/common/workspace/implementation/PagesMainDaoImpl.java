@@ -198,7 +198,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         window.setOwnerUnitId(unitID);
         window.setWindowPositionX(200);
         window.setWindowPositionY(200);
-        window.setWindowWidth(300);
+        window.setWindowWidth(600);
         window.setWindowHeight(200);
         window.setIsMax(0);
         window.setIsMin(0);
