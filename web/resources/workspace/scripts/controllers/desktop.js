@@ -1,10 +1,6 @@
 define([
         'angular',
-        //'directives/windows'
-        'directives/itsADrag',
-        'directives/drag',
-        //'directives/resizeIt'
-        'directives/resizable'
+        "directives/winDirective"
 ],
     function (angular) {
     'use strict';
@@ -18,11 +14,7 @@ define([
      */
     angular
         .module('DesktopCtrl', [
-            //'windows'
-            //'drag',
-            //'resizeIt',
-            'itsADrag',
-            'resizable'
+            'winDirective'
 
         ])
         .controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', '$rootScope', function ($scope, $http, $sce, $routeParams, $rootScope) {
@@ -62,21 +54,36 @@ define([
 //                });
 //            };
 
-            $scope.getWindow = function (unitId) {
-                $http.post('getwindow/' + unitId, null).success(function (data) {
-                    $scope.applicationUnits[unitId].windows.push(data);
+            $scope.getWindow = function (unit) {
+              $scope.applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
+
+                $http.post('getwindow/' + unit.uniteID, null).success(function (data) {
+                  console.log(data);
+                    $rootScope.applicationUnits[unit.uniteID].windows.push(data);
                 });
             };
             $scope.updateWindow = function (window) {
+
+
                 $http.post('updatewindow/', window).success(function (data) {
                     console.log("good - " + data);
                 });
             };
-            $scope.deleteWindow = function (window) {
-                $http.post('deletewindow/', window.windowId).success(function (data) {
-                    console.log("good - " + data);
-                });
-                $scope.applicationUnits[window.ownerUnitId].windows.splice(window.windowId, 1);
+            $scope.deleteWindow = function ($index) {
+              console.log("del = " + $index);
+
+
+              //
+              //
+              //  var data = {};
+              //  data.windowId = window.windowId;
+              //  console.log();
+              //  $http.post('deletewindow/', data).success(function (data) {
+              //      console.log("good - " + data);
+              //  });
+              //
+              //console.log(window.ownerUnitId);
+              //console.log($rootScope.applicationUnits);
             };
 
 

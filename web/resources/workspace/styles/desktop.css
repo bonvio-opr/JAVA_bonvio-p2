@@ -8,6 +8,11 @@
 html,
 body {
   overflow: hidden;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -552,4 +557,16 @@ th.shrink {
   bottom: 0;
 /*  min-width: 700px;
   min-height: 500px;*/
+}
+
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  opacity: 0.2;
+  display: none;
 }

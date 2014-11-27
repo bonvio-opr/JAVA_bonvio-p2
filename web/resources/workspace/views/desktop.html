@@ -1,58 +1,61 @@
 
 <!-- desktopHTML -->
 <div ng-class="{'animated':true, 'fadeIn':true}" ng-init="init()">
-    <div ng-repeat="i in applicationUnits">
+	<div ng-repeat="i in applicationUnits">
 
-        <a draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
-           unit-icon ng-model="i"
-           ng-mousedown="movable = false"
-           ng-mousemove="movable = true"
-           ng-mouseup="iconUpdate(i)"
-           ng-click="!movable ? getWindow(i.uniteID) : ''">
-            <img ng-src="{{i.unitImgPath}}{{hash}}" />
-            <p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
-            <span></span>
-        </a>
+		<a win-draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
+		   unit-icon ng-model="i"
+		   ng-mousedown="movable = false"
+		   ng-mousemove="movable = true"
+		   ng-mouseup="iconUpdate(i)"
+		   ng-click="!movable ? getWindow(i) : ''">
+			<img ng-src="{{i.unitImgPath}}{{hash}}" />
+			<p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
+			<span></span>
+		</a>
 
-        <div ng-repeat="win in i.windows" ng-if="!win.isMin">
-            <div draggable resizable id="window" class="abs"
-                 ng-style="{
+		<div ng-repeat="win in i.windows" ng-if="!win.isMin">
+			<div win-draggable win-resizable id="window" class="abs"
+			     ng-style="{
                     'position': 'absolute',
                     'left': win.windowPositionX + 'px',
                     'top': win.windowPositionY + 'px',
                     'width': (win.windowWidth <= 200 ? 200 : win.windowWidth) + 'px',
                     'height': (win.windowHeight <= 200 ? 200 : win.windowHeight) + 'px',
                  }"
-                 ng-mouseup="updateWindow(win)"
-                 ng-class="(!win.isMax)?'window':'window_full'">
-                <div class="abs window_inner">
-                    <div class="window_top">
+			     ng-mouseup="updateWindow(win)"
+			     ng-class="(!win.isMax)?'window':'window_full'">
+				<div class="abs window_inner">
+					<div class="window_top">
                       <span class="float_left">
                         <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-                        {{win.title}} - {{i.unitName}}
+                        {{win.title}} - {{i.unitName}} - {{win.$index}}
                       </span>
                       <span class="float_right">
                         <a href class="window_min" ng-click="win.isMin = true" ng-mouseup="updateWindow(win)"></a>
                         <a href class="window_resize" ng-click="win.isMax = !win.isMax" ng-mouseup="updateWindow(win)"></a>
-                        <a href class="window_close" ng-click="deleteWindow(win)"></a>
+                        <a href class="window_close" ng-click="deleteWindow($index)"></a>
                       </span>
-                    </div>
-                    <div class="abs window_content">
-                        <!--<div class="window_aside">
-                            Storage in use: 119.1 GB
-                        </div>-->
-                        <div class="window_iframe window_main_without_aside">
-                            <embed ng-src="{{applicationUrl}}"></embed>
-                        </div>
-                    </div>
-                    <div class="abs window_bottom">
-                        Free: 80.9 GB
-                    </div>
-                </div>
-                <span class="abs ui-resizable-handle ui-resizable-se"></span>
-            </div>
-        </div>
+					</div>
+					<div class="abs window_content">
+						<!--<div class="window_aside">
+								Storage in use: 119.1 GB
+						</div>-->
+						<div class="window_iframe window_main_without_aside">
+							<iframe ng-src="{{applicationUrl}}"></iframe>
+							<!--<object data="{{applicationUrl}}"></object>-->
+						</div>
+						<div class="overlay"></div>
+					</div>
+					<div class="abs window_bottom">
+						Free: 80.9 GB {{applicationUrl}}
+					</div>
+				</div>
+				<span class="abs ui-resizable-handle ui-resizable-se winResizableBlock"></span>
 
-    </div>
+			</div>
+		</div>
+
+	</div>
 </div>
 <!-- /desktopHTML -->
