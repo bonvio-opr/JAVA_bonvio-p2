@@ -14,7 +14,7 @@
 			<span></span>
 		</a>
 
-		<div ng-repeat="win in i.windows" ng-if="!win.isMin">
+		<div ng-repeat="win in i.windows" ng-show="win.isMin == 1">
 			<div win-draggable win-resizable id="window" class="abs"
 			     win-coord ng-model="win"
 			     ng-style="{
@@ -30,10 +30,10 @@
 					<div class="window_top">
                       <span class="float_left">
                         <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-                        {{win.title}} - {{i.unitName}} - {{win.windowWidth}}
+                        {{win.title}} - {{i.unitName}} == {{win.isMin}}
                       </span>
                       <span class="float_right">
-                        <a href class="window_min" ng-click="win.isMin = true" ng-mouseup="updateWindow(win)"></a>
+                        <a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
                         <a href class="window_resize" ng-click="win.isMax = !win.isMax" ng-mouseup="updateWindow(win)"></a>
                         <a href class="window_close" ng-click="deleteWindow($index, count, win)"></a>
                       </span>

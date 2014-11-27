@@ -56,7 +56,10 @@ define([
 						$rootScope.applicationUnits[unit.unitId].windows.push(data);
 					});
 				};
-				$scope.updateWindow = function (window) {
+
+				$rootScope.updateWindow = function (window) {
+					window.isMax = parseInt(window.isMax);
+					window.isMin = parseInt(window.isMin);
 					$http.post('updatewindow/', window).success(function (data) {
 						console.log("good - " + data);
 					});

@@ -13,6 +13,7 @@ define(['angular'], function (angular) {
 		.controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', "$rootScope", function ($scope, $location, $http, $sce, $routeParams, $rootScope) {
 
 			$rootScope.applicationUnits = null;
+			$rootScope.updateWindow = null;
 
 			console.log('MainCtrl it work');
 

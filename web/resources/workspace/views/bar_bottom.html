@@ -7,9 +7,11 @@
 <div  id="dock" ng-repeat="i in applicationUnits">
     <ul ng-repeat="tab in i.windows">
         <li>
-            <a href ng-click="tab.isMin = !tab.isMin" ng-class="!tab.isMin ? 'active':''">
+            <a href
+               ng-click="updateWindow(tab); tab.isMin == 1 ? tab.isMin = 0 : tab.isMin = 1"
+               ng-class="tab.isMin == 0 ? 'active':''">
                 <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-            {{i.unitName}} - {{tab.windowTitle}}
+            {{tab.isMin}} - {{i.unitName}} - {{tab.windowTitle}}
             </a>
         </li>
     </ul>
