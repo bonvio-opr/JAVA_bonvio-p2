@@ -34,7 +34,7 @@
                       </span>
                       <span class="float_right">
                         <a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
-                        <a href class="window_resize" ng-click="win.isMax = !win.isMax" ng-mouseup="updateWindow(win)"></a>
+                        <a href class="window_resize" ng-click="win.isMax == 1 ? win.isMax = 0 : win.isMax = 1; updateWindow(win)"></a>
                         <a href class="window_close" ng-click="deleteWindow($index, count, win)"></a>
                       </span>
 					</div>
