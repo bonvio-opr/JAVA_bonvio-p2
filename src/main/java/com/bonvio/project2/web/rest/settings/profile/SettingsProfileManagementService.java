@@ -3,10 +3,8 @@ package com.bonvio.project2.web.rest.settings.profile;
 import com.bonvio.project2.classes.settings.profile.FullUserProfile;
 import com.bonvio.project2.dao.settings.profile.implementation.SettingsProfileManagementDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -75,5 +73,18 @@ public class SettingsProfileManagementService {
             return 0;
         }
     }
+
+    @RequestMapping(value = "/refreshUserImage", method = RequestMethod.POST)
+    public int refreshUserImage(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+        try {
+            String userId = request.getSession().getAttribute("userId").toString();
+            dao.addImage(userId, file);
+                return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 
 }

@@ -205,6 +205,19 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         window.setTitle("Дефолтное название");
         window.setState("Че за state?");
         window.setzIndex(0);
+
+        /* работает, проверить на БД
+
+        DECLARE
+ id number;
+BEGIN
+insert into s_window (OWNERUNITID, windowpositionx, windowpositiony, WINDOWWIDTH, WINDOWHEIGHT, windowtitle, windowstate, ismax, ismin, zindex) values (1,1,2,2,5,'aaaaaaaa','df',5,5,5)
+RETURNING WINDOWID INTO id;
+dbms_output.put_line(id);
+END;
+        * */
+
+
 /*
 insert into s_window (ownerunitid, windowpositionx, windowpositiony, WINDOWWIDTH, WINDOWHEIGHT, windowtitle, windowstate, ismax, ismin, zindex) values (1,1,2,2,5,'df','df',5,5,5);
 COMMIT;
@@ -331,7 +344,7 @@ select S_WINDOW_SEQ.currval from dual;*/
                     new Object[]{
                             application.getUnitPositionX(),
                             application.getUnitPositionY(),
-                            application.getUniteID()}
+                            application.getUnitId()}
             );
             return 1;
         } catch (Exception ept) {
@@ -431,7 +444,7 @@ select S_WINDOW_SEQ.currval from dual;*/
                 }, wsId, userId));
 
         for (int i = 0; i < applications.size(); i++) {
-            applications.get(i).setWindows(getWindowByOwnerWindowId(applications.get(i).getUniteID()));
+            applications.get(i).setWindows(getWindowByOwnerWindowId(applications.get(i).getUnitId()));
         }
 
         return applications;
@@ -474,7 +487,7 @@ select S_WINDOW_SEQ.currval from dual;*/
     //old
     public ArrayList<WorkspaceWithApplications> getUserPrivateWorkspace(String userId, String userPhoneNumber) {
 //    public WorkspaceWithApplications getUserPrivateWorkspace(String userNum) {
-        ArrayList<WorkspaceWithApplications> wList = new ArrayList<>();
+        ArrayList<WorkspaceWithApplications> wList = new ArrayList<WorkspaceWithApplications>();
         ArrayList<WorkspaceWithApplicationsDBExtractor> wdb = new ArrayList<>();
         wdb.addAll(getJdbcTemplate().query(
                 "select " +

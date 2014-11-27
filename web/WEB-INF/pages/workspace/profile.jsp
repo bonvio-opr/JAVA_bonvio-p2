@@ -35,8 +35,6 @@
             };
         }]);
 
-
-
         app.controller('ProfileCTRL', ['$scope', '$http', function($scope, $http) {
 
             $http.post('/CM/settings/profile/getProfile', null).success(function(data) {
@@ -61,7 +59,6 @@
                 data.profilePhoneNumber = $scope.profilePhoneNumber;
 
                 $http.post('/CM/settings/profile/refreshProfile', data).success(function(data) {
-
                     // for refresh
                     $http.post('/CM/settings/profile/getProfile', null).success(function(data) {
                         $scope.profileName = data.profileName;
@@ -85,12 +82,16 @@
                 });
             }
 
-            $scope.addImg = function(){
-                var data = $scope.image;
 
-                $http.post('/CM/settings/profile/refreshUserPassAndPhone', data).success(function(data) {
-                    $scope.profilePassword = null;
+            $scope.refreshUserImage = function(){
+                var data = $scope.imagetosave;
+
+                $http({method: 'POST', url: '/CM/settings/profile/refreshUserImage', headers: { 'Content-Type': 'multipart/form-data' },data: data}).success(function(){
+
+                }).error(function(){
+
                 });
+
             }
 
         }]);
@@ -177,8 +178,10 @@
 
 
 Тут будет аватар:
+    <input type="button" value="Сохранить картинку!" ng-click="refreshUserImage ()"/>
+
 <br>
-    <input my-upload type="file" name="upload">
+    <input my-upload type="file" name="upload" ng-model="imagetosave">
     <br>
     <img style="width: 300px; height: 200px;"   ng-if="image" src="{{image}}" alt="">
 
