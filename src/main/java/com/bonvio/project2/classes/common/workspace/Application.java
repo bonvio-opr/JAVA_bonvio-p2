@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Application {
 
-    private int uniteID;
+    private int unitId;
     private int unitPositionX;
     private int unitPositionY;
     private String unitName;
@@ -19,7 +19,7 @@ public class Application {
     @Override
     public String toString() {
         return "Application{" +
-                "uniteID=" + uniteID +
+                "unitId=" + unitId +
                 ", unitPositionX=" + unitPositionX +
                 ", unitPositionY=" + unitPositionY +
                 ", unitName='" + unitName + '\'' +
@@ -29,12 +29,12 @@ public class Application {
                 '}';
     }
 
-    public int getUniteID() {
-        return uniteID;
+    public int getUnitId() {
+        return unitId;
     }
 
-    public void setUniteID(int uniteID) {
-        this.uniteID = uniteID;
+    public void setUnitId(int unitId) {
+        this.unitId = unitId;
     }
 
     public int getUnitPositionX() {
@@ -104,8 +104,8 @@ public class Application {
         this.unitImgPath = unitImgPath;
     }
 
-    public Application(int uniteID, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY, int unitType) {
-        this.uniteID = uniteID;
+    public Application(int unitId, String unitName, String unitCode, String unitImgPath, int unitPositionX, int unitPositionY, int unitType) {
+        this.unitId = unitId;
         this.unitName = unitName;
         this.unitCode = unitCode;
         this.unitImgPath = unitImgPath;
