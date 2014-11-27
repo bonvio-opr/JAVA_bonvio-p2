@@ -57,9 +57,9 @@ define([
             $scope.getWindow = function (unit) {
               $scope.applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
 
-                $http.post('getwindow/' + unit.uniteID, null).success(function (data) {
+                $http.post('getwindow/' + unit.unitId, null).success(function (data) {
                   console.log(data);
-                    $rootScope.applicationUnits[unit.uniteID].windows.push(data);
+                    $rootScope.applicationUnits[unit.unitId].windows.push(data);
                 });
             };
             $scope.updateWindow = function (window) {

@@ -5,21 +5,15 @@
       <configuration>
         <datasource-map />
         <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/classes2/artifacts/CM_Web_exploded/WEB-INF/classes/hibernate.cfg.xml" />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/classes2/artifacts/unnamed/WEB-INF/classes/hibernate.cfg.xml" />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
-          <file>file://$MODULE_DIR$/classes2/artifacts/CM_Web_exploded/WEB-INF/config/rest-services-config.xml</file>
-          <file>file://$MODULE_DIR$/classes2/artifacts/unnamed/WEB-INF/classes/applicationContext.xml</file>
-          <file>file://$MODULE_DIR$/classes2/artifacts/CM_Web_exploded/WEB-INF/classes/applicationContext.xml</file>
-          <file>file://$MODULE_DIR$/web/WEB-INF/config/rest-services-config.xml</file>
           <file>file://$MODULE_DIR$/web/WEB-INF/rest-dispatcher-servlet.xml</file>
-          <file>file://$MODULE_DIR$/classes2/artifacts/CM_Web_exploded/WEB-INF/rest-dispatcher-servlet.xml</file>
+          <file>file://$MODULE_DIR$/web/WEB-INF/config/rest-services-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -33,18 +27,16 @@
         </webroots>
       </configuration>
     </facet>
-<<<<<<< HEAD
-=======
-    <facet type="Spring" name="Spring">
+    <facet type="web" name="Web2">
       <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/web/WEB-INF/config/rest-services-config.xml</file>
-          <file>file://$MODULE_DIR$/web/WEB-INF/rest-dispatcher-servlet.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
-        </fileset>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/web/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/web/web" relative="/" />
+        </webroots>
       </configuration>
     </facet>
->>>>>>> origin/LastAAnton
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -54,7 +46,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.0.5.RELEASE" level="project" />
@@ -97,6 +89,8 @@
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.2" level="project" />
     <orderEntry type="library" name="dans-dbf-lib-1.0.0-beta-10" level="project" />
-    <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" name="html2image-0.9" level="project" />
+    <orderEntry type="library" name="jackson-all-1.8.10" level="project" />
+    <orderEntry type="library" name="ojdbc7" level="project" />
   </component>
 </module>
