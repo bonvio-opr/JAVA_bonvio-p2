@@ -4,7 +4,7 @@
 	<div ng-repeat="i in applicationUnits" ng-init="count = $index">
 
 		<a win-draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
-		   unit-icon ng-model="i"
+		   ico-coord ng-model="i"
 		   ng-mousedown="movable = false"
 		   ng-mousemove="movable = true"
 		   ng-mouseup="iconUpdate(i)"
@@ -16,6 +16,7 @@
 
 		<div ng-repeat="win in i.windows" ng-if="!win.isMin">
 			<div win-draggable win-resizable id="window" class="abs"
+			     win-coord ng-model="win"
 			     ng-style="{
                     'position': 'absolute',
                     'left': win.windowPositionX + 'px',
@@ -29,7 +30,7 @@
 					<div class="window_top">
                       <span class="float_left">
                         <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-                        {{win.title}} - {{i.unitName}} - {{win.$index}}
+                        {{win.title}} - {{i.unitName}} - {{win.windowWidth}}
                       </span>
                       <span class="float_right">
                         <a href class="window_min" ng-click="win.isMin = true" ng-mouseup="updateWindow(win)"></a>

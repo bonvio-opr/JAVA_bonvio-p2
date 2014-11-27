@@ -1,45 +1,38 @@
 define(['angular'], function (angular) {
-    'use strict';
+	'use strict';
 
-    /**
-     * @ngdoc function
-     * @name MainCtrl
-     * @description
-     * # MainCtrl
-     * Controller of the p2DashboardApp
-     */
-    angular.module('MainCtrl', [])
+	/**
+	 * @ngdoc function
+	 * @name MainCtrl
+	 * @description
+	 * # MainCtrl
+	 * Controller of the p2DashboardApp
+	 */
+	angular.module('MainCtrl', [])
 
-        .controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', "$rootScope", function ($scope, $location, $http, $sce, $routeParams, $rootScope) {
+		.controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', "$rootScope", function ($scope, $location, $http, $sce, $routeParams, $rootScope) {
 
-            $rootScope.applicationUnits = null;
+			$rootScope.applicationUnits = null;
 
-            console.log('MainCtrl it work');
-            /**
-             * selectedURL
-             */
-            /*if (localStorage.getItem("selectedURL") != undefined){
-             $location.path(localStorage.getItem("selectedURL"));
-             } else {
-             localStorage.setItem("selectedURL", "/");
-             }*/
+			console.log('MainCtrl it work');
 
-            $scope.toggleHideMenuDesktops = function () {
-                $scope.viewMenu = false;
-            };
-
-            $scope.viewMenu = false;
-
-            $scope.toggleViewMenu = function (ggg) {
-//                console.log($rootScope.test);
-                $scope.viewMenu = $scope.viewMenu === true ? false : true;
-                //$scope.viewMenu = false;
-                //alert(ggg);
-            };
-
-
-
-
-        }]);// endMainCtrl
+		}]).directive("toggleMenu", [function () {
+			return {
+				restrict: "A",
+				link: function (scope, element, attribute) {
+					element.on("mousedown", function (event) {
+						if (event.target.classList.contains("menu_trigger")) {
+							scope.$apply(function () {
+								scope.showMenu = !scope.showMenu;
+							});
+						} else {
+							scope.$apply(function () {
+								scope.showMenu = false;
+							});
+						}
+					});
+				}
+			};
+		}]);// endMainCtrl
 
 });

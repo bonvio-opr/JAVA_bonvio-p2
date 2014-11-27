@@ -36,9 +36,9 @@
 
 <img id="wallpaper" class="abs" src="resources/workspace/images/misc/wallpaper.jpg" />
 
-<div data-ng-controller="MainCtrl" >
+<div data-ng-controller="MainCtrl">
 
-    <div class="abs" id="wrapper" ng-mouseup="toggleHideMenuDesktops()">
+    <div class="abs" id="wrapper" toggle-menu>
 
         <div data-ng-controller="Bar_topCtrl" class="abs" id="bar_top">
             <!-- start: bar_top -->
