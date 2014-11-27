@@ -1,7 +1,7 @@
 
 <!-- desktopHTML -->
 <div ng-class="{'animated':true, 'fadeIn':true}" ng-init="init()">
-	<div ng-repeat="i in applicationUnits">
+	<div ng-repeat="i in applicationUnits" ng-init="count = $index">
 
 		<a win-draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
 		   unit-icon ng-model="i"
@@ -34,7 +34,7 @@
                       <span class="float_right">
                         <a href class="window_min" ng-click="win.isMin = true" ng-mouseup="updateWindow(win)"></a>
                         <a href class="window_resize" ng-click="win.isMax = !win.isMax" ng-mouseup="updateWindow(win)"></a>
-                        <a href class="window_close" ng-click="deleteWindow($index)"></a>
+                        <a href class="window_close" ng-click="deleteWindow($index, count, win)"></a>
                       </span>
 					</div>
 					<div class="abs window_content">

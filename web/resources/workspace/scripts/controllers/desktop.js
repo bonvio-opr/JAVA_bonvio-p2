@@ -69,28 +69,15 @@ define([
                     console.log("good - " + data);
                 });
             };
-            $scope.deleteWindow = function ($index) {
-              console.log("del = " + $index);
-
-
-              //
-              //
-              //  var data = {};
-              //  data.windowId = window.windowId;
-              //  console.log();
-              //  $http.post('deletewindow/', data).success(function (data) {
-              //      console.log("good - " + data);
-              //  });
-              //
-              //console.log(window.ownerUnitId);
-              //console.log($rootScope.applicationUnits);
+            $scope.deleteWindow = function ($index, $parentIndex, window) {
+              $rootScope.applicationUnits[$parentIndex].windows.splice($index, 1); // удаление на клиенте
+              // удаление на сервере
+              var data = {};
+              data.windowId = window.windowId;
+              $http.post('deletewindow/', data).success(function (data) {
+                console.log("good - " + data);
+              });
             };
-
-
-
-
-
-
         }]);
 
 });
