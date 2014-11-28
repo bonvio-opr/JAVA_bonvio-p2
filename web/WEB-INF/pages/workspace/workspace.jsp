@@ -27,6 +27,8 @@
     <!--[if lt IE 9]>
     <link rel="stylesheet" href="resources/workspace/styles/ie.css" />
     <![endif]-->
+
+    <link rel="stylesheet" href="resources/workspace/styles/" />
 </head>
 <body ng-app="p2DashboardApp">
 

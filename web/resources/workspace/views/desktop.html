@@ -1,15 +1,40 @@
+<!--<section ng-init="init()">-->
+	<!--<section ng-repeat="unit in applicationUnits" ng-init="$partIndex = $index">-->
+		<!--<a class="icon"-->
+		   <!--win-draggable-->
+		   <!--icon-coord ng-model="unit"-->
+		   <!--ng-style="{'position': 'absolute', 'left': unit.unitPositionX, 'top': unit.unitPositionY}"-->
+		   <!--ng-mouseup="iconUpdate(unit)"-->
+		   <!--ng-dblclick="getWindow(unit)">-->
+			<!--<img ng-src="{{unit.unitImgPath}}{{hash}}">-->
+			<!--<p>{{unit.unitName}} x: {{unit.unitPositionX}} y: {{unit.unitPositionY}}</p>-->
+		<!--</a>-->
+		<!--<section class="win-single"-->
+		         <!--ng-repeat="win in unit.windows"-->
+		         <!--win-draggable win-resizable-->
+		         <!--win-coord ng-model="win"-->
+		         <!--ng-show="win.isMin == 1">-->
+			<!--<header>123</header>-->
+		<!--</section>-->
+	<!--</section>-->
+<!--</section>-->
+
+
+
+
+
 
 <!-- desktopHTML -->
 <div ng-class="{'animated':true, 'fadeIn':true}" ng-init="init()">
 	<div ng-repeat="i in applicationUnits" ng-init="count = $index">
 
 		<a win-draggable class="wsUnit icon" style="/*float:left;*/ left:{{i.unitPositionX}}px;top:{{i.unitPositionY}}px;position: absolute" href
-		   ico-coord ng-model="i"
+		   icon-coord ng-model="i"
 		   ng-mousedown="movable = false"
 		   ng-mousemove="movable = true"
 		   ng-mouseup="iconUpdate(i)"
 		   ng-dblclick="getWindow(i)">
-			<img ng-src="{{i.unitImgPath}}{{hash}}" />
+			<img ng-src="{{i.unitImgPath}}{{hash}}">
 			<p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
 			<span></span>
 		</a>

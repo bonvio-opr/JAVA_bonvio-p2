@@ -27,7 +27,7 @@ define(["angular"], function (angular) {
 				}
 			};
 		}])
-		.directive("icoCoord", [function () {
+		.directive("iconCoord", [function () {
 			return {
 				restrict: "A",
 				require: "ngModel",
