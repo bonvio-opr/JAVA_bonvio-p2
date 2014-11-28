@@ -1,4 +1,8 @@
-define(['angular'], function (angular) {
+define([
+	'angular',
+	'directives/winDirective',
+	'directives/updateCoord'
+], function (angular) {
 	'use strict';
 
 	/**
@@ -8,7 +12,10 @@ define(['angular'], function (angular) {
 	 * # MainCtrl
 	 * Controller of the p2DashboardApp
 	 */
-	angular.module('MainCtrl', [])
+	angular.module('MainCtrl', [
+		'winDirective',
+		'updateCoord'
+	])
 
 		.controller('MainCtrl', ['$scope', '$location', '$http', '$sce', '$routeParams', "$rootScope", function ($scope, $location, $http, $sce, $routeParams, $rootScope) {
 

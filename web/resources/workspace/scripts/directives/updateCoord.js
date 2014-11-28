@@ -10,7 +10,7 @@ define(["angular"], function (angular) {
 				restrict: "A",
 				require: "ngModel",
 				link: function (scope, element, attribute, ngModel) {
-					element.on("mouseup", function () {
+					element.on("mousemove", function () {
 						scope.$apply(function () {
 							// получаем стили
 							var elementStyle = window.getComputedStyle(element[0]);
@@ -30,7 +30,7 @@ define(["angular"], function (angular) {
 				restrict: "A",
 				require: "ngModel",
 				link: function (scope, element, attribute, ngModel) {
-					element.on("mouseup", function () {
+					element.on("mousemove", function () {
 						scope.$apply(function () {
 							// получаем стили
 							var elementStyle = window.getComputedStyle(element[0]);

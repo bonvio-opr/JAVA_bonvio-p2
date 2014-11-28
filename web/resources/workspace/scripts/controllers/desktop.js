@@ -1,7 +1,5 @@
 define([
-		'angular',
-		"directives/updateCoord",
-		"directives/winDirective"
+		'angular'
 	],
 	function (angular) {
 		'use strict';
