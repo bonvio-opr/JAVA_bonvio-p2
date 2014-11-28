@@ -33,7 +33,7 @@
 		   ng-mousedown="movable = false"
 		   ng-mousemove="movable = true"
 		   ng-mouseup="iconUpdate(i)"
-		   ng-dblclick="getWindow(i)">
+		   ng-dblclick="getWindow(i, count)">
 			<img ng-src="{{i.unitImgPath}}{{hash}}">
 			<p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
 			<span></span>
@@ -55,7 +55,7 @@
 					<div class="window_top" ng-dblclick="win.isMax == 1 ? win.isMax = 0 : win.isMax = 1; updateWindow(win)">
                       <span class="float_left">
                         <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-                        {{win.title}} - {{i.unitName}} == {{win.isMin}}
+                        {{win.title}} - {{i.unitName}} {{i.unitId}}
                       </span>
                       <span class="float_right">
                         <a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>

@@ -44,12 +44,13 @@ define([
 					});
 				};
 
-				$scope.getWindow = function (unit) {
+				$scope.getWindow = function (unit, index) {
+                    console.log(unit.unitId);
 					$scope.applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
 
 					$http.post('getwindow/' + unit.unitId, null).success(function (data) {
 						console.log(data);
-						$rootScope.applicationUnits[unit.unitId].windows.push(data);
+						$rootScope.applicationUnits[index].windows.push(data);
 					});
 				};
 
