@@ -13,8 +13,6 @@ define([
 		 */
 		angular
 			.module('DesktopCtrl', [
-				'winDirective'
-
 			])
 			.controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', '$rootScope', function ($scope, $http, $sce, $routeParams, $rootScope) {
 				console.log('DesktopCtrl it work');

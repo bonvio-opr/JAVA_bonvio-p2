@@ -12,14 +12,16 @@ define(["angular"], function (angular) {
 				link: function (scope, element, attribute, ngModel) {
 					element.on("mousemove", function () {
 						scope.$apply(function () {
-							// получаем стили
-							var elementStyle = window.getComputedStyle(element[0]);
-							// задаем отступы
-							ngModel.$viewValue.windowPositionX = parseInt(elementStyle["left"]);
-							ngModel.$viewValue.windowPositionY = parseInt(elementStyle["top"]);
-							// задаем размеры
-							ngModel.$viewValue.windowWidth = parseInt(elementStyle["width"]);
-							ngModel.$viewValue.windowHeight = parseInt(elementStyle["height"]);
+							if (ngModel.$viewValue.isMax == 0) {
+								// получаем стили
+								var elementStyle = window.getComputedStyle(element[0]);
+								// задаем отступы
+								ngModel.$viewValue.windowPositionX = parseInt(elementStyle["left"]);
+								ngModel.$viewValue.windowPositionY = parseInt(elementStyle["top"]);
+								// задаем размеры
+								ngModel.$viewValue.windowWidth = parseInt(elementStyle["width"]);
+								ngModel.$viewValue.windowHeight = parseInt(elementStyle["height"]);
+							}
 						});
 					});
 				}
