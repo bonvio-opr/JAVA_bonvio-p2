@@ -56,6 +56,22 @@ define([
 					redirectTo: '/'
 				});
 			//$locationProvider.html5Mode(true);
-		}]);
+		}]).directive("toggleMenu", [function () {
+            return {
+                restrict: "A",
+                link: function (scope, element, attribute) {
+                    element.on("mousedown", function (event) {
+                        console.log(event.target);
+                        if (event.target.classList.contains("menu_trigger")/* || event.target.classList.contains("text")*/) {
+                            scope.$apply(function () {
+                                scope.showMenu = !scope.showMenu;
+							});
+                        } else {
+							scope.showMenu = false;
+                        }
+                    });
+                }
+            };
+        }]);
 
 });
