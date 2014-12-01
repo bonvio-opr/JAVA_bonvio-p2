@@ -1,0 +1,10 @@
+.win-single {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    outline: 1px solid #444;
+    box-shadow: 0 0 10px;
+}
+
+.win-single header {
+    background: #fff;
+}

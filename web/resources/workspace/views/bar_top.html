@@ -1,0 +1,29 @@
+<span class="float_right">
+
+    <ul>
+	    <li> {{CurrentUserCredentials.firstName}} {{CurrentUserCredentials.secondName}} <span
+		    class="glyphicon glyphicon-ok"> tel:{{CurrentUserCredentials.userNumber}} </span> &nbsp;&nbsp;</li>
+	    <li><a ng-href="#/about"><span class="glyphicon glyphicon-cog"></span></a></li>
+	    <li><a ng-href="logout"><span class="glyphicon glyphicon-off"></span></a></li>
+    </ul>
+
+</span>
+
+<ul>
+	<li>
+		<!-- class="glyphicon glyphicon-b-logo" -->
+		<a class="menu_trigger" href>
+			Desktops</a>
+		<ul class="menu" ng-show="showMenu">
+
+			<li ng-repeat="i in CurrentUserPrivateWorkspaces">
+				<a ng-href="/CM/#/p{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
+			</li>
+			<li ng-repeat="i in CurrentUserAdditionWorkspaces">
+				<a ng-href="/CM/#/a{{i.wsId}}"><i class="fa fa-desktop"></i><span class="text"> {{i.wsName}} </span></a>
+			</li>
+
+		</ul>
+	</li>
+
+</ul>

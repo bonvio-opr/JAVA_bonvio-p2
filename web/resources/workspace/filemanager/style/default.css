@@ -1,0 +1,132 @@
+#screen {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: #eee;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#screen > nav {
+	padding: 5px 10px;
+}
+
+#screen .left,
+#screen .right {
+	position: inherit;
+	top: 30px;
+	bottom: 0;
+	outline: 1px solid #bbb;
+}
+
+#screen .left {
+	left: 0;
+	right: 50%;
+}
+#screen .fullLeft {
+	left: 0;
+	right: 0;
+}
+#screen .fullRight {
+	margin-left: -50%;
+}
+
+#screen .right {
+	left: 50%;
+	right: 0;
+}
+
+#screen nav ul {
+	list-style: none;
+	margin: 0; padding: 0;
+	border-bottom: 1px solid #bbb;
+}
+
+#screen nav ul li {
+	display: inline-block;
+}
+#screen nav ul li a {
+	display: inherit;
+	padding: 5px 10px;
+}
+
+#screen nav ul.folder li {
+	border-left: 1px solid #bbb;
+}
+
+#screen section table th,
+#screen section table td {
+	font-size: 13px;
+	padding: 3px 6px;
+}
+
+#screen section {
+	width: 100%;
+	position: absolute;
+	overflow: scroll;
+	top: 57px; bottom: 0;
+}
+#screen section table {
+	width: 100%;
+	border-collapse: collapse;
+	position: inherit;
+}
+#screen section table thead tr {
+	border-bottom: 1px solid #bbb;
+}
+#screen section table th:first-child {
+	width: 50%;
+}
+#screen section table th:not(:first-child) {
+	border-left: 1px solid #bbb;
+}
+
+#screen section table tr:hover td{
+	background: #bbbbbb;
+}
+
+[contenteditable]:focus {
+	outline: 1px solid #bbb;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+menu {
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+menu ul {
+	list-style: none;
+	margin: 0; padding: 0;
+	display: none;
+	position: absolute;
+	background: #fff;
+	border: 1px solid #bbb;
+}
+menu span:hover ul {
+	display: block;
+}
+
+menu span ul li {
+	padding: 5px 10px;
+}
+menu span ul li:hover {
+	background: #eee;
+}
+
+.file-upload {
+	position: relative;
+}
+.file-upload input.upload {
+	position: absolute;
+	top: -10px;
+	left: 0;
+	width: 15px;
+	cursor: pointer;
+	opacity: 0;
+}

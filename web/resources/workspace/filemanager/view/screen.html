@@ -1,0 +1,72 @@
+<nav>
+	<ul>
+		<li ng-repeat="link in nav[side]">
+			<a href="#" ng-click="open('path', side, link.href)">{{link.text}}</a> /&nbsp;
+		</li>
+	</ul>
+	<ul class="folder">
+		<li>
+			<a href="#" class="fa fa-folder"
+			   ng-click="action('create', side, file, files.length)"></a>
+			<span class="file-upload" ng-click="action('upload', side, file, files.length)">
+				<span class="fa fa-upload"></span>
+				<input type="file" class="upload">
+			</span>
+		</li>
+		<li>
+			<a href="#" class="fa fa-folder-open"
+				 ng-click="open('path', side, 'files/home')">&nbsp;home</a>
+			<a href="#" class="fa fa-folder-open"
+				 ng-click="open('path', side, 'files/root')">&nbsp;root</a>
+		</li>
+	</ul>
+</nav>
+<section ng-contextmenu="menu($event)">
+	<table>
+		<thead>
+		<tr>
+			<th>Имя</th>
+			<th>Действия</th>
+			<th>Тип</th>
+			<th>Размер</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-if="nav[side][nav[side].length - 2]">
+			<td colspan="4">
+				<a href="#" ng-click="open('path', side, nav[side][nav[side].length - 2].href)">..</a>
+			</td>
+		</tr>
+		<tr ng-repeat="file in files[side]"
+		    ng-init="editable = false; selected = false; menu = false">
+			<td ng-model="file.name"
+					ng-click="open('folder', side, file.name)"
+					ng-focus="editable"
+					ng-blur="editable = false; action('rename', side, file)"
+			    contenteditable="{{editable}}"
+					>
+				<a href="#">{{file.name}}</a></td>
+			<td>
+				<menu>
+					<span>Меню<ul>
+						<li>
+							<a class="fa fa-edit" href="#" ng-click="editable = true">&nbsp;Переименовать</a>
+						</li>
+						<li>
+							<a class="fa fa-copy" href="#" ng-click="action('copy', side, file, $index)">&nbsp;Копировать</a>
+						</li>
+						<li>
+							<a class="fa fa-cut" href="#" ng-click="action('move', side, file, $index)">&nbsp;Переместить</a>
+						</li>
+						<li>
+							<a class="fa fa-trash" href="#" ng-click="action('delete', side, file, $index)">&ensp;Удалить</a>
+						</li>
+					</ul></span>
+				</menu>
+			</td>
+			<td>{{file.type}}</td>
+			<td>{{file.size}}</td>
+		</tr>
+		</tbody>
+	</table>
+</section>
