@@ -65,5 +65,24 @@ define(["angular"], function (angular) {
 					}
 				}
 			};
+		}])
+		.directive("winZIndex", ["$document", function ($document) {
+			return {
+				link: function (scope, element, attribute) {
+					element.on("mousedown", mousedown);
+
+					function mousedown(event) {
+						element[0].parentNode.parentNode.parentNode.appendChild(element[0].parentNode.parentNode);
+						//var attr = scope.$eval(attribute.winZIndex);
+						//element.css("z-index", "2" + attr.winCount);
+						////console.log("zBEFORE - " + element.css("z-index"));
+						//$document.bind("mouseup", mouseup);
+					}
+
+					function mouseup(event) {
+						//console.log("zAFTER - " + element.css("z-index"));
+					}
+				}
+			};
 		}]);
 });

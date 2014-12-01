@@ -1,6 +1,6 @@
 package com.bonvio.project2.classes.cafe.waiters;
 
-import javax.jnlp.IntegrationService;
+//import javax.jnlp.IntegrationService;
 
 /**
  * Created by Arti on 02.07.2014.

@@ -12,8 +12,7 @@ define([
 		 * Controller of the generatorAngularRequireApp
 		 */
 		angular
-			.module('DesktopCtrl', [
-			])
+			.module('DesktopCtrl', [])
 			.controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', '$rootScope', function ($scope, $http, $sce, $routeParams, $rootScope) {
 				console.log('DesktopCtrl it work');
 
@@ -27,13 +26,16 @@ define([
 				/**
 				 * unit
 				 */
+				$scope.allWindow = 0; // общее количество открытых окон
 
 				$http.get('getApplicationsById/' + $routeParams.desktopId).success(function (data) {
 					localStorage.setItem('getApplicationsById', JSON.stringify(data));
-					$scope.applicationUnits = data;
-					console.log(data);
-
-					$rootScope.applicationUnits = data;
+					$rootScope.applicationUnits = $scope.applicationUnits = data;
+					for (var i = 0; i < $scope.applicationUnits.length; i++) {
+						$scope.applicationUnits[i].applicationUrl = $sce.trustAsResourceUrl($scope.applicationUnits[i].unitCode);
+						$scope.allWindow += $scope.applicationUnits[i].windows.length; // общее количество открытых окон
+					}
+					//console.log("ALL FUCKING WINDOWS - ", $scope.allWindow); // общее количество открытых окон
 				});
 
 				// icon
@@ -44,13 +46,15 @@ define([
 					});
 				};
 
-				$scope.getWindow = function (unit, index) {
-                    console.log(unit.unitId);
-					$scope.applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
+				$scope.getWindow = function (unit, parentIndex) {
+
+					$scope.allWindow++; // общее количество открытых окон
+
+					$rootScope.applicationUnits[parentIndex].applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
 
 					$http.post('getwindow/' + unit.unitId, null).success(function (data) {
 						console.log(data);
-						$rootScope.applicationUnits[index].windows.push(data);
+						$rootScope.applicationUnits[parentIndex].windows.push(data);
 					});
 				};
 
@@ -62,6 +66,8 @@ define([
 					});
 				};
 				$scope.deleteWindow = function ($index, $parentIndex, window) {
+					$scope.allWindow--; // общее количество открытых окон
+
 					$rootScope.applicationUnits[$parentIndex].windows.splice($index, 1); // удаление на клиенте
 					// удаление на сервере
 					var data = {};
@@ -71,5 +77,4 @@ define([
 					});
 				};
 			}]);
-
 	});
