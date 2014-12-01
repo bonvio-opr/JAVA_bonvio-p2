@@ -95,6 +95,8 @@ div.ui-resizable-handle {
 }
 
 .icon img {
+  z-index: 0;
+  pointer-events: none;
   background: url(../images/gui/trans_black.png) no-repeat -99999px -99999px;
   display: block;
   margin: 0 auto 5px;
