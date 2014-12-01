@@ -32,4 +32,4 @@ _ReSharper*/
 target/
 out/
 classes/artifacts/
-web/resources/vendors/
+web/resources/bower_components
