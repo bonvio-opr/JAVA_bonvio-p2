@@ -18,6 +18,7 @@ body {
 body {
   background: #222;
   font: 12px/1 'Lucida Grande', Arial, 'Liberation Sans', FreeSans, sans-serif;
+  min-width: 1000px !important;
 }
 
 a {
@@ -224,7 +225,6 @@ div.ui-resizable-handle {
 }
 
 .window_min,
-.window_resize,
 .window_close {
   background: url(../images/gui/window_buttons.gif) no-repeat;
   border-radius: 2px;
@@ -242,12 +242,30 @@ div.ui-resizable-handle {
   background-position: 0 -15px;
 }
 
-.window_resize {
-  background-position: -28px 0;
-}
-
-.window_resize:hover {
-  background-position: -28px -15px;
+@media screen and (min-width: 980px) {
+  .window_resize {
+    background: url(../images/gui/window_buttons.gif) no-repeat;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -webkit-background-clip: padding-box;
+    float: left;
+    font-size: 0;
+    margin: 6px 0 0 5px;
+    width: 28px;
+    height: 15px;
+  }
+  .window_resize {
+    background-position: -28px 0;
+  }
+  .window_resize:hover {
+    background-position: -28px -15px;
+  }
+  .window_resize:hover {
+    box-shadow: #09f 0 0 10px;
+    -moz-box-shadow: #09f 0 0 10px;
+    -webkit-box-shadow: #09f 0 0 10px;
+  }
 }
 
 .window_close {
@@ -261,8 +279,7 @@ div.ui-resizable-handle {
   -webkit-box-shadow: #f00 0 0 10px;
 }
 
-.window_min:hover,
-.window_resize:hover {
+.window_min:hover {
   box-shadow: #09f 0 0 10px;
   -moz-box-shadow: #09f 0 0 10px;
   -webkit-box-shadow: #09f 0 0 10px;
