@@ -24,6 +24,10 @@ define([
 
 			console.log('MainCtrl it work');
 
+			$scope.$on('ngRepeatFinished', function(scope, element, attrs){
+				alert("FINISH");
+			});
+
 		}]);// endMainCtrl
 
 });

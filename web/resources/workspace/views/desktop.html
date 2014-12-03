@@ -1,92 +1,60 @@
-<!--<section ng-init="init()">-->
-<!--<section ng-repeat="unit in applicationUnits" ng-init="$partIndex = $index">-->
-<!--<a class="icon"-->
-	 <!--win-draggable-->
-	 <!--icon-coord ng-model="unit"-->
-	 <!--ng-style="{'position': 'absolute', 'left': unit.unitPositionX, 'top': unit.unitPositionY}"-->
-	 <!--ng-mouseup="iconUpdate(unit)"-->
-	 <!--ng-dblclick="getWindow(unit)">-->
-	<!--<img ng-src="{{unit.unitImgPath}}{{hash}}">-->
-	<!--<p>{{unit.unitName}} x: {{unit.unitPositionX}} y: {{unit.unitPositionY}}</p>-->
-<!--</a>-->
-	<!--<section class="win-single"-->
-					 <!--ng-repeat="win in unit.windows"-->
-					 <!--win-draggable win-resizable-->
-					 <!--win-coord ng-model="win"-->
-					 <!--ng-show="win.isMin == 1">-->
-		<!--<header>123</header>-->
-	<!--</section>-->
-<!--</section>-->
-<!--</section>-->
-
-
-<!-- desktopHTML -->
-<div ng-class="{'animated':true, 'fadeIn':true}" ng-init="init()">
-	<div ng-repeat="i in applicationUnits" ng-init="count = $index">
-
-		<a win-draggable class="wsUnit icon"
-			 ng-style="{
-			 	'left': i.unitPositionX + 'px',
-			 	'top': i.unitPositionY + 'px',
-			 	'position': 'absolute'
-			 }"
-			 icon-coord ng-model="i"
-			 ng-mousedown="movable = false"
-			 ng-mousemove="movable = true"
-			 ng-mouseup="iconUpdate(i)"
-			 ng-dblclick="getWindow(i, count)">
-			<img ng-src="{{i.unitImgPath}}{{hash}}">
-			<p>{{i.unitName}} x: {{i.unitPositionX}} y: {{i.unitPositionY}}</p>
-			<span></span>
-		</a>
-
-		<div ng-repeat="win in i.windows" ng-show="win.isMin == 1">
-			<div win-draggable win-resizable id="window" class="abs"
-					 win-coord ng-model="win"
-					 win-z-index="{
-					 	'winCount': allWindow
-					 }"
-					 ng-style="{
-                    'position': 'absolute',
-                    'left': win.windowPositionX + 'px',
-                    'top': win.windowPositionY + 'px',
-                    'width': (win.windowWidth <= 200 ? 200 : win.windowWidth) + 'px',
-                    'height': (win.windowHeight <= 200 ? 200 : win.windowHeight) + 'px',
-                 }"
-					 ng-mouseup="updateWindow(win)"
-					 ng-class="(!win.isMax)?'window':'window_full'">
-				<div class="abs window_inner">
-					<div class="window_top" ng-dblclick="win.isMax == 1 ? win.isMax = 0 : win.isMax = 1; updateWindow(win)">
-                      <span class="float_left">
-                        <img width="20" ng-src="{{i.unitImgPath}}{{hash}}"/>
-                        {{win.title}} - {{i.unitName}} {{$winCount}}
-                      </span>
-                      <span class="float_right">
-                        <a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
-                        <a href class="window_resize"
-													 ng-click="win.isMax == 1 ? win.isMax = 0 : win.isMax = 1; updateWindow(win)"></a>
-                        <a href class="window_close" ng-click="deleteWindow($index, count, win)"></a>
-                      </span>
+<div ng-repeat="unit in applicationUnits">
+	<div class="icon block"
+			 ng-init="$parentIndex = $index"
+			 icon-coord ng-model="unit"
+			 ng-mouseup="iconUpdate(unit)"
+			 ng-style="{ 'left': unit.unitPositionX + 'px', 'top': unit.unitPositionY + 'px'}"
+			 ng-dblclick="getWindow(unit, $parentIndex)">
+		<img ng-src="{{unit.unitImgPath}}{{hash}}">
+		{{unit.unitName}} x: {{unit.unitPositionX}} y: {{unit.unitPositionY}}
+	</div>
+	<!--WINDOWS OF UNIT BEGIN HERE-->
+	<section ng-repeat="win in unit.windows" ng-show="win.isMin == 1">
+		<div win-draggable win-resizable win-z-index
+				 win-coord ng-model="win"
+				 class="abs"
+				 ng-style="{
+				 'position': 'absolute',
+				 'left': win.windowPositionX + 'px',
+				 'top': win.windowPositionY + 'px',
+				 'width': (win.windowWidth <= 200 ? 200 : win.windowWidth) + 'px',
+				 'height': (win.windowHeight <= 200 ? 200 : win.windowHeight) + 'px'
+				 }"
+				 ng-mouseup="updateWindow(win)"
+				 ng-class="!win.isMax ?'window single-window' : 'window_full'">
+			<div class="abs window_inner">
+				<!--ШАПКА ОКНА BEGIN HERE-->
+				<header class="window_top"
+								ng-dblclick="win.isMax = win.isMax==1?0:1; updateWindow(win)">
+					<span class="float_left">
+						<img width="20" ng-src="{{unit.unitImgPath}}{{hash}}"/>
+						{{win.title}} - {{unit.unitName}}
+					</span>
+					<span class="float_right">
+						<a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
+						<a href class="window_resize" ng-click="win.isMax = win.isMax==1?0:1; updateWindow(win)"></a>
+						<a href class="window_close" ng-click="deleteWindow($index, $parentIndex, win)"></a>
+					</span>
+				</header>
+				<!--ШАПКА ОКНА END HERE-->
+				<!--CONTENT BEGIN HERE-->
+				<div class="abs window_content">
+					<div class="window_iframe window_main_without_aside">
+						<iframe ng-src="{{unit.applicationUrl}}"></iframe>
+						<!--<object data="{{unit.applicationUrl}}"></object>-->
 					</div>
-					<div class="abs window_content">
-						<!--<div class="window_aside">
-								Storage in use: 119.1 GB
-						</div>-->
-						<div class="window_iframe window_main_without_aside">
-							<iframe ng-src="{{i.applicationUrl}}"></iframe>
-							<!--<object data="{{applicationUrl}}"></object>-->
-						</div>
-						<div class="overlay"></div>
-					</div>
-					<div class="abs window_bottom">
-						<!--Free: 80.9 GB {{applicationUrl}}-->
-					</div>
+					<div class="overlay"></div>
 				</div>
+				<!--CONTENT END HERE-->
+				<!--FOOTER BEGIN HERE-->
+				<div class="abs window_bottom">
+					<!--Free: 80.9 GB {{applicationUrl}}-->
+				</div>
+				<!--FOOTER END HERE-->
 				<span class="abs ui-resizable-handle ui-resizable-se winResizableBlock"></span>
-
 			</div>
 		</div>
-
-	</div>
+	</section>
+	<!--WINDOWS OF UNIT END HERE-->
 </div>
-<!-- /desktopHTML -->
+<div class="desktop-allocate"></div>

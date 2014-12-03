@@ -40,7 +40,7 @@ define([
 
 				// icon
 				$scope.iconUpdate = function (unit) {
-					delete unit.unitActive;
+					unit.unitActive = null;
 					$http.post('updateApplicationPosition/', unit).success(function (data) {
 						localStorage.setItem('getApplicationsById', JSON.stringify(data));
 					});

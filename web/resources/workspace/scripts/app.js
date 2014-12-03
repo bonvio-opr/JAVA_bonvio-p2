@@ -61,7 +61,7 @@ define([
                 restrict: "A",
                 link: function (scope, element, attribute) {
                     element.on("mousedown", function (event) {
-                        console.log(event.target);
+                        //console.log(event.target);
                         if (event.target.classList.contains("menu_trigger")/* || event.target.classList.contains("text")*/) {
                             scope.$apply(function () {
                                 scope.showMenu = !scope.showMenu;

@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="resources/workspace/styles/ie.css" />
     <![endif]-->
 
-    <link rel="stylesheet" href="resources/workspace/styles/" />
+    <link rel="stylesheet" href="resources/workspace/styles/winStyle.css" />
 </head>
 <body ng-app="p2DashboardApp">
 
@@ -53,9 +53,7 @@
             <!-- end: bar_bottom -->
         </div>
 
-        <div class="abs" id="desktop">
-            <!-- Add your site or application content here -->
-            <div ng-view=""></div>
+        <div class="abs" id="desktop" desktop-allocate="block" ng-view="">
         </div>
 
 

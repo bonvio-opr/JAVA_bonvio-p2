@@ -1,10 +1,48 @@
-.win-single {
-    position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
-    outline: 1px solid #444;
-    box-shadow: 0 0 10px;
+.block.selected {
+    outline: 1px dashed #900;
 }
 
-.win-single header {
-    background: #fff;
+.desktop-allocate {
+    position: absolute;
+    background: rgba(100, 130, 200, 0.5);
+    z-index: 4;
+}
+
+.block {
+    position: absolute;
+    background: #000;
+    z-index: 3;
+}
+
+
+.single-window {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.single-window header {
+    color: #fff;
+    border: 1px solid #444;
+    background: linear-gradient(rgba(80, 80, 80, 0.9), rgba(20, 20, 20, 0.9));
+}
+
+.single-window a {
+    text-decoration: none;
+}
+
+.single-window header .button {
+    background: rgba(255, 255, 255, 0.5);
+    border-left: 1px solid #444;
+    float: right;
+}
+
+.single-window header .button a {
+    display: block;
+    float: left;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+.single-window header .button a:hover {
+    background: rgba(25, 25, 25, 0.8);
 }
