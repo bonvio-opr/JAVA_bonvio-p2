@@ -19,6 +19,7 @@ import com.bonvio.project2.dao.common.menuupload.implementation.CommonMenuUpload
 import com.bonvio.project2.dao.common.messenger.implementation.CommonMessengerDaoImpl;
 import com.bonvio.project2.dao.common.printing.CommonPrintingDao;
 import com.bonvio.project2.dao.common.printing.implementation.CommonPrintingDaoImpl;
+import com.bonvio.project2.dao.common.workspace.implementation.FileManagerDaoImpl;
 import com.bonvio.project2.dao.common.workspace.implementation.PagesMainDaoImpl;
 import com.bonvio.project2.dao.settings.profile.implementation.SettingsProfileManagementDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class ApplicationContext {
 
     //unit Commons: WORKSPACE (основное приложение, оболочка)
     @Bean public PagesMainDaoImpl getPagesMainDaoImpl() {return new PagesMainDaoImpl(dataSource);}
+
+    //unit FileManager
+    @Bean public FileManagerDaoImpl getFileManagerDaoImpl (){return new FileManagerDaoImpl (dataSource);}
 
     //unit Commons: MENU UPLOAD (обновление позиций меню)
     @Bean public CommonMenuUploadJobDaoImpl getCommonMenuUploadJobDaoImpl() {return new CommonMenuUploadJobDaoImpl(dataSource);}
