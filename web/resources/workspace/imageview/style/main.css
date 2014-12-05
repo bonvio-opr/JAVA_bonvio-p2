@@ -1,0 +1,161 @@
+#screen {
+    color: #fff;
+    background: #fff;
+    min-width: 320px;
+    min-height: 240px;
+}
+
+#screen a,
+#screen > footer > span > a.color.black {
+    color: #000;
+    text-decoration: none;
+}
+
+#screen,
+#screen > header,
+#screen > section,
+#screen > section > img,
+#screen > footer {
+    left: 0;
+    right: 0;
+}
+
+#screen > header,
+#screen > footer,
+#screen > footer > span.left,
+#screen > footer > span.right {
+    position: fixed;
+    text-align: center;
+}
+
+#screen > header {
+    padding: 5px 10px;
+}
+
+#screen,
+#screen > header,
+#screen > section > img {
+    top: 0;
+}
+
+#screen,
+#screen > section > img,
+#screen > footer {
+    bottom: 0;
+}
+
+#screen,
+#screen > header > span,
+#screen > section,
+#screen > section > img {
+    position: absolute;
+}
+
+#screen > section {
+    top: 30px;
+    bottom: 60px;
+}
+
+#screen > header,
+#screen > footer {
+    background: #222;
+    outline: 1px solid #111;
+    z-index: 100;
+}
+
+#screen > section > img {
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+#screen > section > img.full {
+    width: 100%;
+}
+
+#screen > header > span,
+#screen > footer > span.right {
+    right: 20px;
+}
+
+#screen > footer {
+    padding: 10px;
+}
+
+#screen > footer > a {
+    color: #fff;
+}
+
+#screen > footer > a.prev,
+#screen > footer > a.next,
+#screen > footer > span.left a,
+#screen > footer > span.right a,
+#screen > footer > a.full,
+#screen > footer > a.color,
+#screen > footer > a.setting {
+    width: 40px;
+    height: 25px;
+    line-height: 25px;
+    background: #444;
+}
+
+#screen > footer > a.prev {
+    border-radius: 5px 0 0 5px;
+    margin-right: -10px;
+}
+
+#screen > footer > a.next {
+    border-radius: 0 5px 5px 0;
+    margin-left: -10px;
+}
+
+
+#screen > footer > a.slide {
+    position: relative;
+    background: #500;
+    border-radius: 20px;
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    font-size: 20px;
+    z-index: 101;
+}
+
+#screen > footer > a:hover,
+#screen > footer > span > a.color.white,
+#screen > footer > span.left a.active,
+#screen > footer > span.right a:hover,
+#screen > footer > span.left a:hover {
+    background: #000;
+}
+
+#screen > footer > span.left {
+    left: 20px;
+}
+
+#screen > footer > span.left,
+#screen > footer > span.right {
+    margin-top: 5px;
+}
+
+#screen > footer > span.left a,
+#screen > footer > span.right a {
+    color: #fff;
+    display: block;
+    float: left;
+    height: 25px;
+    padding: 2px 5px;
+    line-height: 25px;
+}
+
+#screen > footer > span.left a:not(:last-child) {
+    border-right: 1px solid #000;
+}
+
+#screen > footer > span.left > a,
+#screen > footer > span.left > a.color.white {
+    color: #fff;
+}
+
+#screen > footer > span > a.color.black {
+    background: #fff;
+}

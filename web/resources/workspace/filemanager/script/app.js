@@ -1,2 +1,4 @@
-var FileManager = angular.module("FileManager", []);
+var FileManager = angular.module("FileManager", [
+	'angularFileUpload'
+]);
 

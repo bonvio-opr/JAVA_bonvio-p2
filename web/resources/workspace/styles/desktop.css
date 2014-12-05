@@ -135,6 +135,16 @@ div.ui-resizable-handle {
   z-index: 5;
 }
 
+span.ellipsis {
+  text-overflow: ellipsis;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 190px;
+}
+
+
+
 .window.window_stack {
   z-index: 10;
 }

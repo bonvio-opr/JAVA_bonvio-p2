@@ -1,24 +1,24 @@
 <nav>
 	<ul>
 		<li ng-repeat="link in nav[side]">
-			<a href="#" ng-click="open('path', side, link.href)">{{link.text}}</a> /&nbsp;
+			<a href="#" ng-click="location(side, link)">{{link.name}}</a> /&nbsp;
 		</li>
 	</ul>
 	<ul class="folder">
 		<li>
 			<a href="#" class="fa fa-folder"
-			   ng-click="action('create', side, file, files.length)"></a>
-			<span class="file-upload" ng-click="action('upload', side, file, files.length)">
-				<span class="fa fa-upload"></span>
-				<input type="file" class="upload">
-			</span>
+			   ng-click="action('create', side, file, files.length)">&nbsp Создать папку</a>
+<!--				<span class="file-upload" ng-click="upload(side, files[side][0].parentId)">
+					<span class="fa fa-upload"></span>
+					<input type="file" class="upload">
+				</span>-->
 		</li>
-		<li>
-			<a href="#" class="fa fa-folder-open"
-				 ng-click="open('path', side, 'files/home')">&nbsp;home</a>
-			<a href="#" class="fa fa-folder-open"
-				 ng-click="open('path', side, 'files/root')">&nbsp;root</a>
-		</li>
+		<!--<li>-->
+			<!--<a href="#" class="fa fa-folder-open"-->
+				 <!--ng-click="open('path', side, 'files/home')">&nbsp;home</a>-->
+			<!--<a href="#" class="fa fa-folder-open"-->
+				 <!--ng-click="open('path', side, 'files/root')">&nbsp;root</a>-->
+		<!--</li>-->
 	</ul>
 </nav>
 <section ng-contextmenu="menu($event)">
@@ -32,20 +32,22 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-if="nav[side][nav[side].length - 2]">
-			<td colspan="4">
-				<a href="#" ng-click="open('path', side, nav[side][nav[side].length - 2].href)">..</a>
+		<tr>
+			<td colspan="4" ng-show="files[side][0].parentId != 0">
+				<a href="#" ng-click="location(side, nav[side][nav[side].length - 2])">..</a>
 			</td>
 		</tr>
 		<tr ng-repeat="file in files[side]"
-		    ng-init="editable = false; selected = false; menu = false">
-			<td ng-model="file.name"
-					ng-click="open('folder', side, file.name)"
+		    ng-init="editable = false; selected = false; menu = false"
+				ng-show="file.name">
+			<td ng-click="file.type == 'folder' ? open(side, file) : openFile(file)"
 					ng-focus="editable"
-					ng-blur="editable = false; action('rename', side, file)"
-			    contenteditable="{{editable}}"
+					ng-model="file"
+					ng-blur="editable = false"
+			    contenteditable="{{editable}}" file-index="{{$index}}" file-side="{{side}}"
+					content-rename
 					>
-				<a href="#">{{file.name}}</a></td>
+				<a href="#">{{file.id}} {{file.name}}</a></td>
 			<td>
 				<menu>
 					<span>Меню<ul>
@@ -66,6 +68,14 @@
 			</td>
 			<td>{{file.type}}</td>
 			<td>{{file.size}}</td>
+		</tr>
+		<tr>
+		<td colspan="4">
+			<div ng-controller="myCtrl">
+				<input type="file" file-model="myFile"/>
+				<button ng-click="uploadFile(side, files[side][0].parentId)">UPLOAD</button>
+			</div>
+		</td>
 		</tr>
 		</tbody>
 	</table>

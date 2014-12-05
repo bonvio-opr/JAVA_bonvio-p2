@@ -16,6 +16,7 @@
     <script src="/CM/resources/workspace/filemanager/script/controller.js"></script>
     <script src="/CM/resources/workspace/filemanager/script/directive.js"></script>
     <link href="/CM/resources/workspace/filemanager/style/default.css" rel="stylesheet">
+    <script src="/CM/resources/bower_components/angular-file-upload/angular-file-upload.min.js"></script>
 </head>
 <body>
 <section id="screen" ng-controller="screen" ng-init="full = 0">

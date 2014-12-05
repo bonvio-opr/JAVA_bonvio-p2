@@ -1,120 +1,166 @@
-var root = {
-    "left": "files/root",
-    "right": "files"
-};
-var parentId = {
-    "leftId": "1",
-    "rightId": "0"
-};
+var root = "root";
 
 FileManager.controller("screen", ["$scope", "$http", function ($scope, $http) {
-
-    $scope.location = {};
-    $scope.files = {};
-    $scope.nav = {};
-    $scope.local = [];
-
-    $scope.init = function (side) {
-        //$scope.local[side] = localStorage[side + "ID"] || parentId[side];
-        $scope.location[side] = localStorage[side] || root[side];
-
-        $http.post($scope.location[side] + "/index.json").success(function (data) {
-            //localStorage[side + "ID"] = data.pop(); // достаем ID родительского элемента
-            $scope.files[side] = data;
-            localStorage[side + "Id"] = data[0].parentId;
-        });
-        var path = $scope.location[side].split("/");
-        path.forEach(function (element, i, array) {
-            array[i] = {
-                "text": element,
-                "href": (array[i - 1] ? array[i - 1].href + "/" : "") + element
-            };
-        });
-        $scope.nav[side] = path;
-        localStorage[side] = $scope.location[side];
-    };
-
-    $scope.open = function (type, side, name) {
-        switch (type) {
-            case "path":
-                localStorage[side] = name;
-                break;
-            case "folder":
-                localStorage[side] += "/" + name;
-                break;
-        }
-        $scope.init(side);
-    };
-
-    $scope.menu = function ($event, file, side) {
-        console.log(file, side);
-        console.log($event.target);
-    };
+	$scope.files = {};
 
 
-    $scope.action = function (name, side, file, index) {
-        var inversionSide = side == "left" ? "right" : "left";
-        var buffer = null;
-        switch (name) {
-            case "move":
-                buffer = $scope.files[side][index];
-                buffer.parentId = localStorage[inversionSide + "Id"];
-                $scope.files[side].splice(index, 1);
-                $scope.files[inversionSide].push(buffer);
-                console.log(file);
-                break;
-            case "copy":
-                buffer = $scope.files[side][index];
-                buffer.parentId = localStorage[inversionSide + "Id"];
-                $scope.files[inversionSide].push(buffer);
-                console.log(buffer);
-                break;
-            case "delete":
-                file.parentId = localStorage[side + "Id"];
-                console.log(file);
-                $scope.files[side].splice(index, 1);
-                break;
-            case "rename":
-                file.parentId = localStorage[side + "Id"];
-                console.log(file);
-                break;
-            case "create":
-                buffer = {id: 100, name: "Новая папка", type: "folder"};
-                buffer.parentId = localStorage[side + "Id"];
-                $scope.files[side].push(buffer);
-                console.log(buffer);
-                break;
-        }
-    };
+	$scope.openFile = function (file) {
+		if (file.type == 'jpg') {
+			console.log(window);
+		}
+	};
 
-    $scope.select = function (type, side, name) {
-        console.log("selected " + name);
-    };
+	$scope.init = function (side, file) {
+		$http.get("/CM/filemanager/getfolderbyparentid/" + file.id).success(function (data) {
+			$scope.files[side] = data; // получаем файлы и папки
+			if (data.length == 0) {
+				data.push({});
+				data[0].parentId = file.id;
+			}
+		});
+	};
 
-    $scope.menu = function ($event) {
-        var data = {};
-        data.element = $event.target.parentNode
-        data.info = data.element.getAttribute("data-info");
-        data.side = data.element.getAttribute("data-side");
+	$scope.open = function (side, file) {
+		$scope.nav[side].push({
+			id: file.id,
+			name: file.name
+		});
+		$scope.init(side, file);
+	};
 
-        console.log(data);
-        if (data != null) {
-            var menu = document.querySelector("menu");
-            menu.style.top = $event.pageY + "px";
-            menu.style.left = $event.pageX + "px";
-            menu.classList.add("show");
-        }
-    };
+	$scope.action = function (name, side, file, index) {
+		var inversionSide = side == "left" ? "right" : "left";
+		var buffer = null;
+		switch (name) {
+			case 'move': // WORKING!
+				buffer = $scope.files[side][index]; // перемещаем файл/папку в буфер
+				buffer.parentId = $scope.files[inversionSide][0].parentId; // меняем родительский Id
+				$scope.files[side].splice(index, 1); // вырезаем
+				$scope.files[inversionSide].push(buffer); // добавляем на другую сторону
+				$http.post('/CM/filemanager/updatefolder', file).success(function (data) { // обновляем на сервере
+					console.log('move ok', data);
+				});
+				break;
+			case "copy":
+				//buffer = $scope.files[side][index];
+				//buffer.parentId = localStorage[inversionSide + "Id"];
+				//$scope.files[inversionSide].push(buffer);
+				//console.log(buffer);
+				break;
+			case "delete": // WORKING!
+				console.log($scope.files[side][index].id);
+				$http.get("/CM/filemanager/deletefolder/" + $scope.files[side][index].id).success(function (data) {
+					console.log(data);
+				});
+				$scope.files[side].splice(index, 1);
+				break;
+			case 'create': // WORKING!
+				file = {name: 'Новая папка', type: 'folder', parentId: $scope.files[side][0].parentId};
+				$http.post('/CM/filemanager/addfolder', file).success(function (data) {
+					buffer = file;
+					buffer.id = data;
+					$scope.files[side].push(buffer);
+				});
+				break;
+			case 'upload':
+				//console.log('upload');
+				break;
+		}
+	};
 
+
+	// формирование пути и выстраивание навигации
+	var leftHome = {id: 0, name: 'home'};
+	var rightHome = {id: 0, name: 'home'};
+	$scope.nav = {};
+	$scope.nav['left'] = [];
+	$scope.nav['left'].push(leftHome);
+	$scope.nav['right'] = [];
+	$scope.nav['right'].push(rightHome);
+	// магия
+	$scope.location = function (side, file) {
+		var find = 0;
+		$scope.nav[side].forEach(function (element, i) {
+			if (element.id == file.id) { // ищем id ко которой сделан click
+				find = i + 1; // заносим index
+			}
+		});
+		$scope.nav[side].splice(find); // удаляем все, что после index
+		$scope.init(side, file); // формируем содержимое
+	};
+	// запускаем
+	$scope.location('left', leftHome);
+	$scope.location('right', rightHome);
+
+
+
+}]).directive("contentRename", function () {
+	return {
+		restrict: "A",
+		link: function (scope, element, attrs) {
+			element.on("blur", function () {
+				var file = scope.files[attrs.fileSide][attrs.fileIndex];
+				file.name = element.text();
+				console.log(file);
+				$http.post('/CM/filemanager/updatefolder', file).success(function (data) { // обновляем на сервере
+					console.log('rename ok', data);
+				});
+			});
+		}
+	};
+});
+
+// DO NOT TOUCH THIS
+FileManager.directive('fileModel', ['$parse', function ($parse) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var model = $parse(attrs.fileModel);
+			var modelSetter = model.assign;
+
+			element.bind('change', function(){
+				scope.$apply(function(){
+					modelSetter(scope, element[0].files[0]);
+				});
+			});
+		}
+	};
+}]);
+FileManager.service('fileUpload', ['$http', function ($http) {
+	this.uploadFileToUrl = function(file, uploadUrl){
+		var fd = new FormData();
+		fd.append('file', file);
+		$http.post(uploadUrl, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
+			.success(function(){
+			})
+			.error(function(){
+			});
+	}
+}]);
+FileManager.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload) {
+	$scope.uploadFile = function(side, parentId) {
+
+		var file = $scope.myFile;
+		var uploadUrl = "/CM/filemanager/uploadfile/" +  parentId;
+		fileUpload.uploadFileToUrl(file, uploadUrl);
+		$scope.init(side, {id: parentId});
+	};
 }]);
 
 
+// PLEASE END
+
 FileManager.controller("left", ["$scope", "$http", function ($scope, $http) {
-    $scope.side = "left";
-    $scope.init($scope.side);
+	$scope.side = "left";
+	//var temp = {id: 0, name: "home", first: true};
+	//$scope.init($scope.side, temp);
 }]);
 
 FileManager.controller("right", ["$scope", "$http", function ($scope, $http) {
-    $scope.side = "right";
-    $scope.init($scope.side);
+	$scope.side = "right";
+	//var temp = {id: 0, name: "home", first: true};
+	//$scope.init($scope.side, temp);
 }]);

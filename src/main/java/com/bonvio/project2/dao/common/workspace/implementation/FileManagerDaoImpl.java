@@ -35,9 +35,11 @@ public class FileManagerDaoImpl extends BaseDao {
     //add only folder (catalog)
     public long addFolder(Folder folder, String userId) {
         try {
+
+            //INSERT INTO "ARTI"."S_FOLDERS" (S_NAME, S_OWNER_ID, S_PARENT_ID, S_TYPE) VALUES ('111111', '5', '5', 'file')
             getJdbcTemplate().update("insert into " + defaultSchema + ".s_folders (s_name, s_owner_id, s_parent_id, s_type) values (?,?,?,?)",
                     folder.getName(),
-                    folder.getOwnerId(),
+                    userId,
                     folder.getParentId(),
                     folder.getType()
             );
@@ -46,6 +48,7 @@ public class FileManagerDaoImpl extends BaseDao {
             return folderId;
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Ошибка в добавлении папки");
             return 0;
         }
@@ -109,6 +112,7 @@ public class FileManagerDaoImpl extends BaseDao {
         try {
             getJdbcTemplate().update("delete from " + defaultSchema + ".s_folders where s_id = ? and s_owner_id = ?", idFolder, userId);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Ошибка в удалении файла или папки с ид = " + idFolder);
         }
 
@@ -126,14 +130,14 @@ public class FileManagerDaoImpl extends BaseDao {
 
         try {
             LobHandler lobHandler = new DefaultLobHandler();
-            String fileName = file.getName();
+            String fileName = file.getOriginalFilename();
 
             getJdbcTemplate().update(query,
                     new Object[]{
                             parentId,
                             userId,
                             fileName,
-                            "файл",
+                            fileName.substring(fileName.lastIndexOf(".")+1),
                             new SqlLobValue(file.getInputStream(), (int) file.getSize(), lobHandler)
                     },
                     new int[]{
@@ -145,6 +149,7 @@ public class FileManagerDaoImpl extends BaseDao {
                     }
             );
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Ошибка при добавлении файла в файловый менеджер");
         }
         return 0;
@@ -202,7 +207,7 @@ public class FileManagerDaoImpl extends BaseDao {
                         FileCopyUtils.copy(is, finalOut);
                     }
                 }
-            });
+            }, id, userId);
 
 
         } catch(Exception e) {

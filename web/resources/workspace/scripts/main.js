@@ -10,6 +10,8 @@ require.config({
         'angular' : '/CM/resources/bower_components/angular/angular.min',
         'angular-route': '/CM/resources/bower_components/angular-route/angular-route.min',
 
+        'angular-file-upload': '/CM/resources/bower_components/angular-file-upload/angular-file-upload.min',
+
         'angular-cookies': '/CM/resources/bower_components/angular-cookies/angular-cookies.min',
         'angular-sanitize': '/CM/resources/bower_components/angular-sanitize/angular-sanitize.min',
         'angular-resource': '/CM/resources/bower_components/angular-resource/angular-resource.min',
@@ -31,6 +33,7 @@ require.config({
         //angular
         'angular' : {'exports' : 'angular'},
         'angular-route': ['angular'],
+        'angular-file-upload': ['angular'],
         'angular-cookies': ['angular'],
         'angular-sanitize': ['angular'],
         'angular-resource': ['angular'],
@@ -57,6 +60,7 @@ require([
     'jquery-ui',
     'angular',
     'app',
+    'angular-file-upload',
     'angular-route',
     'angular-cookies',
     'angular-sanitize',

@@ -32,10 +32,10 @@ public class FileManagerController {
 
     @RequestMapping(method= RequestMethod.POST, value = "/addfolder")
     @ResponseBody
-    public String addFolder(@RequestBody Folder folder, HttpServletRequest request) {
+    public long addFolder(@RequestBody Folder folder, HttpServletRequest request) {
         String userId = request.getSession().getAttribute("userId").toString();
-        fileManagerDao.addFolder(folder, userId);
-        return "ok";
+
+        return fileManagerDao.addFolder(folder, userId);
     }
 
 
@@ -48,7 +48,7 @@ public class FileManagerController {
         return folders;
     }
 
-    @RequestMapping(value = "/deletefolder/{folderId}",  method = RequestMethod.POST)
+    @RequestMapping(value = "/deletefolder/{folderId}",  method = RequestMethod.GET)
     @ResponseBody
     public int deleteFolder (@PathVariable("folderId") long folderId, HttpServletRequest request) {
         String userId = request.getSession().getAttribute("userId").toString();
@@ -82,7 +82,7 @@ public class FileManagerController {
         return 0;
     }
 
-    @RequestMapping(value = "/getfile/{fileId}",  method = RequestMethod.POST)
+    @RequestMapping(value = "/getfile/{fileId}",  method = RequestMethod.GET)
     @ResponseBody
     public int getFile (@PathVariable("fileId") long fileId, HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getSession().getAttribute("userId").toString();

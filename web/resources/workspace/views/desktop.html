@@ -28,7 +28,7 @@
 								ng-dblclick="win.isMax = win.isMax==1?0:1; updateWindow(win)">
 					<span class="float_left">
 						<img width="20" ng-src="{{unit.unitImgPath}}{{hash}}"/>
-						{{win.title}} - {{unit.unitName}}
+						<span ng-class="win.windowWidth <= 200 ? 'ellipsis' : ''">{{win.title}} - {{unit.unitName}}</span>
 					</span>
 					<span class="float_right">
 						<a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>

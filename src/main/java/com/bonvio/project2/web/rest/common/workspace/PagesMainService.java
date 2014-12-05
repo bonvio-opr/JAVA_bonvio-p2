@@ -170,6 +170,8 @@ public class PagesMainService {
         return "workspace/login";
     }
 
+
+
     @RequestMapping(value="/loginfailed", method=RequestMethod.GET)
     public String loginError(ModelMap model) {
         model.addAttribute("loginError", "Введенные данные неточны");
@@ -180,6 +182,12 @@ public class PagesMainService {
          @ResponseBody
          public int updateApplicationPosition (@RequestBody Application application) {
         return dao.updateApplicationPosition(application);
+    }
+
+
+    @RequestMapping(value="/imageview", method = RequestMethod.GET)
+    public String imageView() {
+        return "workspace/imageview";
     }
 
 
