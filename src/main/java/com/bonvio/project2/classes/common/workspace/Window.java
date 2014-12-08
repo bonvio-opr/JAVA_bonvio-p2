@@ -16,6 +16,9 @@ public class Window {
     private int isMax;
     private int isMin;
     private int zIndex;
+    private String ownerUnitIcon;
+    private String ownerUnitName;
+    private String applicationUrl;
 
     public Window() {
     }
@@ -31,7 +34,10 @@ public class Window {
             String state,
             int isMax,
             int isMin,
-            int zIndex
+            int zIndex,
+            String ownerUnitIcon,
+            String ownerUnitName,
+            String applicationUrl
     ) {
         this.windowId = windowId;
         this.ownerUnitId = ownerUnitId;
@@ -44,6 +50,9 @@ public class Window {
         this.isMax = isMax;
         this.isMin = isMin;
         this.zIndex = zIndex;
+        this.ownerUnitIcon = ownerUnitIcon;
+        this.ownerUnitName = ownerUnitName;
+        this.applicationUrl = applicationUrl;
     }
 
 
@@ -133,5 +142,29 @@ public class Window {
 
     public void setzIndex(int zIndex) {
         this.zIndex = zIndex;
+    }
+
+    public String getOwnerUnitIcon() {
+        return ownerUnitIcon;
+    }
+
+    public void setOwnerUnitIcon(String ownerUnitIcon) {
+        this.ownerUnitIcon = ownerUnitIcon;
+    }
+
+    public String getOwnerUnitName() {
+        return ownerUnitName;
+    }
+
+    public void setOwnerUnitName(String ownerUnitName) {
+        this.ownerUnitName = ownerUnitName;
+    }
+
+    public String getApplicationUrl() {
+        return applicationUrl;
+    }
+
+    public void setApplicationUrl(String applicationUrl) {
+        this.applicationUrl = applicationUrl;
     }
 }

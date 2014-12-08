@@ -1,7 +1,7 @@
 <!--APP ICON BEGIN-->
 <div ng-repeat="icon in applicationUnits">
 	<div class="icon block"
-			 icon-coord ng-model="unit"
+			 icon-coord ng-model="icon"
 			 ng-mouseup="iconUpdate(icon)"
 			 ng-style="{ 'left': icon.unitPositionX + 'px', 'top': icon.unitPositionY + 'px'}"
 			 ng-dblclick="createWindow(icon.id)">

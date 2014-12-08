@@ -39,7 +39,8 @@
     "angular-ui-router": "~0.2.12",
     "angular-gridster": "~0.10.8",
     "mobile-angular-ui": "~1.1.0-beta.30",
-    "mobile-angular-ui-ui-router": "~0.1.0"
+    "mobile-angular-ui-ui-router": "~0.1.0",
+    "angular-file-upload": "~1.1.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

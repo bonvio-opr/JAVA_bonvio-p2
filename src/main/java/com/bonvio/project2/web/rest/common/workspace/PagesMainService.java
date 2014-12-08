@@ -306,6 +306,26 @@ public class PagesMainService {
         return null;
     }
 
+    @RequestMapping(value = "/getWindowsById/{idWs}", method = RequestMethod.GET)
+    @ResponseBody
+    public List <Window> getWindowsById(@PathVariable (value = "idWs") String idWs, HttpServletRequest request) {
+        String userId = request.getSession().getAttribute("userId").toString();
+
+        String wsType = idWs.substring(0, 1);
+        idWs = idWs.substring(1);
+
+        if (wsType.equals("p")){
+            try {
+                return dao.getWindowByWsId(idWs, userId);
+            } catch (Exception e) {e.printStackTrace();}
+        }
+
+        return null;
+    }
+
+
+
+
     /*@RequestMapping(value = "/getApplicationsById/a/{idApp}", method = RequestMethod.GET)
     @ResponseBody
     public List <Application> getApplicationsByIda(@PathVariable (value = "idApp") String idApp, HttpServletRequest request) {

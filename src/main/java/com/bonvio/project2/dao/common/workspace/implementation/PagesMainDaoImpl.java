@@ -194,6 +194,27 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public Window getWindow(int unitID) {
 
+        if (unitID == 0) return null;
+
+        ArrayList<Application> applications = new ArrayList<>();
+        applications.addAll(getJdbcTemplate().query(
+                "select * from S_WS_APPS where s_id = 4",
+                new RowMapper<Application>() {
+                    @Override
+                    public Application mapRow(ResultSet r, int i) throws SQLException {
+                        return new Application(
+                                r.getInt("APPID"),
+                                r.getString("APPNAME"),
+                                r.getString("APPCODE"),
+                                r.getString("IMGPATH"),
+                                r.getInt("APPX"),
+                                r.getInt("APPY"),
+                                r.getInt("UNITTYPE")
+                        );
+                    }
+                }, unitID));
+
+
         Window window = new Window();
         window.setOwnerUnitId(unitID);
         window.setWindowPositionX(100);
@@ -205,6 +226,10 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         window.setTitle("Дефолтное название");
         window.setState("Че за state?");
         window.setzIndex(0);
+        window.setOwnerUnitIcon(applications.get(0).getUnitImgPath());
+        window.setOwnerUnitName(applications.get(0).getUnitName());
+        window.setApplicationUrl(applications.get(0).getUnitCode());
+
 
         /* работает, проверить на БД
 
@@ -225,20 +250,23 @@ select S_WINDOW_SEQ.currval from dual;*/
 
         try {
             getJdbcTemplate().update("insert into " + defaultSchema + ".s_window " +
-                    "(ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex) " +
-                    "values (?,?,?,?,?,?,?,?,?,?) ",
+                            "(ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex, OWNERUNITICON, OWNERUNITNAME, APPLICATIONURL ) " +
+                            "values (?,?,?,?,?,?,?,?,?,?) ",
                     new Object[]{
-                    window.getOwnerUnitId(),
-                    window.getWindowPositionX(),
-                    window.getWindowPositionY(),
-                    window.getWindowWidth(),
-                    window.getWindowHeight(),
-                    window.getTitle(),
-                    window.getState(),
-                    window.getIsMax(),
-                    window.getIsMin(),
-                    window.getzIndex()
-            });
+                            window.getOwnerUnitId(),
+                            window.getWindowPositionX(),
+                            window.getWindowPositionY(),
+                            window.getWindowWidth(),
+                            window.getWindowHeight(),
+                            window.getTitle(),
+                            window.getState(),
+                            window.getIsMax(),
+                            window.getIsMin(),
+                            window.getzIndex(),
+                            window.getOwnerUnitIcon(),
+                            window.getOwnerUnitName(),
+                            window.getApplicationUrl()
+                    });
         } catch (Exception ept) {
             System.out.println("ошибка в создании окна");
         }
@@ -250,7 +278,6 @@ select S_WINDOW_SEQ.currval from dual;*/
         } catch (Exception ept) {
             System.out.println("ошибка в присвоении Ид окна");
         }
-
 
 
         return window;
@@ -353,12 +380,12 @@ select S_WINDOW_SEQ.currval from dual;*/
         }
     }
 
-    public List<Window> getWindowByOwnerWindowId(int id) {
+   /* public List<Window> getWindowByOwnerWindowId(int id) {
 
 
         try {
-            List<Window> applications = new ArrayList<Window>();
-            applications.addAll(getJdbcTemplate().query(
+            List<Window> windows = new ArrayList<Window>();
+            windows.addAll(getJdbcTemplate().query(
                     "select * from s_window  where ownerunitid = ?",
                     new RowMapper<Window>() {
                         @Override
@@ -379,17 +406,64 @@ select S_WINDOW_SEQ.currval from dual;*/
                         }
                     }, id));
 
-            return applications;
+            return windows;
 
         }catch (Exception e){
             e.printStackTrace();
             return null;
         }
+    }*/
 
 
+    public List<Window> getWindowByWsId(String wsId, String userId) {
+
+        String query = "select s_window.WINDOWID, s_window.OWNERUNITID, s_window.WINDOWPOSITIONX, s_window.WINDOWPOSITIONY, " +
+                "s_window.WINDOWWIDTH, s_window.WINDOWHEIGHT, s_window.WINDOWTITLE, s_window.WINDOWSTATE, s_window.ISMAX, " +
+                "s_window.ISMIN, s_window.ZINDEX, s_window.OWNERUNITICON, s_window.OWNERUNITNAME, s_window.APPLICATIONURL " +
+                "from s_u_ws, s_users, S_U_WS_APPS, S_WS_APPS, s_window " +
+                "where s_users.s_id = ? " +
+                "and s_u_ws.S_ID = ? " +
+                "and  s_u_ws.S_USER_ID = s_users.s_id " +
+                "and S_U_WS_APPS.S_WS_ID = s_u_ws.S_ID " +
+                "and S_WS_APPS.S_ID = S_U_WS_APPS.S_APP_ID " +
+                "and S_WS_APPS.S_ID = s_window.OWNERUNITID";
+
+        try {
+            long userIdLong = Long.parseLong(userId);
+            long wsIdLong = Long.parseLong(wsId);
+
+            List<Window> windows = new ArrayList<Window>();
+            windows.addAll(getJdbcTemplate().query(query,
+                    new RowMapper<Window>() {
+                        @Override
+                        public Window mapRow(ResultSet r, int i) throws SQLException {
+                            return new Window(
+                                    r.getInt("WINDOWID"),
+                                    r.getInt("OWNERUNITID"),
+                                    r.getInt("WINDOWPOSITIONX"),
+                                    r.getInt("WINDOWPOSITIONY"),
+                                    r.getInt("WINDOWWIDTH"),
+                                    r.getInt("WINDOWHEIGHT"),
+                                    r.getString("WINDOWTITLE"),
+                                    r.getString("WINDOWSTATE"),
+                                    r.getInt("ISMAX"),
+                                    r.getInt("ISMIN"),
+                                    r.getInt("ZINDEX"),
+                                    r.getString("OWNERUNITICON"),
+                                    r.getString("OWNERUNITNAME"),
+                                    r.getString("APPLICATIONURL")
+                            );
+                        }
+                    }, userIdLong, wsIdLong));
+            return windows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
+    //common using
     public List<Application> getPrivateApplications(String wsId, String userId) {
 
         if (wsId == null) return null;
@@ -443,12 +517,13 @@ select S_WINDOW_SEQ.currval from dual;*/
                     }
                 }, wsId, userId));
 
-        for (int i = 0; i < applications.size(); i++) {
+       /* for (int i = 0; i < applications.size(); i++) {
             applications.get(i).setWindows(getWindowByOwnerWindowId(applications.get(i).getUnitId()));
-        }
+        }*/
 
         return applications;
     }
+
 
     public List<Application> getAdditionalApplications(String wsId, String userId) {
 

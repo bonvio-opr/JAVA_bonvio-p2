@@ -70,7 +70,7 @@ define([
 
 					$http.post('getwindow/' + unit.unitId, null).success(function (data) {
 						console.log(data);
-						$rootScope.applicationUnits[parentIndex].windows.push(data);
+						//$rootScope.applicationUnits[parentIndex].windows.push(data);
 					});
 				};
 
@@ -88,7 +88,7 @@ define([
 				$scope.deleteWindow = function ($index, $parentIndex, window) {
 					$scope.allWindow--; // общее количество открытых окон
 
-					$rootScope.applicationUnits[$parentIndex].windows.splice($index, 1); // удаление на клиенте
+					//$rootScope.applicationUnits[$parentIndex].windows.splice($index, 1); // удаление на клиенте
 					// удаление на сервере
 					var data = {};
 					data.windowId = window.windowId;
