@@ -6,7 +6,8 @@ FileManager.controller("screen", ["$scope", "$http", function ($scope, $http) {
 
 	$scope.openFile = function (file) {
 		if (file.type == 'jpg') {
-			console.log(window);
+
+			window.top.postMessage("HELLO", "*");
 		}
 	};
 

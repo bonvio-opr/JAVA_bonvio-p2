@@ -13,6 +13,10 @@ Gallery.controller("screen", ["$scope", "$http", "$interval", function ($scope, 
 		$scope.intervalTime = localStorage.getItem("intervalTime") || 2000;
 	};
 
+	$scope.fullImage = false;
+	$scope.color = localStorage.getItem("color") || "#fff";
+	localStorage.setItem("color", $scope.color);
+
 	$scope.update = function () {
 		$scope.currentImage = $scope.images[$scope.index];
 	};
@@ -44,11 +48,11 @@ Gallery.controller("screen", ["$scope", "$http", "$interval", function ($scope, 
 		}
 	};
 
-	$scope.initBG = function () {
-		$scope.fullImage = false;
-		$scope.color = localStorage.getItem("color") || "#fff";
-		localStorage.setItem("color", $scope.color);
-	};
+	//$scope.initBG = function () {
+	//	$scope.fullImage = false;
+	//	$scope.color = localStorage.getItem("color") || "#fff";
+	//	localStorage.setItem("color", $scope.color);
+	//};
 
 	$scope.changeBG = function () {
 		$scope.color = ($scope.color == "#fff") ? "#000" : "#fff";

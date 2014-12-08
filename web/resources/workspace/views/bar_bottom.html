@@ -3,7 +3,7 @@
     <img width="80" src="resources/workspace/images/logo-bonvio_transparant.png" />
 </a>
 
-<div ng-init="update()">
+<div ng-init="update(); $parentIndex = $index">
 <div  id="dock" ng-repeat="unit in applicationUnits">
     <ul ng-repeat="tab in unit.windows">
         <li>

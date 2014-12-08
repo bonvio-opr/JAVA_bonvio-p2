@@ -15,18 +15,18 @@
   <script src="/CM/resources/workspace/imageview/script/main.js"></script>
   <link href="/CM/resources/workspace/imageview/style/main.css" rel="stylesheet">
 </head>
-<body ng-controller="screen" ng-keypress="keyPress($event)">
+<body ng-controller="screen" ng-keypress="keyPress($event)" ng-init="currentImage.src = 'http://localhost:8092/CM/filemanager/getfile/101'">
 
-<nav>
-  <ul>
-    <li><a href="#" ng-click="init('img')">Открыть галерею img</a></li>
-    <li><a href="#" ng-click="init('img2')">Открыть галерею img2</a></li>
-  </ul>
-</nav>
+<%--<nav>--%>
+  <%--<ul>--%>
+    <%--<li><a href="#" ng-click="init('img')">Открыть галерею img</a></li>--%>
+    <%--<li><a href="#" ng-click="init('img2')">Открыть галерею img2</a></li>--%>
+  <%--</ul>--%>
+<%--</nav>--%>
 
-<section id="screen" ng-if="currentImage.src" ng-init="initBG(); setting = false">
+<section id="screen" ng-if="currentImage.src" ng-init="setting = false">
   <header>
-    {{currentImage.name}} <span>{{index + 1}} / {{images.length}}</span>
+    {{currentImage.name}}Image Viewer <span>{{index + 1}} / {{images.length}}</span>
   </header>
   <section ng-style="{
 		'background-color': color,
