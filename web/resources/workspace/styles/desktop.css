@@ -598,5 +598,5 @@ th.shrink {
   bottom: 0;
   background: #000;
   opacity: 0.2;
-  display: none;
+  display: block;
 }

@@ -205,7 +205,7 @@ function getOrderByOrderId(orderId) {
             refrashLocalStorageAmaunt(amaunt);
         },
         error: function(){
-            alert('huy');
+            alert('МАЯ ДЕЛАЕТ ДОМ! НЛО ВАЛЯЕТСЯ ТАМ Я ЕЕ ШАТАЛ! ШЕЛЬКЕНЭ БЕЛЬКЕНЭ!!!');
         }
     });
     return false;

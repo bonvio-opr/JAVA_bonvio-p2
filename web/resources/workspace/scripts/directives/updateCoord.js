@@ -11,9 +11,9 @@ define(["angular"], function (angular) {
 				require: "ngModel",
 				link: function (scope, element, attribute, ngModel) {
 					element.on("mousedown", function () {
-						element.css("z-index", scope.maxZIndex);
-						ngModel.$viewValue.zIndex = element.css("z-index");
-						console.log("БОЛЬШОЙ Z" + scope.maxZIndex);
+					// изменяем Z-INDEX
+					element.css("z-index", scope.maxZIndex);
+					ngModel.$viewValue.zIndex = element.css("z-index");
 					});
 					element.on("mousemove", function () {
 						scope.$apply(function () {
