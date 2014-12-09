@@ -17,7 +17,7 @@ define(["angular"], function (angular) {
 						if (!event.target.classList.contains("winResizableBlock")) {
 							startX = event.pageX - parseInt(style["left"] || 0);
 							startY = event.pageY - parseInt(style["top"] || 0);
-							overlay.css("display", "block");
+							//overlay.css("display", "block");
 							$document.bind("mousemove", mousemove);
 							$document.bind("mouseup", mouseup);
 						}
@@ -29,7 +29,7 @@ define(["angular"], function (angular) {
 					}
 
 					function mouseup(event) {
-						overlay.css("display", "none");
+						//overlay.css("display", "none");
 						$document.unbind("mousemove", mousemove);
 						$document.unbind("mouseup", mouseup);
 					}

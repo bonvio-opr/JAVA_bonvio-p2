@@ -49,7 +49,7 @@
 						<iframe ng-src="{{win.applicationUrl}}"></iframe>
 						<!--&lt;!&ndash;<object class="window_iframe" data="{{unit.applicationUrl}}"></object>&ndash;&gt;-->
 					</div>
-					<div class="overlay"></div>
+					<div ng-class="maxZIndex - 1 != win.zIndex ? 'overlay' : '' "></div>
 				</div>
 				<!--CONTENT END HERE-->
 				<!--FOOTER BEGIN HERE-->
