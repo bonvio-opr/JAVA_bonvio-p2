@@ -32,8 +32,8 @@
 				<header class="window_top"
 								ng-dblclick="win.isMax = win.isMax==1?0:1; updateWindow(win)">
 						<span class="float_left">
-							<img width="20" ng-src="{{win.unitImgPath}}{{hash}}"/>
-							<span ng-class="win.windowWidth <= 200 ? 'ellipsis' : ''">{{win.title}} - {{win.unitName}} -Z {{maxZIndex}} -curZ {{win.zIndex}}</span>
+							<img width="20" ng-src="{{win.ownerUnitIcon}}{{hash}}"/>
+							<span ng-class="win.windowWidth <= 200 ? 'ellipsis' : ''">{{win.title}} - {{win.ownerUnitName}} -Z {{maxZIndex}} -curZ {{win.zIndex}}</span>
 						</span>
 						<span class="float_right">
 							<a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
