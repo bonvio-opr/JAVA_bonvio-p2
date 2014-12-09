@@ -28,25 +28,8 @@
     <link rel="stylesheet" href="resources/workspace/styles/ie.css" />
     <![endif]-->
 
+
     <link rel="stylesheet" href="resources/workspace/styles/winStyle.css" />
-
-    <script>
-        window.addEventListener("message", listener);
-        function listener(event){
-            var iframe1 = document.createElement('img');
-            //iframe1.src = 'http://localhost:8092/CM/filemanager/getfile/' + event.data.id;
-            //document.querySelector('#desktop').appendChild(iframe1);
-            alert(event.data);
-//
-//            document.body.append("<img>");
-//            if (confirm("File Manager Send Message to Workspace: " + event.data + "\nSend Message to Gallery?")) {
-////                console.log(window.frames['imageview']);
-//            }
-//            window.top.postMessage('Hello Workspace', "*");
-        }
-    </script>
-
-
 </head>
 <body ng-app="p2DashboardApp">
 

@@ -4,12 +4,29 @@
 var Gallery = angular.module("Gallery", []);
 
 Gallery.controller("screen", ["$scope", "$http", "$interval", function ($scope, $http, $interval) {
-	$scope.init = function (galleryName) {
-		$http.post("files/" + galleryName + ".json").success(function (data) {
-			$scope.images = data;
-			$scope.currentImage = $scope.images[0];
-			$scope.index = 0;
+	$scope.init = function () {
+		//console.log(localStorage.getItem("imageviewer"));
+
+
+
+		var mainImage = JSON.parse(localStorage.getItem("imageviewer"));
+
+		$http.get("/CM/filemanager/getfolderbyparentid/" + mainImage.parentId).success(function (data) {
+			$scope.images = [];
+			var number = 0;
+			data.forEach(function (element, index) {
+				if (element.id == mainImage.id) {
+					$scope.currentImage = data[index];
+					console.log(index);
+					$scope.index = number;
+				}
+				if (element.type == "jpg" || element.type == "png") {
+					$scope.images.push(element);
+					number++;
+				}
+			});
 		});
+
 		$scope.intervalTime = localStorage.getItem("intervalTime") || 2000;
 	};
 

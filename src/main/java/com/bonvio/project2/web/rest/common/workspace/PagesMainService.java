@@ -199,6 +199,14 @@ public class PagesMainService {
         return dao.getWindow(unitId);
     }
 
+    @RequestMapping(value="/getApplicationByExt/{ext}", method=RequestMethod.POST)
+    @ResponseBody
+    public Window getApplicationByExt (@PathVariable("ext") String ext) {
+        System.out.println(ext);
+
+        return dao.getWindow(1);
+    }
+
     @RequestMapping(value="/updatewindow", method=RequestMethod.POST)
     @ResponseBody
     public int updateWindow (@RequestBody Window window) {

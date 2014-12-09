@@ -15,7 +15,7 @@
   <script src="/CM/resources/workspace/imageview/script/main.js"></script>
   <link href="/CM/resources/workspace/imageview/style/main.css" rel="stylesheet">
 </head>
-<body ng-controller="screen" ng-keypress="keyPress($event)" ng-init="currentImage.src = '/CM/filemanager/getfile/101'">
+<body ng-controller="screen" ng-keypress="keyPress($event)" ng-init="init()">
 
 <%--<nav>--%>
   <%--<ul>--%>
@@ -24,7 +24,7 @@
   <%--</ul>--%>
 <%--</nav>--%>
 
-<section id="screen" ng-if="currentImage.src" ng-init="setting = false">
+<section id="screen" ng-if="currentImage.id" ng-init="setting = false">
   <header>
     {{currentImage.name}}Image Viewer <span>{{index + 1}} / {{images.length}}</span>
   </header>
@@ -32,7 +32,7 @@
 		'background-color': color,
 		'transition-property': 'background-color',
 		'transition-duration': '0.5s'}">
-    <img ng-src="{{currentImage.src}}"
+    <img ng-src="/CM/filemanager/getfile/{{currentImage.id}}"
          ng-class="fullImage ? 'full' : ''"
          ng-click="nextImage()">
   </section>

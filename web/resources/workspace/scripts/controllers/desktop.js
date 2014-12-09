@@ -13,7 +13,7 @@ define([
 		 */
 		angular
 			.module('DesktopCtrl', [])
-			.controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', '$rootScope', function ($scope, $http, $sce, $routeParams, $rootScope) {
+			.controller('DesktopCtrl', ['$scope', '$http', '$sce', '$routeParams', '$rootScope', '$window', function ($scope, $http, $sce, $routeParams, $rootScope, $window) {
 				console.log('DesktopCtrl it work');
 				localStorage.setItem("selectedURL", $routeParams.desktopId);
 				console.log("selected selectedDesktopId: " + $routeParams.desktopId);
@@ -35,11 +35,37 @@ define([
 					}
 
 					$rootScope.windowUnits = $scope.windowUnits = data;
+					if (parseInt(data.length || 0) > 0) {
+						$scope.maxZIndex = ($scope.windowUnits[$scope.windowUnits.length - 1].zIndex) + 1;
+					}
 					//console.log(windowUnits);
-					$scope.maxZIndex = ($scope.windowUnits[$scope.windowUnits.length - 1].zIndex) + 1;
 					//console.log($scope.maxZIndex);
 					//console.log(data);
 				});
+
+				window.addEventListener("message", listener);
+				function listener(event) {
+					event.data.window.zIndex = $scope.maxZIndex++;
+					$scope.windowUnits.push(event.data.window);
+
+					//IMAGE
+					var data = {id: event.data.file.id, parentId: event.data.file.parentId};
+					localStorage.setItem("imageviewer", JSON.stringify(data));
+
+
+
+
+
+
+
+					//window.top.postMessage(bigData, "*");
+					//console.log();
+
+					//$window.$apply(function () {
+					//	console.log($window.top.frames['imageview']);
+					//	//console.log('1', window.top.frames['imageview']);
+					//});
+				}
 
 
 

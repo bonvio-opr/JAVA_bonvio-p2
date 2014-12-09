@@ -3,12 +3,14 @@ var root = "root";
 FileManager.controller("screen", ["$scope", "$http", function ($scope, $http) {
 	$scope.files = {};
 
-
 	$scope.openFile = function (file) {
-		if (file.type == 'jpg') {
-
-			window.top.postMessage("HELLO", "*");
-		}
+		$http.post("/CM/getApplicationByExt/" + file.type).success(function (data) {
+			var bigData = {
+				'window': data,
+				'file': file
+			};
+			window.top.postMessage(bigData, "*");
+		});
 	};
 
 	$scope.init = function (side, file) {
