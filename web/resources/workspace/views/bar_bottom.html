@@ -3,15 +3,24 @@
     <img width="80" src="resources/workspace/images/logo-bonvio_transparant.png" />
 </a>
 
-<div ng-init="update(); $parentIndex = $index">
-<div  id="dock" ng-repeat="unit in applicationUnits">
-    <ul ng-repeat="tab in unit.windows">
+
+
+
+
+
+
+
+
+
+<div ng-init="update()">
+<div  id="dock">
+    <ul ng-repeat="tab in windowUnits">
         <li>
             <a href
-               ng-click="tab.isMin = tab.isMin == 1 ? 0 : 1; updateWindow(tab)"
+               ng-click="(tab.isMin == 1 ? tab.isMin = 0 : tab.isMin = 1); updateWindow(tab)"
                ng-class="tab.isMin == 0 ? 'active':''">
-                <img width="20" ng-src="{{i.unitImgPath}}{{hash}}" />
-            {{tab.isMin}} - {{unit.unitName}} - {{tab.windowTitle}}
+                <img width="20" ng-src="{{tab.unitImgPath}}{{hash}}" />
+            {{tab.isMin}} - {{tab.ownerUnitName}} - {{tab.title}}
             </a>
         </li>
     </ul>

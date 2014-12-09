@@ -4,62 +4,66 @@
 			 icon-coord ng-model="icon"
 			 ng-mouseup="iconUpdate(icon)"
 			 ng-style="{ 'left': icon.unitPositionX + 'px', 'top': icon.unitPositionY + 'px'}"
-			 ng-dblclick="createWindow(icon.id)">
+			 ng-dblclick="createWindow(icon.unitId)">
 		<img ng-src="{{icon.unitImgPath}}{{hash}}">
 		{{icon.unitName}} x: {{icon.unitPositionX}} y: {{icon.unitPositionY}}
 	</div>
 </div>
 <!--APP ICON END-->
 <!--WINDOW BEGIN HERE-->
-<section ng-repeat="win in windowUnits" ng-show="win.isMin == 1">
-	<div win-draggable win-resizable win-z-index
-			 win-coord ng-model="win"
-			 class="abs"
-			 ng-style="{
-				 'position': 'absolute',
-				 'left': win.windowPositionX + 'px',
-				 'top': win.windowPositionY + 'px',
-				 'width': (win.windowWidth <= 200 ? 200 : win.windowWidth) + 'px',
-				 'height': (win.windowHeight <= 200 ? 200 : win.windowHeight) + 'px'
-				 }"
-			 ng-mouseup="updateWindow(win)"
-			 ng-class="!win.isMax ?'window single-window' : 'window_full'">
-		<div class="abs window_inner">
-			<!--ШАПКА BEGIN HERE-->
-			<header class="window_top"
-							ng-dblclick="win.isMax = win.isMax==1?0:1; updateWindow(win)">
-					<span class="float_left">
-						<img width="20" ng-src="{{unit.unitImgPath}}{{hash}}"/>
-						<span ng-class="win.windowWidth <= 200 ? 'ellipsis' : ''">{{win.title}} - {{unit.unitName}}</span>
-					</span>
-					<span class="float_right">
-						<a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
-						<a href class="window_resize" ng-click="win.isMax = win.isMax==1?0:1; updateWindow(win)"></a>
-						<a href class="window_close" ng-click="deleteWindow($index, $parentIndex, win)"></a>
-					</span>
-			</header>
-			<!--ШАПКА END HERE-->
-			<!--CONTENT BEGIN HERE-->
-			<div class="abs window_content">
-				<div class="window_iframe window_main_without_aside">
-					<!--&lt;!&ndash;<div class="window_iframe" ng-include="unit.applicationUrl"></div>&ndash;&gt;-->
-					<iframe ng-src="{{unit.applicationUrl}}" id="{{unit.applicationUrl}}"></iframe>
-					<!--&lt;!&ndash;<object class="window_iframe" data="{{unit.applicationUrl}}"></object>&ndash;&gt;-->
+<!--ng-show="win.isMin == 1"-->
+<section ng-click="maxZIndex = maxZIndex + 1">
+	<section ng-repeat="win in windowUnits" ng-show="win.isMin == 1">
+		<div win-draggable win-resizable
+				 win-coord ng-model="win"
+				 class="abs"
+				 ng-style="{
+					 'position': 'absolute',
+					 'left': win.windowPositionX + 'px',
+					 'top': win.windowPositionY + 'px',
+					 'width': (win.windowWidth <= 200 ? 200 : win.windowWidth) + 'px',
+					 'height': (win.windowHeight <= 200 ? 200 : win.windowHeight) + 'px',
+					 'z-index': win.zIndex
+					 }"
+				 ng-mouseup="updateWindow(win)"
+				 ng-class="!win.isMax ?'window single-window' : 'window_full'">
+			<div class="abs window_inner">
+				<!--ШАПКА BEGIN HERE-->
+				<header class="window_top"
+								ng-dblclick="win.isMax = win.isMax==1?0:1; updateWindow(win)">
+						<span class="float_left">
+							<img width="20" ng-src="{{win.unitImgPath}}{{hash}}"/>
+							<span ng-class="win.windowWidth <= 200 ? 'ellipsis' : ''">{{win.title}} - {{win.unitName}} -Z {{maxZIndex}} -curZ {{win.zIndex}}</span>
+						</span>
+						<span class="float_right">
+							<a href class="window_min" ng-click="win.isMin = 0; updateWindow(win)"></a>
+							<a href class="window_resize" ng-click="win.isMax = win.isMax==1?0:1; updateWindow(win)"></a>
+							<a href class="window_close" ng-click="deleteWindow(win.windowId, $index)"></a>
+						</span>
+				</header>
+				<!--ШАПКА END HERE-->
+				<!--CONTENT BEGIN HERE-->
+				<div class="abs window_content">
+					<div class="window_iframe window_main_without_aside">
+						<!--&lt;!&ndash;<div class="window_iframe" ng-include="unit.applicationUrl"></div>&ndash;&gt;-->
+						<iframe ng-src="{{win.applicationUrl}}"></iframe>
+						<!--&lt;!&ndash;<object class="window_iframe" data="{{unit.applicationUrl}}"></object>&ndash;&gt;-->
+					</div>
+					<div class="overlay"></div>
 				</div>
-				<div class="overlay"></div>
+				<!--CONTENT END HERE-->
+				<!--FOOTER BEGIN HERE-->
+				<div class="abs window_bottom">
+					<!--&lt;!&ndash;Free: 80.9 GB {{applicationUrl}}&ndash;&gt;-->
+				</div>
+				<!--FOOTER END HERE-->
+				<span class="abs ui-resizable-handle ui-resizable-se winResizableBlock"></span>
 			</div>
-			<!--CONTENT END HERE-->
-			<!--FOOTER BEGIN HERE-->
-			<div class="abs window_bottom">
-				<!--&lt;!&ndash;Free: 80.9 GB {{applicationUrl}}&ndash;&gt;-->
-			</div>
-			<!--FOOTER END HERE-->
-			<span class="abs ui-resizable-handle ui-resizable-se winResizableBlock"></span>
 		</div>
-	</div>
+	</section>
 </section>
 <!--WINDOW END HERE-->
-
+<div class="desktop-allocate"></div>
 
 
 

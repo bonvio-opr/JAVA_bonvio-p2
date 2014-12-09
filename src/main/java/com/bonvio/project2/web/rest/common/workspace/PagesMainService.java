@@ -313,6 +313,7 @@ public class PagesMainService {
 
         String wsType = idWs.substring(0, 1);
         idWs = idWs.substring(1);
+        System.out.println(wsType);
 
         if (wsType.equals("p")){
             try {

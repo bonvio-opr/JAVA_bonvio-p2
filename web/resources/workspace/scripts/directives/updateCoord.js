@@ -10,6 +10,11 @@ define(["angular"], function (angular) {
 				restrict: "A",
 				require: "ngModel",
 				link: function (scope, element, attribute, ngModel) {
+					element.on("mousedown", function () {
+						element.css("z-index", scope.maxZIndex);
+						ngModel.$viewValue.zIndex = element.css("z-index");
+						console.log("БОЛЬШОЙ Z" + scope.maxZIndex);
+					});
 					element.on("mousemove", function () {
 						scope.$apply(function () {
 							if (ngModel.$viewValue.isMax == 0) {

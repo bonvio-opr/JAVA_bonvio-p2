@@ -196,24 +196,28 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
         if (unitID == 0) return null;
 
-        ArrayList<Application> applications = new ArrayList<>();
-        applications.addAll(getJdbcTemplate().query(
-                "select * from S_WS_APPS where s_id = 4",
-                new RowMapper<Application>() {
-                    @Override
-                    public Application mapRow(ResultSet r, int i) throws SQLException {
-                        return new Application(
-                                r.getInt("APPID"),
-                                r.getString("APPNAME"),
-                                r.getString("APPCODE"),
-                                r.getString("IMGPATH"),
-                                r.getInt("APPX"),
-                                r.getInt("APPY"),
-                                r.getInt("UNITTYPE")
-                        );
-                    }
-                }, unitID));
-
+    ArrayList<Application> applications = new ArrayList<>();
+        try {
+    applications.addAll(getJdbcTemplate().query(
+            "select * from S_WS_APPS where s_id = ?",
+            new RowMapper<Application>() {
+                @Override
+                public Application mapRow(ResultSet r, int i) throws SQLException {
+                    return new Application(
+                            r.getInt("S_ID"),
+                            r.getString("S_NAME"),
+                            r.getString("S_CODE"),
+                            r.getString("S_APP_IMAGE"),
+                            r.getInt("S_APP_POSITION_X"),
+                            r.getInt("S_APP_POSITION_Y"),
+                            r.getInt("S_UNIT_TYPE")
+                    );
+                }
+            }, unitID));
+}catch (Exception e){
+            System.out.println("Получено Ид приложения ошибка");
+    e.printStackTrace();
+}
 
         Window window = new Window();
         window.setOwnerUnitId(unitID);
@@ -250,8 +254,8 @@ select S_WINDOW_SEQ.currval from dual;*/
 
         try {
             getJdbcTemplate().update("insert into " + defaultSchema + ".s_window " +
-                            "(ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex, OWNERUNITICON, OWNERUNITNAME, APPLICATIONURL ) " +
-                            "values (?,?,?,?,?,?,?,?,?,?) ",
+                            "(ownerunitid, windowpositionx, windowpositiony, windowwidth, windowheight, windowtitle, windowstate, ismax, ismin, zindex, OWNERUNITICON, OWNERUNITNAME, APPLICATIONURL) " +
+                            "values (?,?,?,?,?,?,?,?,?,?,?,?,?) ",
                     new Object[]{
                             window.getOwnerUnitId(),
                             window.getWindowPositionX(),
@@ -419,14 +423,15 @@ select S_WINDOW_SEQ.currval from dual;*/
 
         String query = "select s_window.WINDOWID, s_window.OWNERUNITID, s_window.WINDOWPOSITIONX, s_window.WINDOWPOSITIONY, " +
                 "s_window.WINDOWWIDTH, s_window.WINDOWHEIGHT, s_window.WINDOWTITLE, s_window.WINDOWSTATE, s_window.ISMAX, " +
-                "s_window.ISMIN, s_window.ZINDEX, s_window.OWNERUNITICON, s_window.OWNERUNITNAME, s_window.APPLICATIONURL " +
+                "s_window.ISMIN, s_window.ZINDEX, S_WS_APPS.S_APP_IMAGE, S_WS_APPS.s_name, S_WS_APPS.s_code " +
                 "from s_u_ws, s_users, S_U_WS_APPS, S_WS_APPS, s_window " +
                 "where s_users.s_id = ? " +
                 "and s_u_ws.S_ID = ? " +
                 "and  s_u_ws.S_USER_ID = s_users.s_id " +
                 "and S_U_WS_APPS.S_WS_ID = s_u_ws.S_ID " +
                 "and S_WS_APPS.S_ID = S_U_WS_APPS.S_APP_ID " +
-                "and S_WS_APPS.S_ID = s_window.OWNERUNITID";
+                "and S_WS_APPS.S_ID = s_window.OWNERUNITID " +
+                "order by s_window.ZINDEX";
 
         try {
             long userIdLong = Long.parseLong(userId);
@@ -449,9 +454,9 @@ select S_WINDOW_SEQ.currval from dual;*/
                                     r.getInt("ISMAX"),
                                     r.getInt("ISMIN"),
                                     r.getInt("ZINDEX"),
-                                    r.getString("OWNERUNITICON"),
-                                    r.getString("OWNERUNITNAME"),
-                                    r.getString("APPLICATIONURL")
+                                    r.getString("S_APP_IMAGE"),
+                                    r.getString("s_name"),
+                                    r.getString("s_code")
                             );
                         }
                     }, userIdLong, wsIdLong));

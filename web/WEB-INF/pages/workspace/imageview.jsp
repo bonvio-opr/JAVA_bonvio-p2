@@ -15,7 +15,7 @@
   <script src="/CM/resources/workspace/imageview/script/main.js"></script>
   <link href="/CM/resources/workspace/imageview/style/main.css" rel="stylesheet">
 </head>
-<body ng-controller="screen" ng-keypress="keyPress($event)" ng-init="currentImage.src = 'http://localhost:8092/CM/filemanager/getfile/101'">
+<body ng-controller="screen" ng-keypress="keyPress($event)" ng-init="currentImage.src = '/CM/filemanager/getfile/101'">
 
 <%--<nav>--%>
   <%--<ul>--%>

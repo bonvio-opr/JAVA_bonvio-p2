@@ -20,6 +20,10 @@ define(['angular'], function (angular) {
             $scope.update  = function() {
                 console.log($rootScope.applicationUnits);
             };
+
+            $scope.updateTab = function (window) {
+                console.log("ТОЧКА!111111111");
+            };
 //            console.log($scope.applicationUnits);
 
 

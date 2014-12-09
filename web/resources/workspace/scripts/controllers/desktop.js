@@ -25,10 +25,20 @@ define([
 					$rootScope.applicationUnits = $scope.applicationUnits = data;
 				});
 
+				$scope.maxZIndex = 10;
+
 				// получаем все окна по desktopId
 				$http.get('getWindowsById/' + $routeParams.desktopId).success(function (data) {
 					localStorage.setItem('getWindowsById', JSON.stringify(data));
+					for (var i = 0; i < data.length; i++) {
+						data[i].zIndex = $scope.maxZIndex++;
+					}
+
 					$rootScope.windowUnits = $scope.windowUnits = data;
+					//console.log(windowUnits);
+					$scope.maxZIndex = ($scope.windowUnits[$scope.windowUnits.length - 1].zIndex) + 1;
+					//console.log($scope.maxZIndex);
+					//console.log(data);
 				});
 
 
@@ -56,45 +66,49 @@ define([
 
 				// icon
 				$scope.iconUpdate = function (unit) {
-					unit.unitActive = null;
 					$http.post('updateApplicationPosition/', unit).success(function (data) {
 						localStorage.setItem('getApplicationsById', JSON.stringify(data));
 					});
 				};
 
-				$scope.getWindow = function (unit, parentIndex) {
+				//$scope.getWindow = function (unit, parentIndex) {
+                //
+				//	$scope.allWindow++; // общее количество открытых окон
+                //
+				//	$rootScope.applicationUnits[parentIndex].applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
+                //
+				//	$http.post('getwindow/' + unit.unitId, null).success(function (data) {
+				//		console.log(data);
+				//		//$rootScope.applicationUnits[parentIndex].windows.push(data);
+				//	});
+				//};
 
-					$scope.allWindow++; // общее количество открытых окон
-
-					$rootScope.applicationUnits[parentIndex].applicationUrl = $sce.trustAsResourceUrl(unit.unitCode);
-
-					$http.post('getwindow/' + unit.unitId, null).success(function (data) {
-						console.log(data);
+				// ОКОШКИ
+				$scope.createWindow = function (unitId) {
+					$http.post('getwindow/' + parseInt(unitId), null).success(function (data) {
+						data.zIndex = $scope.maxZIndex++;
+						$scope.windowUnits.push(data);
 						//$rootScope.applicationUnits[parentIndex].windows.push(data);
 					});
 				};
-
-				$scope.createWindow = function (unitId) {
-					//
+				$scope.deleteWindow = function (windowId, $index) {
+					$http.post('deletewindow/', {windowId: windowId}).success(function (data) {
+						$scope.windowUnits.splice($index, 1);
+					});
 				};
 
+
+
+
+
 				$rootScope.updateWindow = function (window) {
+					console.log("ТОЧКА!");
 					window.isMax = parseInt(window.isMax);
 					window.isMin = parseInt(window.isMin);
 					$http.post('updatewindow/', window).success(function (data) {
 						console.log("good - " + data);
 					});
 				};
-				$scope.deleteWindow = function ($index, $parentIndex, window) {
-					$scope.allWindow--; // общее количество открытых окон
 
-					//$rootScope.applicationUnits[$parentIndex].windows.splice($index, 1); // удаление на клиенте
-					// удаление на сервере
-					var data = {};
-					data.windowId = window.windowId;
-					$http.post('deletewindow/', data).success(function (data) {
-						console.log("good - " + data);
-					});
-				};
 			}]);
 	});
