@@ -34,7 +34,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public int checkCredentials(String number, String password) {
 
-        if (getJdbcTemplate().queryForInt("select count (*) from " + defaultSchema + ".s_users where s_phonenumber=?", number) > 0) {
+        if (getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=?", number) > 0) {
             //Integer exists = getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=? and s_password=?", number, password);
             try {
                 Integer exists = getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=? and s_password=?", number, password);
@@ -194,30 +194,31 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public Window getWindow(int unitID) {
 
+
         if (unitID == 0) return null;
 
-    ArrayList<Application> applications = new ArrayList<>();
+        ArrayList<Application> applications = new ArrayList<>();
         try {
-    applications.addAll(getJdbcTemplate().query(
-            "select * from S_WS_APPS where s_id = ?",
-            new RowMapper<Application>() {
-                @Override
-                public Application mapRow(ResultSet r, int i) throws SQLException {
-                    return new Application(
-                            r.getInt("S_ID"),
-                            r.getString("S_NAME"),
-                            r.getString("S_CODE"),
-                            r.getString("S_APP_IMAGE"),
-                            r.getInt("S_APP_POSITION_X"),
-                            r.getInt("S_APP_POSITION_Y"),
-                            r.getInt("S_UNIT_TYPE")
-                    );
-                }
-            }, unitID));
-}catch (Exception e){
+            applications.addAll(getJdbcTemplate().query(
+                    "select * from S_WS_APPS where s_id = ?",
+                    new RowMapper<Application>() {
+                        @Override
+                        public Application mapRow(ResultSet r, int i) throws SQLException {
+                            return new Application(
+                                    r.getInt("S_ID"),
+                                    r.getString("S_NAME"),
+                                    r.getString("S_CODE"),
+                                    r.getString("S_APP_IMAGE"),
+                                    r.getInt("S_APP_POSITION_X"),
+                                    r.getInt("S_APP_POSITION_Y"),
+                                    r.getInt("S_UNIT_TYPE")
+                            );
+                        }
+                    }, unitID));
+        }catch (Exception e){
             System.out.println("Получено Ид приложения ошибка");
-    e.printStackTrace();
-}
+            e.printStackTrace();
+        }
 
         Window window = new Window();
         window.setOwnerUnitId(unitID);
@@ -236,7 +237,6 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
 
         /* работает, проверить на БД
-
         DECLARE
  id number;
 BEGIN
@@ -277,9 +277,10 @@ select S_WINDOW_SEQ.currval from dual;*/
 
 
         try {
-            int windowId = getJdbcTemplate().queryForInt("select S_WINDOW_SEQ.currval as ownerunitid from dual");
+            int windowId = getJdbcTemplate().queryForInt("select max(windowid) from s_window");
             window.setWindowId(windowId);
         } catch (Exception ept) {
+            ept.printStackTrace();
             System.out.println("ошибка в присвоении Ид окна");
         }
 
@@ -385,8 +386,6 @@ select S_WINDOW_SEQ.currval from dual;*/
     }
 
    /* public List<Window> getWindowByOwnerWindowId(int id) {
-
-
         try {
             List<Window> windows = new ArrayList<Window>();
             windows.addAll(getJdbcTemplate().query(
@@ -409,9 +408,7 @@ select S_WINDOW_SEQ.currval from dual;*/
                             );
                         }
                     }, id));
-
             return windows;
-
         }catch (Exception e){
             e.printStackTrace();
             return null;

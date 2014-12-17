@@ -25,6 +25,9 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
         String q = "";
         if(myCurrentAccountRole.toLowerCase().contains("c")) {            //ЕСЛИ ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ КЛИЕНТ
 //            q = "select * from " + defaultSchema + ".s_cafe_events where s_date>=trunc(SYSDATE) and S_EXPOSED <> 0 and S_DELETED <> 0 order by s_date";
+
+            // change SYSDATE  (use in Oracle)  to NOW() (use to mysql)
+            // chang trunc() to DATE()
             q = "select " +
                     "EV.S_ID, " +
                     "EV.S_DATE, " +
@@ -65,18 +68,18 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
                     "WHERE (" +
                     "  EV.S_EVENT_TYPE<>27" +
                     "  AND EV.S_EVENT_TYPE<>13 " +
-                    "  AND s_date>=TRUNC(SYSDATE - 1) " +
+                    "  AND s_date>=DATE(NOW()) - 1 " +
                     "  AND EV.S_DELETED=0 " +
                     "  AND ORD.S_DATE_CLOSE IS NULL " +
                     "  ) " +
                     " OR (" +
                     "  EV.S_EVENT_TYPE=13 " +
-                    "  AND s_date>=TRUNC(SYSDATE - 1) " +
+                    "  AND s_date>=DATE(NOW()) - 1 " +
                     "  AND EV.S_DELETED=0 " +
                     "  ) " +
                     " OR (" +
                     "  EV.S_EVENT_TYPE=25 " +
-                    "  AND s_date>=TRUNC(SYSDATE - 1) " +
+                    "  AND s_date>=DATE(NOW()) - 1 " +
                     "  AND EV.S_DELETED=0 " +
                     "  ) " +
                     "  OR (" +
@@ -105,7 +108,7 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
 //                    " OR " +
                     "(" +
                     "  EV.S_EVENT_TYPE in (11) " +
-                    "  AND s_date>=TRUNC(SYSDATE - 1) " +
+                    "  AND s_date>=DATE(NOW()) - 1 " +
                     "  AND EV.S_EXPOSED=0 " +
                     "  ) " +
                     "  OR (" +
@@ -145,18 +148,18 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
 
     public InternalEvent getEventById(int cafeSpotId, int eventId) {
         String q =
-            "select EV.S_ID," +
-                "EV.S_DATE, " +
-                "EV.S_EVENT_TYPE," +
-                "EV.S_EVENT_SOURCE," +
-                "EV.S_EVENT_HEADER," +
-                "EV.S_EVENT_CONTENT," +
-                "EV.S_EVENT_SPOT_ID," +
-                "EV.S_EXPOSED," +
-                "EV.S_DELETED, " +
-                "EV.S_SERV_ID " +
-            "from "+defaultSchema+".s_cafe_events " +
-            "where s_id="+eventId+" and s_spot_id="+cafeSpotId;
+                "select EV.S_ID," +
+                        "EV.S_DATE, " +
+                        "EV.S_EVENT_TYPE," +
+                        "EV.S_EVENT_SOURCE," +
+                        "EV.S_EVENT_HEADER," +
+                        "EV.S_EVENT_CONTENT," +
+                        "EV.S_EVENT_SPOT_ID," +
+                        "EV.S_EXPOSED," +
+                        "EV.S_DELETED, " +
+                        "EV.S_SERV_ID " +
+                        "from "+defaultSchema+".s_cafe_events " +
+                        "where s_id="+eventId+" and s_spot_id="+cafeSpotId;
         try {
             return (InternalEvent) getJdbcTemplate().query(q, new RowMapper<InternalEvent>() {
                 @Override
@@ -185,7 +188,7 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
     public int exposeEvent(int eventId, String ip) {
         try {
             String q = "update "+defaultSchema+".s_cafe_events set s_exposed=1 where s_id="+eventId+" and " +
-            "((s_event_source=1 and s_event_spot_id="+getSpotIdBySpotIpAddress(ip)+") " +
+                    "((s_event_source=1 and s_event_spot_id="+getSpotIdBySpotIpAddress(ip)+") " +
                     "or (s_event_source=2 and s_event_spot_id=0)" +
                     ")";
             getJdbcTemplate().update(q);
@@ -224,7 +227,7 @@ public class CafeEventsDaoImpl extends BaseDao implements CafeEventsDao {
                     eventSpotId,
                     0,
                     event.getEventOrderId()
-                    );
+            );
             return 1;
         } catch (Exception e) {
             System.out.println("Ошибка отправки события на запись в базу: ошибка синтаксиса Oracle");

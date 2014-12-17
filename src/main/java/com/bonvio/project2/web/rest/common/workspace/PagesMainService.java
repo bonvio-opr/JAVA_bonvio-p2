@@ -57,7 +57,7 @@ public class PagesMainService {
                 return "redirect:/";
             }
         } catch (Exception e) {}
-        try {
+        //try {
             String optimizedNumber = optimizeNumber(number);
             int checkResult = dao.checkCredentials(optimizedNumber, password);
             if (checkResult == 1) {
@@ -98,10 +98,10 @@ public class PagesMainService {
                 model.setViewName("workspace/login");
                 return "redirect:/";
             }
-        } catch (Exception e) {
+       /* } catch (Exception e) {
             //return new ModelAndView("workspace/login");
             return "redirect:/";
-        }
+        }*/
         //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
         model.setViewName("workspace/login");
         //return model;

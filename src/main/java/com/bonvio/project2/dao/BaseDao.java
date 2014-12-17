@@ -9,7 +9,7 @@ import javax.sql.DataSource;
  */
 public abstract class BaseDao extends NamedParameterJdbcDaoSupport {
 
-    protected String defaultSchema = "ARTI";
+    protected String defaultSchema = "test";
 
     public BaseDao(DataSource dataSource) {
         setDataSource(dataSource);

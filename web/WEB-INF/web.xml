@@ -9,6 +9,11 @@
         <welcome-file>/login</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/pages/workspace/error.jsp</location>
+    </error-page>
+
     <display-name>rest</display-name>
 
     <context-param>

@@ -126,11 +126,13 @@ public class FileManagerDaoImpl extends BaseDao {
     //add only one file
     public long uploadFile(MultipartFile file, long parentId, String userId) {
 
-        String query = "insert into " + defaultSchema + ".s_folders (s_parent_id, s_owner_id, s_name, s_type, s_file) values (?,?,?,?,?)";
+        String query = "insert into " + defaultSchema + ".s_folders (s_parent_id, s_owner_id, s_name, s_type, S_FILE) values (?,?,?,?,?)";
 
         try {
             LobHandler lobHandler = new DefaultLobHandler();
             String fileName = file.getOriginalFilename();
+            System.out.println("fileName" + fileName);
+
 
             getJdbcTemplate().update(query,
                     new Object[]{

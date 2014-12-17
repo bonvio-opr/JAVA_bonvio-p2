@@ -161,42 +161,42 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
         CafeObject cafeObject = new CafeObject();
         String q = "select  " +
 //                    "SPOTS.S_ID as SPOT_ID,  " +
-                    "SPOTS.S_NAME as SPOT_NAME, " +
-                    "SPOTS.S_COORDS as SPOT_COORDS, " +
-                    "SPOTS.S_ADDRESS as SPOT_ADDRESS, " +
-                    "SECTORS.S_ID as SECTOR_ID, " +
-                    "SECTORS.S_IP as SECTOR_IP, " +
-                    "SECTORS.S_NAME as SECTOR_NAME, " +
-                    "MU.S_NAME as MENU_NAME, " +
-                    "MU.S_CODE as MENU_CODE, " +
-                    "PBC.S_POSITION_ID as POS_ID, " +
-                    "POS.S_NAME as POS_NAME, " +
-                    "POS.S_DESCRIPTION as POS_DESCR, " +
-                    "POS.S_PRICE as POS_PRICE, " +
-                    "POS.S_LANGUAGE_ID as POS_LANG, " +
-                    "POS.S_QUANTITY as POS_QUANTITY, " +
-                    "POS.S_PICTURE as POS_PICTURE, " +
-                    "POS.S_INCLUDED as POS_INCLUDED, " +
-                    "POS.S_UNITS as POS_UNITS, " +
-                    "MU.S_TYPE as MENU_TYPE " +
+                "SPOTS.S_NAME as SPOT_NAME, " +
+                "SPOTS.S_COORDS as SPOT_COORDS, " +
+                "SPOTS.S_ADDRESS as SPOT_ADDRESS, " +
+                "SECTORS.S_ID as SECTOR_ID, " +
+                "SECTORS.S_IP as SECTOR_IP, " +
+                "SECTORS.S_NAME as SECTOR_NAME, " +
+                "MU.S_NAME as MENU_NAME, " +
+                "MU.S_CODE as MENU_CODE, " +
+                "PBC.S_POSITION_ID as POS_ID, " +
+                "POS.S_NAME as POS_NAME, " +
+                "POS.S_DESCRIPTION as POS_DESCR, " +
+                "POS.S_PRICE as POS_PRICE, " +
+                "POS.S_LANGUAGE_ID as POS_LANG, " +
+                "POS.S_QUANTITY as POS_QUANTITY, " +
+                "POS.S_PICTURE as POS_PICTURE, " +
+                "POS.S_INCLUDED as POS_INCLUDED, " +
+                "POS.S_UNITS as POS_UNITS, " +
+                "MU.S_TYPE as MENU_TYPE " +
                 "from  " +
-                    defaultSchema+".S_CAFE_SPOTS SPOTS " +
+                defaultSchema+".S_CAFE_SPOTS SPOTS " +
                 "left join " +
                 defaultSchema+".S_CAFE_SPOT_SECTORS SECTORS " +
                 "on  " +
-                    "SPOTS.S_ID=SECTORS.S_CAFE_SPOT_ID " +
+                "SPOTS.S_ID=SECTORS.S_CAFE_SPOT_ID " +
                 "left join " +
                 defaultSchema+".S_CAFE_MENU_UNITS MU " +
                 "on  " +
-                    "MU.S_CAFE_SECTOR_ID=SECTORS.S_ID " +
+                "MU.S_CAFE_SECTOR_ID=SECTORS.S_ID " +
                 "left join  " +
                 defaultSchema+".S_CAFE_POSITIONS_BY_CATEGORIES PBC " +
                 "on " +
-                    "PBC.S_CATEGORY_ID=MU.S_ID " +
+                "PBC.S_CATEGORY_ID=MU.S_ID " +
                 "left join " +
                 defaultSchema+".S_CAFE_MENU_UNITS_POSITIONS POS " +
                 "on " +
-                    "POS.S_ID=PBC.S_POSITION_ID " +
+                "POS.S_ID=PBC.S_POSITION_ID " +
                 "where " +
                 "POS.S_INCLUDED>0 " +
                 "and SECTORS.S_IP=? " +
@@ -296,19 +296,19 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
             }
             //Категория та же самая
             mpList.add(new MenuPosition(
-                    new Long(codb.getPosId()),
-                    codb.getPosLang(),
-                    codb.getPosName(),
-                    codb.getPosPrice(),
-                    codb.getPosDescription(),
-                    codb.getPosPictureLink(),
-                    codb.getPosQuantity(),
-                    codb.getPosUnits(),
-                    "",
-                    0,
-                    codb.getPosIncluded(),
+                            new Long(codb.getPosId()),
+                            codb.getPosLang(),
+                            codb.getPosName(),
+                            codb.getPosPrice(),
+                            codb.getPosDescription(),
+                            codb.getPosPictureLink(),
+                            codb.getPosQuantity(),
+                            codb.getPosUnits(),
+                            "",
+                            0,
+                            codb.getPosIncluded(),
                             codb.getPosCatType()
-                )
+                    )
             );
         }
         sectors.add(sector);
@@ -324,13 +324,15 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
 
     public ArrayList<Integer> getFreeTablesArray(String ip) {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        list.addAll(getJdbcTemplate().query("select distinct O.S_TABLE_NUM from "+defaultSchema+".s_cafe_orders O where s_date_close is null and O.S_DATE_OPEN>SYSDATE-1 and O.S_DATE_OPEN<SYSDATE+10/1440",
+        // old to Oracle  "select distinct O.S_TABLE_NUM from "+defaultSchema+".s_cafe_orders O where s_date_close is null and O.S_DATE_OPEN>SYSDATE-1 and O.S_DATE_OPEN<SYSDATE+10/1440"
+
+        list.addAll(getJdbcTemplate().query("select distinct O.S_TABLE_NUM from "+defaultSchema+".s_cafe_orders O where s_date_close is null and O.S_DATE_OPEN>NOW()-1 and O.S_DATE_OPEN<NOW()+10/1440",
                 new RowMapper<Integer>() {
-            @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt(1);
-            }
-        }));
+                    @Override
+                    public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return resultSet.getInt(1);
+                    }
+                }));
         Integer capacity = getJdbcTemplate().queryForInt("select s_capacity from "+defaultSchema+".s_cafe_spot_sectors where s_ip=?", ip);
         ArrayList<Integer> result = new ArrayList<Integer>();
         for(int i=1; i<=capacity; i++) {
