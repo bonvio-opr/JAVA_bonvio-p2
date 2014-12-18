@@ -28,9 +28,9 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     }
 
 
-    public int groupManagementCreateGroup(Group gr, int ownerId) {
+    public int createGroup(Group gr, int ownerId) {
         try {
-            String q = "insert into "+defaultSchema+".s_groups (s_name, s_name_short, s_owner_id, s_group_info, s_avatar_path) values (?,?,?,?,?)";
+            String q = "insert into "+defaultSchema+".s_groups (s_name, s_name_short, s_user_id, s_group_info, s_avatar_path) values (?,?,?,?,?)";
             getJdbcTemplate().update(q, gr.getGroupName(), gr.getGroupShortName(), ownerId, gr.getGroupInfo(), gr.getGroupPicturePath());
             return 1;
         } catch (Exception e) {
@@ -40,19 +40,20 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
         }
     }
 
-    public List<Group> groupManagementSearchByName(String namePart) {
+    public List<Group> searchGroupByName(String namePart) {
         List<Group> gList = new LinkedList<>();
         try {
-            String q = "select * from "+defaultSchema+".s_groups where s_name like '?' order by S_NAME";
+            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH from "+defaultSchema+".s_groups where s_name like ? order by S_NAME";
             gList.addAll(getJdbcTemplate().query(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
                     return new Group(
-                            r.getInt(1),
-                            r.getString(2),
-                            r.getString(3),
-                            r.getString(4),
-                            r.getString(5)
+                            r.getInt("S_ID"),
+                            r.getString("S_NAME"),
+                            r.getString("S_NAME_SHORT"),
+                            r.getString("S_GROUP_INFO"),
+                            r.getString("S_AVATAR_PATH"),
+                            r.getInt("S_USER_ID")
                     );
                 }
             }, namePart));
@@ -63,6 +64,71 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
             return null;
         }
     }
+
+    public List<Group> getMyGroups(int userId) {
+        List<Group> gList = new LinkedList<>();
+        try {
+            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from "+defaultSchema+".s_groups where S_USER_ID = ? order by S_NAME";
+            gList.addAll(getJdbcTemplate().query(q, new RowMapper<Group>() {
+                @Override
+                public Group mapRow(ResultSet r, int i) throws SQLException {
+                    return new Group(
+                            r.getInt("S_ID"),
+                            r.getString("S_NAME"),
+                            r.getString("S_NAME_SHORT"),
+                            r.getString("S_GROUP_INFO"),
+                            r.getString("S_AVATAR_PATH"),
+                            r.getInt("S_USER_ID")
+                    );
+                }
+            }, userId));
+            return gList;
+        } catch (Exception e) {
+            System.out.println("Ошибка поиска групп: ошибка запроса к БД");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int deleteGroup(int userId, String  groupId) {
+        try {
+            int groupIdInt = Integer.parseInt(groupId);
+            getJdbcTemplate().update("delete from " + defaultSchema + ".s_groups where s_id = ? and s_user_id = ?", groupIdInt ,  userId);
+            return 1;
+        } catch (Exception e) {
+            System.out.println("Ошибка удаления группы: ошибка запроса к БД");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    public Group getGroup(String groupId) {
+
+        try {
+            int groupIdInt = Integer.parseInt(groupId);
+            String q = "select * from "+defaultSchema+".s_groups where s_id=? ";
+            return getJdbcTemplate().queryForObject(q, new RowMapper<Group>() {
+                @Override
+                public Group mapRow(ResultSet r, int i) throws SQLException {
+                    return new Group(
+                            r.getInt("S_ID"),
+                            r.getString("S_NAME"),
+                            r.getString("S_NAME_SHORT"),
+                            r.getString("S_GROUP_INFO"),
+                            r.getString("S_AVATAR_PATH"),
+                            r.getInt("S_USER_ID")
+                    );
+                }
+            }, Group.class, groupIdInt);
+        } catch (Exception e) {
+            System.out.println("Ошибка получения полной информации о группе: ошибка запроса к БД");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 
     public Group groupManagementWatchGroup(int groupId) {
@@ -77,7 +143,8 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
                             r.getString(2),
                             r.getString(3),
                             r.getString(4),
-                            r.getString(5)
+                            r.getString(5),
+                            r.getInt("S_USER_ID")
                     );
                 }
             }, Group.class, groupId);

@@ -10,8 +10,8 @@ import java.util.LinkedList;
  * Created by Arti on 06.08.2014.
  */
 public interface GroupsManagementDao {
-    public int groupManagementCreateGroup(Group groupName, int ownerId);
-    public java.util.List<Group> groupManagementSearchByName(String namePart);
+    public int createGroup(Group groupName, int ownerId);
+    public java.util.List<Group> searchGroupByName(String namePart);
     public Group groupManagementWatchGroup(int groupId);
     public int groupManagementInviteUser(int inviterUserId, int invitedUserId, int groupId);
     public int groupManagementSpotAddExisting(int spotId, int groupId);

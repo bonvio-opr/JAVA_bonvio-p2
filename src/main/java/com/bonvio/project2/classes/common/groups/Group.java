@@ -9,6 +9,7 @@ public class Group {
     private String groupShortName;
     private String groupInfo;
     private String groupPicturePath;
+    private int userId;
 
     @Override
     public String toString() {
@@ -18,6 +19,7 @@ public class Group {
                 ", groupShortName='" + groupShortName + '\'' +
                 ", groupInfo='" + groupInfo + '\'' +
                 ", groupPicturePath='" + groupPicturePath + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 
@@ -61,16 +63,25 @@ public class Group {
         this.groupPicturePath = groupPicturePath;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public Group() {
 
     }
 
-    public Group(int groupId, String groupName, String groupShortName, String groupInfo, String groupPicturePath) {
+    public Group(int groupId, String groupName, String groupShortName, String groupInfo, String groupPicturePath, int userId) {
 
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupShortName = groupShortName;
         this.groupInfo = groupInfo;
         this.groupPicturePath = groupPicturePath;
+        this.userId = userId;
     }
 }

@@ -5,11 +5,10 @@ import com.bonvio.project2.classes.common.groups.GroupApplicationsTemplate;
 import com.bonvio.project2.classes.common.groups.TemplateApp;
 import com.bonvio.project2.dao.common.groups.implementation.GroupsManagementDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -18,21 +17,59 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/gm")
+@RequestMapping("/group")
 public class GroupsManagementService {
 
     @Autowired
     public GroupsManagementDaoImpl dao;
 
-    @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
-    public int createGroup(@RequestParam("group") Group g, @RequestParam("ownerId") int ownerId){
-        return dao.groupManagementCreateGroup(g, ownerId);
+    @RequestMapping(method= RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView redirect(HttpServletRequest request) {
+        String userId = request.getSession().getAttribute("userId").toString();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("workspace/groups");
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/searchByName", method = RequestMethod.POST)
-    public List<Group> groupManagementSearchByName(@RequestParam("namePart") String namePart){
-        return dao.groupManagementSearchByName(namePart);
+
+    @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
+    public int createGroup(@RequestBody Group group,  HttpServletRequest request){
+        String userId = request.getSession().getAttribute("userId").toString();
+        int userIdInt = Integer.parseInt(userId);
+        return dao.createGroup(group, userIdInt);
     }
+
+    @RequestMapping(value = "/searchByName/{groupName}", method = RequestMethod.POST)
+    public List<Group> groupManagementSearchByName(@PathVariable("groupName") String groupName){
+        return dao.searchGroupByName(groupName);
+    }
+
+    @RequestMapping(value = "/mygroups", method = RequestMethod.POST)
+    public List<Group> myGroups(HttpServletRequest request){
+        String userId = request.getSession().getAttribute("userId").toString();
+        int userIdInt = Integer.parseInt(userId);
+        return dao.getMyGroups(userIdInt);
+    }
+
+    @RequestMapping(value = "/deletegroup/{groupId}", method = RequestMethod.POST)
+    public int deleteGroup (@PathVariable("groupId") String groupId, HttpServletRequest request){
+        String userId = request.getSession().getAttribute("userId").toString();
+        int userIdInt = Integer.parseInt(userId);
+        return dao.deleteGroup(userIdInt, groupId);
+    }
+
+    @RequestMapping(value = "/getgroup/{groupId}", method = RequestMethod.POST)
+    public Group getGroup (@PathVariable("groupId") String groupId){
+        return dao.getGroup(groupId);
+    }
+
+
+
+
+
+
 
     @RequestMapping(value = "/watchGroup", method = RequestMethod.POST)
     public Group getGroupById(@RequestParam("groupId") int groupId){

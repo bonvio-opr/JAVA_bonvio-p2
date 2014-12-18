@@ -19,6 +19,8 @@ public class GroupApplicationTemplateDBExtractor {
                 '}';
     }
 
+
+
     public int gettId() {
         return tId;
     }
