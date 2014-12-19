@@ -128,7 +128,7 @@ public class CafeWaitersPagesService {
             return modelAndView;
         }
         System.out.println("DEBUG:  Request= /cafep; workSessionId="+session.getId()+"; userid="+session.getAttribute("userid"));
-//        modelAndView.addObject("cafefullinfo", dao.getCafeObject(request.getRemoteAddr()));
+//        modelAndView.addObject("cafefullinfo", groupsManagement.getCafeObject(request.getRemoteAddr()));
         modelAndView.addObject("libfullinfo", dao.getCafeWaiterObjectInfo("127.0.0.1"));
         modelAndView.setViewName("app_libwaiters/app_libwaiters");
         return modelAndView;

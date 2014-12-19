@@ -17,12 +17,15 @@
     <script src="/CM/resources/workspace/group/script/directive.js"></script>
 </head>
 <body ng-controller="groupsPage">
-<div>
+
+<div style="clear: both">
+
+<div style="float: left; width: 100px">
     {{items}}
 </div>
-<br>
 
-<div>
+
+<div style="float: left; width: 300px">
     <form ng-submit="createGroup()">
     <table>
         <tr>
@@ -56,8 +59,8 @@
     </table>
     </form>
 </div>
-<br>
-<div>
+
+<div style="float: left; width: 300px">
     <table>
         <tr>
             <td>Найти группу по имени:</td>
@@ -66,28 +69,92 @@
             <td><input type="text" ng-model="groupNameSearch"/></td>
         </tr>
         <tr >
-            <td><input type="submit" ng-click="searchGroup()" value="Отправить"/></td>
+            <td><input type="submit" ng-click="searchGroup()" value="Найти"/></td>
         </tr>
     </table>
 </div>
 
-<br>
-<div>
+
+<div style="float: left">
+    мои группы <br>
     <table>
         <tr>
+            <td>Id</td>
             <td>Name</td>
             <td>ShortName</td>
             <td>Info</td>
             <td>Info</td>
         </tr>
         <tr ng-repeat="group in groups">
-            <td>{{group.groupName}}</td>
+            <td>{{group.groupId}}</td>
+            <td><a href="" ng-click="getPointsByGroupId (group.groupId)" > {{group.groupName}} </a></td>
             <td>{{group.groupShortName}}</td>
             <td>{{group.groupInfo}}</td>
             <td><input type="button" ng-click="deleteGroup (group.groupId)" value="Удалить"/></td>
         </tr>
     </table>
 </div>
+</div>
+
+<div style="clear: both">
+    <div style="float: left">
+        точки в группе
+        <table>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>GroupId</td>
+                <td>Description</td>
+                <td>delete</td>
+            </tr>
+            <tr ng-repeat="point in points">
+                <td>{{point.id}}</td>
+                <td>{{point.name}}</td>
+                <td>{{point.groupId}}</td>
+                <td>{{point.description}}</td>
+                <td><input type="button" ng-click="deletePoint (point.id)" value="Удалить"/></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div style="float: left">
+        Создать Точку <br>
+        <form ng-submit="createPoint()">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" ng-model="pointName" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>
+                    <input type="text" ng-model="pointDescription" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>GroupId</td>
+                <td>
+                    <input type="number" ng-model="pointGroupId" required/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit"  value="Создать точку"/>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+
+
+
+
+</div>
+
 
 
 </body>

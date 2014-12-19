@@ -35,7 +35,7 @@ public class CafeKitchenOrdersService {
 
     /*@RequestMapping(value = "/getMenuPositionWithRecipe", method = RequestMethod.POST)
     public MenuPositionWithRecipe getMenuPositionWithRecipe(@RequestParam("positionId") int positionId) {
-        return dao.getMenuPositionById(positionId);
+        return groupsManagement.getMenuPositionById(positionId);
     }*/
 
     @RequestMapping(value = "/statusSetAccepted", method = RequestMethod.POST)

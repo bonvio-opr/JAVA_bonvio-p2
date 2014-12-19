@@ -104,7 +104,7 @@ public class CafeBarmanPagesService {
         }catch(Exception e) {
             return new ModelAndView("app_libbarman/login");
         }
-//        modelAndView.addObject("cafefullinfo", dao.getCafeObject(request.getRemoteAddr()));
+//        modelAndView.addObject("cafefullinfo", groupsManagement.getCafeObject(request.getRemoteAddr()));
         modelAndView.addObject("libfullinfo", dao.getCafeObject("127.0.0.1"));
         modelAndView.setViewName("app_libbarman/app_libbarman");
         return modelAndView;

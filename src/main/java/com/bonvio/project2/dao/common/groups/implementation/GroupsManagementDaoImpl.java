@@ -43,7 +43,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     public List<Group> searchGroupByName(String namePart) {
         List<Group> gList = new LinkedList<>();
         try {
-            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH from "+defaultSchema+".s_groups where s_name like ? order by S_NAME";
+            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from "+defaultSchema+".s_groups where s_name like ? order by S_NAME";
             gList.addAll(getJdbcTemplate().query(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
@@ -103,6 +103,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     }
 
 
+
     public Group getGroup(String groupId) {
 
         try {
@@ -127,6 +128,13 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
             return null;
         }
     }
+
+
+
+
+
+
+
 
 
 

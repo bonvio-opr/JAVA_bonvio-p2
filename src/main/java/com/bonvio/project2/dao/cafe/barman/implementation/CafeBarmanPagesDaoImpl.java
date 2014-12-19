@@ -221,7 +221,7 @@ public class CafeBarmanPagesDaoImpl extends BaseDao implements CafeBarmanPagesDa
     }
 
     public int sendRegistrationCode(String phone, String password) {
-//        int regState = dao.checkUserData(name, phone);
+//        int regState = groupsManagement.checkUserData(name, phone);
         String url = "http://api.prostor-sms.ru/messages/v2/send.json";
         String pCode = genPass();
         String msgText = pCode+" - для продолжения регистрации используйте этот четырёхзначный код. С уважением, ваш BONVIO.net";

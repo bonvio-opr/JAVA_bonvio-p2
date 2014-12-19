@@ -94,7 +94,7 @@ public class PagesMainService {
                 return "workspace/confirm";
             } else if (checkResult == 5) {
                 session.setAttribute("error", "Ошибка SMS-сервера, попробуйте позже");
-                //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+                //model.addObject("freeTables", groupsManagement.getFreeTablesArray(request.getRemoteAddr()));
                 model.setViewName("workspace/login");
                 return "redirect:/";
             }
@@ -102,7 +102,7 @@ public class PagesMainService {
             //return new ModelAndView("workspace/login");
             return "redirect:/";
         }*/
-        //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+        //model.addObject("freeTables", groupsManagement.getFreeTablesArray(request.getRemoteAddr()));
         model.setViewName("workspace/login");
         //return model;
         return "redirect:/";
@@ -123,9 +123,9 @@ public class PagesMainService {
         try {
             String optimizedNumber = optimizeNumber(number);
 //            String sha = getSha1(password);
-            int checkResult = dao.checkCredentials(optimizedNumber, password);
+            int checkResult = groupsManagement.checkCredentials(optimizedNumber, password);
             if (checkResult == 1) {
-                Integer userId = dao.getUserIdByPhoneNumber(optimizedNumber);
+                Integer userId = groupsManagement.getUserIdByPhoneNumber(optimizedNumber);
                 if(userId != 0) {
                     session.setAttribute("userId", userId);
                     session.setAttribute("userPhoneNumber", optimizeNumber(number));
@@ -153,14 +153,14 @@ public class PagesMainService {
                 return model;
             } else if (checkResult == 5) {
                 session.setAttribute("error", "Ошибка SMS-сервера, попробуйте позже");
-                //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+                //model.addObject("freeTables", groupsManagement.getFreeTablesArray(request.getRemoteAddr()));
                 model.setViewName("workspace/login");
                 return model;
             }
         } catch (Exception e) {
             return new ModelAndView("workspace/login");
         }
-        //model.addObject("freeTables", dao.getFreeTablesArray(request.getRemoteAddr()));
+        //model.addObject("freeTables", groupsManagement.getFreeTablesArray(request.getRemoteAddr()));
         model.setViewName("workspace/login");
         return model;
     }*/
@@ -341,7 +341,7 @@ public class PagesMainService {
         String userId;
         try {
             userId= request.getSession().getAttribute("userId").toString();
-            return dao.getAdditionalApplications(idApp, userId);
+            return groupsManagement.getAdditionalApplications(idApp, userId);
         } catch (Exception e) {e.printStackTrace();}
         return null;
     }*/

@@ -36,7 +36,7 @@ public class CafeClientsPagesService {
         ModelAndView modelAndView = new ModelAndView();
         try {
             if(session.getAttribute("userId").toString().length()*session.getAttribute("userPhoneNumber").toString().length() > 0) {
-                modelAndView.addObject("libfullinfo", dao.getCafeObject("127.0.0.1"));
+                modelAndView.addObject("libfullinfo", groupsManagement.getCafeObject("127.0.0.1"));
                 modelAndView.setViewName("app_libclients/app_libclients");
                 return modelAndView;
             }
@@ -45,10 +45,10 @@ public class CafeClientsPagesService {
             session.setAttribute("userId", null);
             session.setAttribute("userPhoneNumber", null);
             modelAndView.setViewName("app_libclients/login");
-            modelAndView.addObject("lib_spot_freeTables", dao.getFreeTablesArray("127.0.0.1"));
+            modelAndView.addObject("lib_spot_freeTables", groupsManagement.getFreeTablesArray("127.0.0.1"));
             return modelAndView;
         }
-        modelAndView.addObject("lib_spot_freeTables", dao.getFreeTablesArray("127.0.0.1"));
+        modelAndView.addObject("lib_spot_freeTables", groupsManagement.getFreeTablesArray("127.0.0.1"));
         modelAndView.addObject("loginError", "Зафиксирована попытка доступа к недоступному приложению");
         session.setAttribute("userId", null);
         session.setAttribute("userPhoneNumber", null);
@@ -117,7 +117,7 @@ public class CafeClientsPagesService {
                 model.setViewName("app_libclients/app_libclients");
                 model.addObject("lib_tbl_num", table);
                 session.setAttribute("userTableNum", table);
-//                model.addObject("libfullinfo", dao.getCafeObject(request.getRemoteAddr()));
+//                model.addObject("libfullinfo", groupsManagement.getCafeObject(request.getRemoteAddr()));
                 model.addObject("libfullinfo", dao.getCafeObject(request.getRemoteAddr()));
                 return model;
             }
