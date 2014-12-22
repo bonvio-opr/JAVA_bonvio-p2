@@ -1,6 +1,7 @@
 package test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -11,7 +12,7 @@ public class TestValuta {
 
 
     public static void main(String[] args) {
-
+        Date date = new Date();
 
         double a = 1.8;
         double b = 0.2;
@@ -29,6 +30,15 @@ public class TestValuta {
 
         BigDecimal sum3 = new BigDecimal("1.55");
         System.out.println("sum3="+sum3);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("date=" + (new Date().getTime() - date.getTime()));
 
 
     }

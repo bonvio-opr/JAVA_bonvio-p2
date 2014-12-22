@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -41,7 +42,7 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
 
     public int checkCredentials(String number, String password) {
 
-        if(getJdbcTemplate().queryForInt("select count (*) from "+defaultSchema+".s_users where s_phonenumber=?", number)>0) {
+        if(getJdbcTemplate().queryForInt("select count(*) from "+defaultSchema+".s_users where s_phonenumber=?", number)>0) {
             try {
                 Integer exists = getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users where s_phonenumber=? and s_password=?", number, password);
                 if (exists == 1) {
@@ -157,6 +158,7 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
     }
 
     public CafeObject getCafeObject(String remoteAddr) {
+        Date date = new Date();
         System.out.println("DEBUG: Incoming request from IP:"+remoteAddr+"; ");
         CafeObject cafeObject = new CafeObject();
         String q = "select  " +
@@ -315,6 +317,10 @@ public class CafeClientsPagesDaoImpl extends BaseDao implements PagesDao {
         sector.setListOfMenues(spotMenues);
         cafeObject.setCafeSectors(sectors);
         System.out.println(cafeObject);
+        //System.out.println("cafeObject готов и отдан клиенту");
+        //Date date2 = new Date ().getTime() - date.getTime();
+        System.out.println("объект cafeObject создан из БД за милисекунды =" + (new Date ().getTime() - date.getTime()));
+
         return cafeObject;
     }
 

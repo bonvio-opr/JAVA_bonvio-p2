@@ -1,9 +1,6 @@
 package com.bonvio.project2.dao.common.groups.implementation;
 
-import com.bonvio.project2.classes.common.groups.Group;
-import com.bonvio.project2.classes.common.groups.GroupApplicationTemplateDBExtractor;
-import com.bonvio.project2.classes.common.groups.GroupApplicationsTemplate;
-import com.bonvio.project2.classes.common.groups.TemplateApp;
+import com.bonvio.project2.classes.common.groups.*;
 import com.bonvio.project2.dao.BaseDao;
 import com.bonvio.project2.dao.common.groups.GroupsManagementDao;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -30,7 +27,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int createGroup(Group gr, int ownerId) {
         try {
-            String q = "insert into "+defaultSchema+".s_groups (s_name, s_name_short, s_user_id, s_group_info, s_avatar_path) values (?,?,?,?,?)";
+            String q = "insert into " + defaultSchema + ".s_groups (s_name, s_name_short, s_user_id, s_group_info, s_avatar_path) values (?,?,?,?,?)";
             getJdbcTemplate().update(q, gr.getGroupName(), gr.getGroupShortName(), ownerId, gr.getGroupInfo(), gr.getGroupPicturePath());
             return 1;
         } catch (Exception e) {
@@ -43,7 +40,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     public List<Group> searchGroupByName(String namePart) {
         List<Group> gList = new LinkedList<>();
         try {
-            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from "+defaultSchema+".s_groups where s_name like ? order by S_NAME";
+            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from " + defaultSchema + ".s_groups where s_name like ? order by S_NAME";
             gList.addAll(getJdbcTemplate().query(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
@@ -68,7 +65,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     public List<Group> getMyGroups(int userId) {
         List<Group> gList = new LinkedList<>();
         try {
-            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from "+defaultSchema+".s_groups where S_USER_ID = ? order by S_NAME";
+            String q = "select S_ID, S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH, S_USER_ID from " + defaultSchema + ".s_groups where S_USER_ID = ? order by S_NAME";
             gList.addAll(getJdbcTemplate().query(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
@@ -90,10 +87,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
         }
     }
 
-    public int deleteGroup(int userId, String  groupId) {
+    public int deleteGroup(int userId, String groupId) {
         try {
             int groupIdInt = Integer.parseInt(groupId);
-            getJdbcTemplate().update("delete from " + defaultSchema + ".s_groups where s_id = ? and s_user_id = ?", groupIdInt ,  userId);
+            getJdbcTemplate().update("delete from " + defaultSchema + ".s_groups where s_id = ? and s_user_id = ?", groupIdInt, userId);
             return 1;
         } catch (Exception e) {
             System.out.println("Ошибка удаления группы: ошибка запроса к БД");
@@ -102,13 +99,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
         }
     }
 
-
-
-    public Group getGroup(String groupId) {
-
+    public Group getGroupById(String groupId) {
         try {
             int groupIdInt = Integer.parseInt(groupId);
-            String q = "select * from "+defaultSchema+".s_groups where s_id=? ";
+            String q = "select * from " + defaultSchema + ".s_groups where s_id=? ";
             return getJdbcTemplate().queryForObject(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
@@ -121,7 +115,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
                             r.getInt("S_USER_ID")
                     );
                 }
-            }, Group.class, groupIdInt);
+            },  groupIdInt);
         } catch (Exception e) {
             System.out.println("Ошибка получения полной информации о группе: ошибка запроса к БД");
             e.printStackTrace();
@@ -136,13 +130,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
 
 
-
-
-
     public Group groupManagementWatchGroup(int groupId) {
         Group gList = new Group();
         try {
-            String q = "select * from "+defaultSchema+".s_groups where s_id=? order by S_NAME";
+            String q = "select * from " + defaultSchema + ".s_groups where s_id=? order by S_NAME";
             return getJdbcTemplate().queryForObject(q, new RowMapper<Group>() {
                 @Override
                 public Group mapRow(ResultSet r, int i) throws SQLException {
@@ -163,10 +154,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
         }
     }
 
-//    public int groupManagementInviteUser(int invitedUserId, int groupId, LinkedList<Integer> appNumbersList) {
+    //    public int groupManagementInviteUser(int invitedUserId, int groupId, LinkedList<Integer> appNumbersList) {
     public int groupManagementInviteUser(int inviterUserId, int invitedUserId, int groupId) {
         try {
-            String q = "insert into "+defaultSchema+".s_g_invites (s_group_id, s_sender_id, s_receiver_id, s_date_sent, s_date_accepted, s_date_rejected) values (?,?,?,SYSDATE,?,?)";
+            String q = "insert into " + defaultSchema + ".s_g_invites (s_group_id, s_sender_id, s_receiver_id, s_date_sent, s_date_accepted, s_date_rejected) values (?,?,?,SYSDATE,?,?)";
             getJdbcTemplate().update(q, groupId, inviterUserId, invitedUserId, null, null);
             return 1;
         } catch (Exception e) {
@@ -178,7 +169,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int groupManagementAcceptInvitation(int invitedUserId, int groupId) {
         try {
-            String q = "update table "+defaultSchema+".s_g_invites set s_date_accepted=SYSDATE where s_group_id=? and s_receiver_id=?";
+            String q = "update table " + defaultSchema + ".s_g_invites set s_date_accepted=SYSDATE where s_group_id=? and s_receiver_id=?";
             getJdbcTemplate().update(q, groupId, invitedUserId);
             return 1;
         } catch (Exception e) {
@@ -190,7 +181,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int groupManagementRejectInvitation(int invitedUserId, int groupId) {
         try {
-            String q = "update table "+defaultSchema+".s_g_invites set s_date_rejected=SYSDATE where s_group_id=? and s_receiver_id=?";
+            String q = "update table " + defaultSchema + ".s_g_invites set s_date_rejected=SYSDATE where s_group_id=? and s_receiver_id=?";
             getJdbcTemplate().update(q, groupId, invitedUserId);
             return 1;
         } catch (Exception e) {
@@ -202,7 +193,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int groupManagementSpotAddExisting(int spotId, int groupId) {
         try {
-            String q = "insert into "+defaultSchema+".s_g_spots (S_GROUP_ID, S_SPOT_ID) values(?,?)";
+            String q = "insert into " + defaultSchema + ".s_g_spots (S_GROUP_ID, S_SPOT_ID) values(?,?)";
             getJdbcTemplate().update(q, groupId, spotId);
             return 1;
         } catch (Exception e) {
@@ -213,9 +204,9 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int groupManagementSpotCreateThenAdd(Point2D.Double spotLatLon, String spotAddress, int groupId, String spotName, String country, String city) {
         try {
-            getJdbcTemplate().update("insert into "+defaultSchema+".s_cafe_spots (S_NAME, S_COORDS, S_ADDRESS, S_COUNTRY, S_CITY) values (?,?,?,?,?)", spotName, spotLatLon, spotAddress, country, city);
-            Integer spotNumInTable = getJdbcTemplate().queryForInt("select s_id from "+defaultSchema+".s_cafe_spots where s_name=? and s_address=?", spotName, spotAddress);
-            getJdbcTemplate().update("insert into "+defaultSchema+".s_g_spots (s_group_id, s_spot_id) values (?,?)", groupId, spotNumInTable);
+            getJdbcTemplate().update("insert into " + defaultSchema + ".s_cafe_spots (S_NAME, S_COORDS, S_ADDRESS, S_COUNTRY, S_CITY) values (?,?,?,?,?)", spotName, spotLatLon, spotAddress, country, city);
+            Integer spotNumInTable = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_cafe_spots where s_name=? and s_address=?", spotName, spotAddress);
+            getJdbcTemplate().update("insert into " + defaultSchema + ".s_g_spots (s_group_id, s_spot_id) values (?,?)", groupId, spotNumInTable);
             return 1;
         } catch (Exception e) {
             System.out.println("Ошибка создания точки: ошибка в синтаксисе Oracle");
@@ -248,7 +239,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int groupManagementUpdateGroupInfo(Group g) {
         try {
-            String q = "update table "+defaultSchema+".s_groups (S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH) VALUES (?,?,?,?) where s_id=?";
+            String q = "update table " + defaultSchema + ".s_groups (S_NAME, S_NAME_SHORT, S_GROUP_INFO, S_AVATAR_PATH) VALUES (?,?,?,?) where s_id=?";
             getJdbcTemplate().update(q,
                     g.getGroupName(),
                     g.getGroupShortName(),
@@ -270,10 +261,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
             GroupApplicationsTemplate result = new GroupApplicationsTemplate();
             String q = "select " +
                     "T.S_ID, T.S_NAME, WSA.S_ID, WSA.S_NAME " +
-                    "from "+defaultSchema+".S_G_WS_TEMPLATES T " +
-                    "left join "+defaultSchema+".S_G_WS_TEMPLATE_APPS TA " +
+                    "from " + defaultSchema + ".S_G_WS_TEMPLATES T " +
+                    "left join " + defaultSchema + ".S_G_WS_TEMPLATE_APPS TA " +
                     "on T.S_ID=TA.S_TEMPLATE_ID " +
-                    "left join "+defaultSchema+".S_WS_APPS WSA " +
+                    "left join " + defaultSchema + ".S_WS_APPS WSA " +
                     "on WSA.S_ID=TA.S_APP_ID " +
                     "where T.S_ID=? and T.S_GROUP_ID=?";
             tList.addAll(getJdbcTemplate().query(q, new RowMapper<GroupApplicationTemplateDBExtractor>() {
@@ -302,10 +293,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
             List<GroupApplicationTemplateDBExtractor> tList = new LinkedList<>();
             String q = "select " +
                     "T.S_ID, T.S_NAME, WSA.S_ID, WSA.S_NAME " +
-                    "from "+defaultSchema+".S_G_WS_TEMPLATES T " +
-                    "left join "+defaultSchema+".S_G_WS_TEMPLATE_APPS TA " +
+                    "from " + defaultSchema + ".S_G_WS_TEMPLATES T " +
+                    "left join " + defaultSchema + ".S_G_WS_TEMPLATE_APPS TA " +
                     "on T.S_ID=TA.S_TEMPLATE_ID " +
-                    "left join "+defaultSchema+".S_WS_APPS WSA " +
+                    "left join " + defaultSchema + ".S_WS_APPS WSA " +
                     "on WSA.S_ID=TA.S_APP_ID " +
                     "where T.S_GROUP_ID=? and WSA.S_NAME is not null " +
                     "group by T.S_ID, T.S_NAME, WSA.S_ID, WSA.S_NAME " +
@@ -321,7 +312,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
                     );
                 }
             }, groupId));
-            if(tList.size()>0) {
+            if (tList.size() > 0) {
                 int currTId = tList.get(0).gettId();
                 String currTName = tList.get(0).gettName();
 
@@ -345,9 +336,9 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int createTemplate(int groupId, String templateName, final List<TemplateApp> templateApps) {
         try {
-            getJdbcTemplate().update("insert into "+defaultSchema+".s_g_ws_templates (s_group_id, s_name) values (?,?)");
-            Integer k = getJdbcTemplate().queryForInt("select s_id from "+defaultSchema+".s_g_ws_templates where s_group_id=? and s_name=? and rownum<2 order by s_id desc ", groupId, templateName);
-            getJdbcTemplate().batchUpdate("insert into "+defaultSchema+".s_g_ws_template_apps (s_template_id, s_app_id) values (?,?)", new BatchPreparedStatementSetter() {
+            getJdbcTemplate().update("insert into " + defaultSchema + ".s_g_ws_templates (s_group_id, s_name) values (?,?)");
+            Integer k = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_g_ws_templates where s_group_id=? and s_name=? and rownum<2 order by s_id desc ", groupId, templateName);
+            getJdbcTemplate().batchUpdate("insert into " + defaultSchema + ".s_g_ws_template_apps (s_template_id, s_app_id) values (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                     TemplateApp tApp = templateApps.get(i);
@@ -370,10 +361,10 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
     public int editTemplate(int groupId, String templateName, final List<TemplateApp> templateApps) {
         try {
-            getJdbcTemplate().update("insert into "+defaultSchema+".s_g_ws_templates (s_group_id, s_name) values (?,?)");
-            Integer k = getJdbcTemplate().queryForInt("select s_id from "+defaultSchema+".s_g_ws_templates where s_group_id=? and s_name=? and rownum<2 order by s_id desc ", groupId, templateName);
-            getJdbcTemplate().update("delete from "+defaultSchema+".s_g_ws_templates_apps where s_id="+k);
-            getJdbcTemplate().batchUpdate("insert into "+defaultSchema+".s_g_ws_template_apps (s_template_id, s_app_id) values (?,?)", new BatchPreparedStatementSetter() {
+            getJdbcTemplate().update("insert into " + defaultSchema + ".s_g_ws_templates (s_group_id, s_name) values (?,?)");
+            Integer k = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_g_ws_templates where s_group_id=? and s_name=? and rownum<2 order by s_id desc ", groupId, templateName);
+            getJdbcTemplate().update("delete from " + defaultSchema + ".s_g_ws_templates_apps where s_id=" + k);
+            getJdbcTemplate().batchUpdate("insert into " + defaultSchema + ".s_g_ws_template_apps (s_template_id, s_app_id) values (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                     TemplateApp tApp = templateApps.get(i);
@@ -397,8 +388,8 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
     public List<TemplateApp> getAppsByWsId(int groupId, int wsId) {
         try {
             List<TemplateApp> result = new LinkedList<>();
-            result.addAll(getJdbcTemplate().query("SELECT wsapps.S_ID, wsapps.s_name FROM "+defaultSchema+".s_g_ws_apps APPS " +
-                    "LEFT JOIN "+defaultSchema+".s_ws_apps wsapps " +
+            result.addAll(getJdbcTemplate().query("SELECT wsapps.S_ID, wsapps.s_name FROM " + defaultSchema + ".s_g_ws_apps APPS " +
+                    "LEFT JOIN " + defaultSchema + ".s_ws_apps wsapps " +
                     "ON APPS.S_APP_ID=wsapps.S_ID " +
                     "WHERE S_GWS_ID=? " +
                     "ORDER BY s_app_id", new RowMapper<TemplateApp>() {
