@@ -85,7 +85,7 @@ public class GroupsManagementService {
         return groupsManagement.deleteGroup(userIdInt, groupId);
     }
 
-    @RequestMapping(value = "/getgroupbyid/{groupId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getgroupbyid/{groupId}", method = RequestMethod.POST)
     public Group getGroup (@PathVariable("groupId") String groupId){
         return groupsManagement.getGroupById(groupId);
     }
