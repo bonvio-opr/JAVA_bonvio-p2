@@ -35,6 +35,7 @@ public class GroupsManagementService {
     @ResponseBody
     public ModelAndView redirect(HttpServletRequest request) {
         String userId = request.getSession().getAttribute("userId").toString();
+        System.out.println("проверка");
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("workspace/groups");
