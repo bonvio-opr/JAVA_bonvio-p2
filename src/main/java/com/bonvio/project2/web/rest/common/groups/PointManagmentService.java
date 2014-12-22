@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Ivan on 19.12.2014.
  */
 
-@Controller
-@RequestMapping("/group")
+/*@Controller
+@RequestMapping("/group")*/
 public class PointManagmentService {
 
 

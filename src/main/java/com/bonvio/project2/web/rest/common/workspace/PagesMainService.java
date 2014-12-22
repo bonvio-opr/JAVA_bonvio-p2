@@ -48,6 +48,18 @@ public class PagesMainService {
         return modelAndView;
     }
 
+    @RequestMapping(value="/myip", method = RequestMethod.GET)
+    public ModelAndView goIp( HttpServletRequest request) {
+
+        String ip = request.getRemoteAddr();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("ip", ip);
+        modelAndView.setViewName("workspace/myip");
+
+    return modelAndView;
+    }
+
+
     @RequestMapping(value="/check", method = RequestMethod.POST)
     public String goCheck(@RequestParam("usrnum") String number, @RequestParam("usrpwd") String password, HttpServletRequest request) {
         HttpSession session = request.getSession();

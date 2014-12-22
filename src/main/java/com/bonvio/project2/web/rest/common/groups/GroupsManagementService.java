@@ -29,13 +29,12 @@ public class GroupsManagementService {
     public PointManagmentDaoImpl pointManagment;
 
 
-    //work with point
+    //work with group
 
     @RequestMapping(method= RequestMethod.GET)
     @ResponseBody
     public ModelAndView redirect(HttpServletRequest request) {
-        String userId = request.getSession().getAttribute("userId").toString();
-
+        //String userId = request.getSession().getAttribute("userId").toString();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("workspace/groups");
         return modelAndView;
@@ -45,7 +44,13 @@ public class GroupsManagementService {
     @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
     public int createGroup(@RequestBody Group group,  HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("createGroup нет авторизации" + e);
+            return 0;
+        }
         return groupsManagement.createGroup(group, userIdInt);
     }
 
@@ -57,20 +62,32 @@ public class GroupsManagementService {
     @RequestMapping(value = "/mygroups", method = RequestMethod.POST)
     public List<Group> myGroups(HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("mygroups нет авторизации" + e);
+            return null;
+        }
         return groupsManagement.getMyGroups(userIdInt);
     }
 
     @RequestMapping(value = "/deletegroup/{groupId}", method = RequestMethod.POST)
     public int deleteGroup (@PathVariable("groupId") String groupId, HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("deletegroup/{groupId} нет авторизации" + e);
+            return 0;
+        }
         return groupsManagement.deleteGroup(userIdInt, groupId);
     }
 
-    @RequestMapping(value = "/getgroup/{groupId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/getgroupbyid/{groupId}", method = RequestMethod.GET)
     public Group getGroup (@PathVariable("groupId") String groupId){
-        return groupsManagement.getGroup(groupId);
+        return groupsManagement.getGroupById(groupId);
     }
 
 
@@ -83,28 +100,52 @@ public class GroupsManagementService {
     @RequestMapping(value = "/createpoint", method = RequestMethod.POST)
     public int createPoint (@RequestBody Point point,  HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("/createpoint нет авторизации" + e);
+            return 0;
+        }
         return pointManagment.createPoint(point, userIdInt);
     }
 
     @RequestMapping(value = "/deletepoint/{piontId}", method = RequestMethod.POST)
     public int deletePoint (@PathVariable("piontId") int piontId,  HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("deletepoint/{piontId} нет авторизации" + e);
+            return 0;
+        }
         return pointManagment.deletePoint(piontId, userIdInt);
     }
 
     @RequestMapping(value = "/getpointsbygroupid/{groupId}", method = RequestMethod.POST)
     public  List<Point> getPoints (@PathVariable("groupId") int groupId,  HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("/getpointsbygroupid/{groupId} нет авторизации" + e);
+            return null;
+        }
         return pointManagment.getPointsByGroupId(groupId, userIdInt);
     }
 
     @RequestMapping(value = "/getpoinbyid/{piontId}", method = RequestMethod.POST)
     public Point getPointById (@PathVariable("piontId") int piontId,  HttpServletRequest request){
         String userId = request.getSession().getAttribute("userId").toString();
-        int userIdInt = Integer.parseInt(userId);
+        int userIdInt = 0;
+        try {
+            userIdInt = Integer.parseInt(userId);
+        }catch (Exception e){
+            System.out.println("/getpoinbyid нет авторизации" + e);
+            return null;
+        }
         return pointManagment.getPointById(piontId, userIdInt);
     }
 
@@ -118,10 +159,10 @@ public class GroupsManagementService {
 
 
 
-    @RequestMapping(value = "/watchGroup", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/watchGroup", method = RequestMethod.POST)
     public Group getGroupById(@RequestParam("groupId") int groupId){
         return groupsManagement.groupManagementWatchGroup(groupId);
-    }
+    }*/
 
     @RequestMapping(value = "/inviteUser", method = RequestMethod.POST)
     public int inviteUser(@RequestParam("inviter") int inviter, @RequestParam("invited") int invited, @RequestParam("groupId") int groupId){
