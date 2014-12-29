@@ -27,6 +27,10 @@
 					controller: 'singleGroupCtrl',
 					templateUrl: partialsPath + '/single.html'
 				})
+				.when('/edit:groupId', {
+					controller: 'updateGroupCtrl',
+					templateUrl: partialsPath + '/single.html'
+				})
 				.when('/create', {
 					controller: 'createGroupCtrl',
 					templateUrl: partialsPath + '/single.html'

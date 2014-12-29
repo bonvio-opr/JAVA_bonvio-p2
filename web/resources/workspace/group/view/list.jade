@@ -27,7 +27,7 @@ div.card.bgc-indigo-500
 						i.mdi.mdi--more-vert
 					lx-dropdown-menu: ul
 						li
-							a.dropdown-link Редактировать
+							a.dropdown-link(href="#/edit{{item.groupId}}") Редактировать
 						li
 							a.dropdown-link.tc-red-500(ng-click="openDialog('modal', item.groupId)") Удалить
 //Модальное окошко

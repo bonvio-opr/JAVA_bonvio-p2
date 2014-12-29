@@ -21,7 +21,7 @@ lx-tabs
 				input(type="text", ng-model="item.groupShortName")
 			lx-text-field(label="Описание группы", type="area", model="item.groupInfo")
 				textarea(ng-model="item.groupInfo")
-			button(class="btn btn--m btn--raised bgc-indigo-500 tc-black", lx-ripple="purple-500", ng-click="createGroup(item)") Создать!
+			button(class="btn btn--m btn--raised bgc-indigo-500 tc-black", lx-ripple="purple-500", ng-click="modifyGroup(item)") {{finishButton}}
 	lx-tab(heading="Участники")
 		p.p Lorem Ipsum Content 2
 	lx-tab(heading='Точки')

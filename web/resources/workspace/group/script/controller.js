@@ -5,7 +5,8 @@
 			.module('app.group', [])
 			.controller('groupCtrl', groupCtrl)
 			.controller('singleGroupCtrl', singleGroupCtrl)
-			.controller('createGroupCtrl', createGroupCtrl);
+			.controller('createGroupCtrl', createGroupCtrl)
+			.controller('updateGroupCtrl', updateGroupCtrl);
 
 	// список всех групп
 	groupCtrl.$inject = ['$scope', 'dataService', 'LxDialogService'];
@@ -23,7 +24,7 @@
 		};
 
 		$scope.deleteGroup = function () {
-			dataService.deleteGroup($scope.groupId, function(data) {
+			dataService.deleteGroup($scope.groupId, function() {
 				delete $scope.groups[$scope.groupId];
 			});
 		};
@@ -42,14 +43,40 @@
 	// создание новой группы
 	createGroupCtrl.$inject = ['$scope', 'dataService'];
 	function createGroupCtrl($scope, dataService) {
-		//console.log('createGroupCtrl start');
 		$scope.title = "Создание группы";
+		$scope.finishButton = "Создать";
 
-		$scope.createGroup = function (item) {
+
+
+		$scope.modifyGroup = function (item) {
 			item.groupPicturePath = $scope.image;
+
 			dataService.createGroup(item, function() {
 				console.log('created!1');
 			});
+		};
+
+		$scope.upload = function(e) {
+			console.log(e);
+			$scope.image = e;
+		};
+	}
+
+	// редатирование группы
+	updateGroupCtrl.$inject = ['$scope', 'dataService', '$routeParams'];
+	function updateGroupCtrl($scope, dataService, $routeParams) {
+		dataService.getGroup($routeParams.groupId, function (data) {
+			$scope.item = data;
+		});
+
+		$scope.title = "Редактирование группы";
+		$scope.finishButton = "Сохранить";
+
+		$scope.modifyGroup = function (item) {
+			item.groupPicturePath = $scope.image;
+			//dataService.createGroup(item, function() {
+			//	console.log('created!1');
+			//});
 		};
 
 		$scope.upload = function(e) {

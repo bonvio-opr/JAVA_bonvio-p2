@@ -24,7 +24,7 @@
       <lx-text-field label="Описание группы" type="area" model="item.groupInfo">
         <textarea ng-model="item.groupInfo"></textarea>
       </lx-text-field>
-      <button lx-ripple="purple-500" ng-click="createGroup(item)" class="btn btn--m btn--raised bgc-indigo-500 tc-black">Создать!</button>
+      <button lx-ripple="purple-500" ng-click="modifyGroup(item)" class="btn btn--m btn--raised bgc-indigo-500 tc-black">{{finishButton}}</button>
     </p>
   </lx-tab>
   <lx-tab heading="Участники">
