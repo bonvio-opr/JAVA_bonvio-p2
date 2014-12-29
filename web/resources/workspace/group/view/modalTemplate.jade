@@ -1,0 +1,8 @@
+|{{name}}
+div#modal.dialog.dialog--l(lx-dialog="")
+	div.dialog__header.bgc-indigo-500
+		div.toolbar: strong.toolbar__label.tc-white {{titleModal}}
+	div.dialog__content.p: div {{contentModal}}
+	div.dialog__actions
+		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена АРБУЗ
+		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="actionModal()") ОК ТЫКВА
