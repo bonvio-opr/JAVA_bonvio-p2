@@ -107,7 +107,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
             if (status.equals("accepted")) {
 //                insertUserTempCode(phone, pCode, password);
                 if (getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=?", phone) > 0) {
-                    getJdbcTemplate().update("UPDATE " + defaultSchema + ".S_USERS_UNCONFIRMED SET S_CODE=?, S_DATE=SYSDATE, S_PWD=? WHERE S_USER_PHONE = ?", pCode, password, phone);
+                    getJdbcTemplate().update("UPDATE " + defaultSchema + ".S_USERS_UNCONFIRMED SET S_CODE=?, S_DATE=SYSDATE(), S_PWD=? WHERE S_USER_PHONE = ?", pCode, password, phone);
                 } else {
                     getJdbcTemplate().update("INSERT INTO " + defaultSchema + ".S_USERS_UNCONFIRMED (S_USER_PHONE, S_CODE, S_PWD) VALUES (?,?,?)", phone, pCode, password);
                 }
@@ -125,7 +125,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
     public int checkConfirmationCode(String number, String code) {
         try {
-            return (getJdbcTemplate().queryForInt("select count (*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=? and s_code=?", number, code));
+            return (getJdbcTemplate().queryForInt("select count(*) from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=? and s_code=?", number, code));
         } catch (Exception e) {
             return 0;
         }

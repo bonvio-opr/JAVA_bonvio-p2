@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary btn-lg btn-block" type="submit" value="Продолжить"/>Продолжить</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit" value="Продолжить"/>Продолжить</button>
 
                 <c:if test="${lasterror != null}"><b><span style="color: red">Неверный код</span></b></c:if>
 
