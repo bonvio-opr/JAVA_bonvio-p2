@@ -30,14 +30,22 @@
 		};
 	}
 
+	/////////////////////////////////////////
 	// просмотр конкретной группы
+	/////////////////////////////////////////
 	singleGroupCtrl.$inject = ['$scope', 'dataService', '$routeParams'];
 	function singleGroupCtrl($scope, dataService, $routeParams) {
 		$scope.disableEdit = true;
 		$scope.title = "Просмотр группы";
 
+		// показ группы
 		dataService.getGroup($routeParams.groupId, function (data) {
 			$scope.item = data;
+		});
+		// показ участников
+		dataService.getMembers($routeParams.groupId, function (data) {
+			$scope.members = data;
+			console.log($scope.members);
 		});
 	}
 

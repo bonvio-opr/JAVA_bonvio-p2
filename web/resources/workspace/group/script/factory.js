@@ -11,6 +11,7 @@
             createGroup: createGroup,
             getGroup: getGroup,
             getGroups: getGroups,
+            getMembers: getMembers,
             deleteGroup: deleteGroup
         };
 
@@ -29,6 +30,10 @@
 
         function deleteGroup(groupId, callback) {
             return $http.post("/CM/group/deletegroup/" + groupId).success(callback);
+        }
+
+        function getMembers(groupId, callback) {
+            $http.post("/CM/group/getmembers/" + groupId).success(callback);
         }
     }
 })();

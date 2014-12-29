@@ -27,7 +27,14 @@ lx-tabs
 				textarea(ng-model="item.groupInfo")
 			button(class="btn btn--m btn--raised bgc-indigo-500 tc-black", lx-ripple="purple-500", ng-submit="", ng-click="modifyGroup(item)") {{finishButton}}
 	lx-tab(heading="Участники")
-		p.p Lorem Ipsum Content 2
+		p.p
+			ul.list
+				li.list-row.list-row--has-primary.list-row--has-separator(ng-repeat="item in members")
+					div.list-primary-tile
+						img.list-primary-tile__img(src="http://bonvio.com/img/favicon.gif", style="width: 10px, height: 10px")
+					div.list-content-tile.list-content-tile--two-lines
+						strong {{item.userSurname}}
+						span {{item.userFirstName}} {{item.userPatronymic}}
 	lx-tab(heading='Точки')
 		p.p Lorem Ipsum Content 3
 	lx-tab(heading="Рабочие места")

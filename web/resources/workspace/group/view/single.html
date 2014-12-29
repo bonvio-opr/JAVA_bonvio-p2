@@ -28,7 +28,14 @@
     </form>
   </lx-tab>
   <lx-tab heading="Участники">
-    <p class="p">Lorem Ipsum Content 2</p>
+    <p class="p">
+      <ul class="list">
+        <li ng-repeat="item in members" class="list-row list-row--has-primary list-row--has-separator">
+          <div class="list-primary-tile"><img src="http://bonvio.com/img/favicon.gif" style="width: 10px, height: 10px" class="list-primary-tile__img"/></div>
+          <div class="list-content-tile list-content-tile--two-lines"><strong>{{item.userSurname}}</strong><span>{{item.userFirstName}} {{item.userPatronymic}}</span></div>
+        </li>
+      </ul>
+    </p>
   </lx-tab>
   <lx-tab heading="Точки">
     <p class="p">Lorem Ipsum Content 3</p>
