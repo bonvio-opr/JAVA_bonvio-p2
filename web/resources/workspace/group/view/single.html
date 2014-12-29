@@ -1,0 +1,50 @@
+
+<!-- Шапка-->
+<div class="card bgc-indigo-500">
+  <div class="toolbar">
+    <!-- Левое меню-->
+    <div class="toolbar__left"><a lx-ripple="" href="#/" class="btn btn--l btn--black btn--icon"><i class="mdi mdi--chevron-left"></i></a></div>
+    <!-- Заголовок--><span class="toolbar__label fs-title">{{title}}</span>
+    <!-- Правое меню-->
+    <!--div.toolbar__right-->
+    <!--	a.btn.btn--l.btn--black.btn--icon(lx-ripple="")-->
+  </div>
+</div>
+<!-- ТАБЫ-->
+<lx-tabs>
+  <lx-tab heading="Инфо">
+    <p class="p">
+      <lx-file-input label="Выбрать файл" change="upload(e)"></lx-file-input>
+      <lx-text-field label="Название группы">
+        <input type="text" ng-model="item.groupName"/>
+      </lx-text-field>
+      <lx-text-field label="Псевдоник группы">
+        <input type="text" ng-model="item.groupShortName"/>
+      </lx-text-field>
+      <lx-text-field label="Описание группы" type="area" model="item.groupInfo">
+        <textarea ng-model="item.groupInfo"></textarea>
+      </lx-text-field>
+      <button lx-ripple="purple-500" ng-click="createGroup(item)" class="btn btn--m btn--raised bgc-indigo-500 tc-black">Создать!</button>
+    </p>
+  </lx-tab>
+  <lx-tab heading="Участники">
+    <p class="p">Lorem Ipsum Content 2</p>
+  </lx-tab>
+  <lx-tab heading="Точки">
+    <p class="p">Lorem Ipsum Content 3</p>
+  </lx-tab>
+  <lx-tab heading="Рабочие места">
+    <p class="p">Lorem Ipsum Content 3</p>
+  </lx-tab>
+  <lx-tab heading="Кандидаты">
+    <p class="p">Lorem Ipsum Content 3</p>
+  </lx-tab>
+</lx-tabs>
+<!--Модальное окошко-->
+<!--div#modal.dialog.dialog--l(lx-dialog="")-->
+<!--	div.dialog__header.bgc-indigo-500-->
+<!--		div.toolbar: strong.toolbar__label.tc-white Загрузка-->
+<!--	div.dialog__content.p: div Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи-->
+<!--	div.dialog__actions-->
+<!--		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена-->
+<!--		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="deleteGroup()") ОК-->

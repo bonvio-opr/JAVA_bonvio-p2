@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Arti on 07.10.2014.
@@ -121,7 +123,7 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
         }
     }
 
-    public int addImage (String userId, MultipartFile file) {
+    public int addImage(String userId, MultipartFile file) {
         LobHandler lobHandler = new DefaultLobHandler();
         String query =
                 "UPDATE S_USERS SET " +
@@ -141,6 +143,50 @@ public class SettingsProfileManagementDaoImpl extends BaseDao implements Setting
         }
     }
 
+    public List<FullUserProfile> getUsers() {
+        List<FullUserProfile> users = new ArrayList<>();
+
+        try {
+            users.addAll(getJdbcTemplate().query(
+                    "select " +
+                            "s_id, " +
+                            "s_email, " +
+                            "s_first_name, " +
+                            "s_second_name, " +
+                            "s_patronymic, " +
+                            "s_phonenumber, " +
+                            "s_doctype, " +
+                            "s_doccode, " +
+                            "s_city, " +
+                            "s_country " +
+                            " from " + defaultSchema + ".s_users ",
+                    new RowMapper<FullUserProfile>() {
+                        @Override
+                        public FullUserProfile mapRow(ResultSet r, int i) throws SQLException {
+                            return new FullUserProfile(
+                                    r.getInt("S_ID"),
+                                    r.getString("S_EMAIL"),
+                                    r.getString("S_FIRST_NAME"),
+                                    r.getString("S_SECOND_NAME"),
+                                    r.getString("S_PATRONYMIC"),
+                                    "",
+                                    r.getString("S_PHONENUMBER"),
+                                    r.getInt("S_DOCTYPE"),
+                                    r.getString("S_DOCCODE"),
+                                    r.getString("S_CITY"),
+                                    r.getString("S_COUNTRY")
+                            );
+
+                        }
+                    }));
+            return users;
+        } catch (EmptyResultDataAccessException ep) {
+            ep.printStackTrace();
+            return null;
+        }
+
+
+    }
 
 
 }

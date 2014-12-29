@@ -1,6 +1,7 @@
 package com.bonvio.project2.dao.common.groups.implementation;
 
 import com.bonvio.project2.classes.common.groups.*;
+import com.bonvio.project2.classes.settings.profile.FullUserProfile;
 import com.bonvio.project2.dao.BaseDao;
 import com.bonvio.project2.dao.common.groups.GroupsManagementDao;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -115,7 +117,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
                             r.getInt("S_USER_ID")
                     );
                 }
-            },  groupIdInt);
+            }, groupIdInt);
         } catch (Exception e) {
             System.out.println("Ошибка получения полной информации о группе: ошибка запроса к БД");
             e.printStackTrace();
@@ -128,6 +130,15 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
 
 
 
+
+
+
+
+
+
+
+
+    //old
 
 
     public Group groupManagementWatchGroup(int groupId) {
@@ -153,6 +164,7 @@ public class GroupsManagementDaoImpl extends BaseDao implements GroupsManagement
             return null;
         }
     }
+
 
     //    public int groupManagementInviteUser(int invitedUserId, int groupId, LinkedList<Integer> appNumbersList) {
     public int groupManagementInviteUser(int inviterUserId, int invitedUserId, int groupId) {

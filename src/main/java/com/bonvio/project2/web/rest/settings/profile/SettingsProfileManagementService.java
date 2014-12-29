@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by Arti on 07.10.2014.
@@ -84,6 +85,11 @@ public class SettingsProfileManagementService {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    @RequestMapping(value = "/getusers", method = RequestMethod.GET)
+    public List<FullUserProfile> getUsers (HttpServletRequest request) {
+       return dao.getUsers ();
     }
 
 

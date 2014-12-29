@@ -1,0 +1,19 @@
+{
+  "name": "group",
+  "version": "0.0.0",
+  "homepage": "https://github.com/milomory/bonvio-p2",
+  "authors": [
+    "milomory <milomory@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lumx": "~0.2.35"
+  }
+}

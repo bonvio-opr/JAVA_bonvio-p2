@@ -13,6 +13,7 @@ import com.bonvio.project2.dao.cafe.waiters.implementation.CafeWaitersOrdersDaoI
 import com.bonvio.project2.dao.cafe.waiters.implementation.CafeWaitersPagesDaoImpl;
 import com.bonvio.project2.dao.common.dbfhandling.implementation.CommonDBFHandlingDaoImpl;
 import com.bonvio.project2.dao.common.groups.implementation.GroupsManagementDaoImpl;
+import com.bonvio.project2.dao.common.groups.implementation.MemberManagmentDaoImpl;
 import com.bonvio.project2.dao.common.groups.implementation.PointManagmentDaoImpl;
 import com.bonvio.project2.dao.common.menuupload.CommonMenuUploadPagesDao;
 import com.bonvio.project2.dao.common.menuupload.implementation.CommonMenuUploadJobDaoImpl;
@@ -52,6 +53,7 @@ public class ApplicationContext {
     //unit Commons: GroupsManagement
     @Bean public GroupsManagementDaoImpl getGroupsManagementDaoImpl() {return new GroupsManagementDaoImpl(dataSource);}
     @Bean public PointManagmentDaoImpl getPointManagmentDaoImpl () {return  new PointManagmentDaoImpl(dataSource);}
+    @Bean public MemberManagmentDaoImpl getMemberManagmentDaoImpl () {return  new MemberManagmentDaoImpl(dataSource);}
 
     //unit Commons: Printing
     @Bean public CommonPrintingDaoImpl getCommonPrintingDaoImpl() {return new CommonPrintingDaoImpl(dataSource);}
