@@ -15,8 +15,8 @@ div.card.bgc-indigo-500
 			// Поиск
 			lx-search-filter(closed="true")
 // Контент
-.data-table-container
-	table.data-table.data-table--has-primary.data-table--has-secondary
+div.data-table-container
+	table.data-table.data-table--bordered.data-table--has-primary.data-table--has-secondary
 		tr.data-table__clickable-row(ng-repeat="item in groups")
 			td
 				div(lx-thumbnail="" thumbnail-src="{{item.groupPicturePath}}" thumbnail-width="60" thumbnail-height="60")
@@ -30,12 +30,14 @@ div.card.bgc-indigo-500
 						li
 							a.dropdown-link(href="#/edit{{item.groupId}}") Редактировать
 						li
-							a.dropdown-link.tc-red-500(ng-click="openDialog('modal', item.groupId)") Удалить
-//Модальное окошко
-div#modal.dialog.dialog--l(lx-dialog="")
-	div.dialog__header.bgc-indigo-500
-		div.toolbar: strong.toolbar__label.tc-white Загрузка
-	div.dialog__content.p: div Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи
-	div.dialog__actions
-		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена
-		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="deleteGroup()") ОК
+							a.dropdown-link.tc-red-500(modal-window="{modalId: item.groupId, modalBtnCancel: '', modalBtnOk: 'delete', modalName: 'Удалить', modalTitle: 'Удаление'," +
+							"modalContent: 'Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи!'}")
+							//a.dropdown-link.tc-red-500(ng-click="openDialog('modal', item.groupId)") Удалить
+////Модальное окошко
+//div#modal.dialog.dialog--l(lx-dialog="")
+//	div.dialog__header.bgc-indigo-500
+//		div.toolbar: strong.toolbar__label.tc-white Загрузка
+//	div.dialog__content.p: div Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи
+//	div.dialog__actions
+//		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена
+//		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="deleteGroup()") ОК

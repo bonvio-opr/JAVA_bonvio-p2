@@ -13,18 +13,42 @@
 		};
 
 		function link($scope, $element, attr) {
-			var attr = $scope.$eval(attr.modalWindow);
-			$scope.id = $element.attr('id');
-			$scope.name = attr.name;
-			$scope.action = attr.action;
-			$scope.titleModal = attr.title;
-			$scope.contentModal = attr.content;
-			//console.log($element.attr('id'));
+			var modalAttr = $scope.$eval(attr.modalWindow);
+
+			$scope.modalId = modalAttr.modalId;
+			$scope.modalBtnOk = modalAttr.modalBtnOk;
+			$scope.modalBtnCancel = modalAttr.modalBtnCancel;
+			$scope.modalTitle = modalAttr.modalTitle;
+			$scope.modalContent = modalAttr.modalContent;
+			$scope.modalName = modalAttr.modalName;
+
+
 			$element.on('click', elementClick);
 
-			function elementClick () {
-				LxDialogService.open('modal');
+			//console.log(modalAttr);
+
+			function elementClick() {
+				LxDialogService.open($scope.modalId);
+				//console.log('Энэ падаю, все впарадке');
 			}
+
+			//
+			//console.log(modalAttr);
+			//
+			//
+			//
+			//var attr = ;
+			//$scope.id = $element.attr('id');
+			//$scope.name = attr.name;
+			//$scope.action = attr.action;
+			//$scope.titleModal = attr.title;
+			//$scope.contentModal = attr.content;
+			////console.log($element.attr('id'));
+			//$element.on('click', elementClick);
+			//
+			//function elementClick () {
+			//	LxDialogService.open('modal');
+			//}
 		}
 	}
 })();

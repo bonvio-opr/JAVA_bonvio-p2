@@ -9,8 +9,8 @@
 			.controller('updateGroupCtrl', updateGroupCtrl);
 
 	// список всех групп
-	groupCtrl.$inject = ['$scope', 'dataService', 'LxDialogService'];
-	function groupCtrl($scope, dataService, LxDialogService) {
+	groupCtrl.$inject = ['$scope', 'dataService'];
+	function groupCtrl($scope, dataService) {
 		dataService.getGroups(function (data) {
 			$scope.groups = {};
 			data.forEach(function(item) {
@@ -18,20 +18,18 @@
 			});
 		});
 
-		$scope.openDialog = function(dialogId, groupId) {
-			LxDialogService.open(dialogId);
-			$scope.groupId = groupId;
-		};
-
-		$scope.deleteGroup = function () {
-			dataService.deleteGroup($scope.groupId, function() {
-				delete $scope.groups[$scope.groupId];
-			});
+		$scope.actionModal = function (modalType, modalId) {
+			switch (modalType) {
+				case 'delete':
+					dataService.deleteGroup(modalId, function() {
+						delete $scope.groups[modalId];
+					});
+			}
 		};
 	}
 
 	/////////////////////////////////////////
-	// просмотр конкретной группы
+	// просмотр конкретной группы ///////////
 	/////////////////////////////////////////
 	singleGroupCtrl.$inject = ['$scope', 'dataService', '$routeParams'];
 	function singleGroupCtrl($scope, dataService, $routeParams) {
@@ -44,9 +42,46 @@
 		});
 		// показ участников
 		dataService.getMembers($routeParams.groupId, function (data) {
-			$scope.members = data;
-			console.log($scope.members);
+			$scope.members = {};
+			data.forEach(function(item) {
+				$scope.members[item.id] = item;
+			});
 		});
+		// показать кандидатов
+		dataService.getGroupInvite($routeParams.groupId, function (data) {
+			$scope.inviters = {};
+			data.forEach(function(item) {
+				$scope.inviters[item.id] = item;
+			});
+		});
+
+		// экшены модального окна
+		$scope.actionModal = function (modalType, modalId) {
+			console.log(modalType);
+			switch (modalType) {
+				case 'deleteM':
+					dataService.deleteFromGroup($routeParams.groupId, modalId, function () {
+						delete $scope.members[modalId];
+						console.log('ЭТОТ НЕХОРОШИЙ ЧЕЛОВЕК УДАЛЕН УЖЖЖЖЖЖЖЖЖЕ!');
+					});
+					break;
+				case 'deleteI':
+					dataService.deleteFromGroup($routeParams.groupId, modalId, function () {
+						delete $scope.inviters[modalId];
+						console.log('ЭТОТ НЕХОРОШИЙ ЧЕЛОВЕК УДАЛЕН B LF:T DDLLDDDDD УЖЖЖЖЖЖЖЖЖЕ!');
+					});
+					break;
+				case 'accept':
+						dataService.migrateInviteToMember($routeParams.groupId, modalId, function () {
+							$scope.members[modalId] = $scope.inviters[modalId]; // ВСТАВИТЬ
+							delete $scope.inviters[modalId]; // УДАЛИТЬ
+							console.log('МОЯ ПРИЯЛИ');
+						});
+					break;
+				default:
+					console.log('Я работаю но не видно моего мадольности!');
+			}
+		}
 	}
 
 	// создание новой группы

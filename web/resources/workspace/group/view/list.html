@@ -17,7 +17,7 @@
 </div>
 <!-- Контент-->
 <div class="data-table-container">
-  <table class="data-table data-table--has-primary data-table--has-secondary">
+  <table class="data-table data-table--bordered data-table--has-primary data-table--has-secondary">
     <tr ng-repeat="item in groups" class="data-table__clickable-row">
       <td>
         <div lx-thumbnail="" thumbnail-src="{{item.groupPicturePath}}" thumbnail-width="60" thumbnail-height="60"></div>
@@ -29,7 +29,9 @@
           <lx-dropdown-menu>
             <ul>
               <li><a href="#/edit{{item.groupId}}" class="dropdown-link">Редактировать</a></li>
-              <li><a ng-click="openDialog('modal', item.groupId)" class="dropdown-link tc-red-500">Удалить</a></li>
+              <li><a modal-window="{modalId: item.groupId, modalBtnCancel: '', modalBtnOk: 'delete', modalName: 'Удалить', modalTitle: 'Удаление',modalContent: 'Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи!'}" class="dropdown-link tc-red-500"></a>
+                <!--a.dropdown-link.tc-red-500(ng-click="openDialog('modal', item.groupId)") Удалить-->
+              </li>
             </ul>
           </lx-dropdown-menu>
         </lx-dropdown>
@@ -37,13 +39,11 @@
     </tr>
   </table>
 </div>
-<!--Модальное окошко-->
-<div id="modal" lx-dialog="" class="dialog dialog--l">
-  <div class="dialog__header bgc-indigo-500">
-    <div class="toolbar"><strong class="toolbar__label tc-white">Загрузка</strong></div>
-  </div>
-  <div class="dialog__content p">
-    <div>Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи</div>
-  </div>
-  <div class="dialog__actions"><a lx-ripple="" lx-dialog-close="" class="btn btn--m btn--black btn--flat">Отмена</a><a lx-ripple="" lx-dialog-close="" ng-click="deleteGroup()" class="btn btn--m btn--red btn--flat">ОК</a></div>
-</div>
+<!--//Модальное окошко-->
+<!--div#modal.dialog.dialog--l(lx-dialog="")-->
+<!--	div.dialog__header.bgc-indigo-500-->
+<!--		div.toolbar: strong.toolbar__label.tc-white Загрузка-->
+<!--	div.dialog__content.p: div Группа будет заблокирована и удалена спустия некоторый промежуток времени, в количсетсве дней равное семи-->
+<!--	div.dialog__actions-->
+<!--		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена-->
+<!--		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="deleteGroup()") ОК-->

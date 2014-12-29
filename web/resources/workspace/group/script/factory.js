@@ -12,11 +12,14 @@
             getGroup: getGroup,
             getGroups: getGroups,
             getMembers: getMembers,
-            deleteGroup: deleteGroup
+            getGroupInvite: getGroupInvite,
+            deleteGroup: deleteGroup,
+            deleteFromGroup: deleteFromGroup,
+            migrateInviteToMember: migrateInviteToMember
         };
 
         function createGroup(data, callback) {
-            console.log(data);
+            //console.log(data);
             $http.post("/CM/group/createGroup", data).success(callback);
         }
 
@@ -34,6 +37,20 @@
 
         function getMembers(groupId, callback) {
             $http.post("/CM/group/getmembers/" + groupId).success(callback);
+        }
+
+        function deleteFromGroup(groupId, userId, callback) {
+            userId = {id: userId};
+            $http.post("/CM/group/deletefromgroup/" + groupId, userId).success(callback);
+        }
+
+        function getGroupInvite(groupId, callback) {
+            $http.post("/CM/group/getgroupinvitations/" + groupId).success(callback);
+        }
+
+        function migrateInviteToMember(groupId, userId, callback) {
+            userId = {id: userId};
+            $http.post("/CM/group/acceptusertogroup/" + groupId, userId).success(callback);
         }
     }
 })();

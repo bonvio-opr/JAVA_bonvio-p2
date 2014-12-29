@@ -1,8 +1,11 @@
-|{{name}}
-div#modal.dialog.dialog--l(lx-dialog="")
+| {{modalName}}
+div.dialog.dialog--l(lx-dialog="", id="{{modalId}}")
 	div.dialog__header.bgc-indigo-500
-		div.toolbar: strong.toolbar__label.tc-white {{titleModal}}
-	div.dialog__content.p: div {{contentModal}}
+		div.toolbar
+			strong.toolbar__label.tc-white {{modalTitle}}
+			div.toolbar__right
+				button.btn.btn--l.btn--white.btn--icon(lx-dialog-close=""): i.mdi.mdi--close
+	div.dialog__content.p: div {{modalContent}}
 	div.dialog__actions
-		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="") Отмена АРБУЗ
-		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="actionModal()") ОК ТЫКВА
+		a.btn.btn--m.btn--black.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="actionModal(modalBtnCancel, modalId)") Отмена АРБУЗ
+		a.btn.btn--m.btn--red.btn--flat(lx-ripple="" lx-dialog-close="", ng-click="actionModal(modalBtnOk, modalId)") ОК ТЫКВА

@@ -4,7 +4,7 @@
   <div class="toolbar">
     <!-- Левое меню-->
     <div class="toolbar__left"><a lx-ripple="" href="#/" class="btn btn--l btn--black btn--icon"><i class="mdi mdi--chevron-left"></i></a></div>
-    <!-- Заголовок--><span class="toolbar__label fs-title">{{title}}</span>
+    <!-- Заголовок--><span class="toolbar__label fs-title">{{title}} - {{item.groupName}}</span>
     <!-- Правое меню-->
     <div ng-if="disableEdit" class="toolbar__right"><a lx-ripple="" href="#/edit{{item.groupId}}" class="btn btn--l btn--black btn--icon"><i class="mdi mdi--edit"></i></a></div>
     <div ng-if="!disableEdit" class="toolbar__right"><a lx-ripple="" href="#/view{{item.groupId}}" class="btn btn--l btn--black btn--icon"><i class="mdi mdi--remove-red-eye"></i></a></div>
@@ -12,6 +12,7 @@
 </div>
 <!-- ТАБЫ-->
 <lx-tabs>
+  <!--///////////////////////////////////////////////////////////////-->
   <lx-tab heading="Инфо">
     <form class="p">
       <lx-file-input label="Выбрать файл" change="upload(e)"></lx-file-input>
@@ -27,23 +28,46 @@
       <button lx-ripple="purple-500" ng-submit="" ng-click="modifyGroup(item)" class="btn btn--m btn--raised bgc-indigo-500 tc-black">{{finishButton}}</button>
     </form>
   </lx-tab>
+  <!--///////////////////////////////////////////////////////////////-->
+  <!--TODO: вкладка ломается все очень плохо-->
   <lx-tab heading="Участники">
-    <p class="p">
-      <ul class="list">
-        <li ng-repeat="item in members" class="list-row list-row--has-primary list-row--has-separator">
-          <div class="list-primary-tile"><img src="http://bonvio.com/img/favicon.gif" style="width: 10px, height: 10px" class="list-primary-tile__img"/></div>
-          <div class="list-content-tile list-content-tile--two-lines"><strong>{{item.userSurname}}</strong><span>{{item.userFirstName}} {{item.userPatronymic}}</span></div>
-        </li>
-      </ul>
-    </p>
+    <div class="data-table-container">
+      <table class="data-table data-table--bordered data-table--has-primary data-table--has-secondary">
+        <tr ng-repeat="item in members" class="data-table__clickable-row">
+          <td>
+            <div lx-thumbnail="" thumbnail-src="/CM/resources/workspace/images/no-avatar.jpg" thumbnail-width="60" thumbnail-height="60"></div>
+          </td>
+          <td>{{item.userSurname}} {{item.userFirstName}} {{item.userPatronymic}}</td>
+          <td>
+            <button class="btn btn--m btn--blue btn--fab"><i modal-window="{modalId: item.id, modalBtnOk: 'deleteM', modalTitle: 'Удаление', modalContent: 'Эне падай дарагой!'}" class="mdi mdi--close"></i></button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </lx-tab>
+  <!--///////////////////////////////////////////////////////////////-->
   <lx-tab heading="Точки">
     <p class="p">Lorem Ipsum Content 3</p>
   </lx-tab>
   <lx-tab heading="Рабочие места">
     <p class="p">Lorem Ipsum Content 3</p>
   </lx-tab>
+  <!--///////////////////////////////////////////////////////////////-->
   <lx-tab heading="Кандидаты">
-    <p class="p">Lorem Ipsum Content 3</p>
+    <div class="data-table-container">
+      <table class="data-table data-table--bordered data-table--has-primary data-table--has-secondary">
+        <tr ng-repeat="item in inviters" class="data-table__clickable-row">
+          <td>
+            <div lx-thumbnail="" thumbnail-src="/CM/resources/workspace/images/no-avatar.jpg" thumbnail-width="60" thumbnail-height="60"></div>
+          </td>
+          <td>{{item.userSurname}} {{item.userFirstName}} {{item.userPatronymic}}</td>
+          <td>
+            <button class="btn btn--m btn--blue btn--fab"><i modal-window="{modalId: item.id, modalBtnCancel: 'deleteI', modalBtnOk: 'accept', modalTitle: 'Удаление', modalContent: 'Эне падай дарагой!'}" class="mdi mdi--person-add"></i></button>
+            <!--button.btn.btn--m.btn--blue.btn--fab-->
+            <!--	i.mdi.mdi--close(modal-window="{modalId: item.id, modalType: 'delete', modalTitle: 'Удаление', modalContent: 'Эне падай дарагой!'}")-->
+          </td>
+        </tr>
+      </table>
+    </div>
   </lx-tab>
 </lx-tabs>
