@@ -142,7 +142,12 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
         getJdbcTemplate().update("insert into " + defaultSchema + ".s_users (s_phonenumber, s_password) values (?,?)", number, pList.get(0));
         getJdbcTemplate().update("delete from " + defaultSchema + ".s_users_unconfirmed where s_user_phone=?", number);
         Integer s_user_id = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_users where s_phonenumber=?", number);
-        getJdbcTemplate().update("insert into " + defaultSchema + ".s_u_ws (s_user_id, s_ws_name) values (?,'Моя навигация')", s_user_id);
+        getJdbcTemplate().update("insert into " + defaultSchema + ".s_u_ws (s_user_id, s_ws_name) values (?,'Мое место')", s_user_id);
+
+        // adding apps
+        Integer s_ws_id = getJdbcTemplate().queryForInt("select s_id from " + defaultSchema + ".s_u_ws where s_user_id=?", s_user_id);
+        getJdbcTemplate().update("INSERT INTO " + defaultSchema + ".s_u_ws_apps (S_WS_ID, S_APP_ID) SELECT DISTINCT ? , s_id FROM " + defaultSchema + ".s_ws_apps", s_ws_id);
+
     }
 
     private String genPass() {
@@ -160,7 +165,7 @@ public class PagesMainDaoImpl extends BaseDao implements PagesMainDao {
 
         if (userId == null) return null;
 
-        ArrayList<WorkspaceApplicationsWithType> workspaceApplicationsWithTypes = new ArrayList<>();
+        ArrayList<WorkspaceApplicationsWithType> workspaceApplicationsWithTypes = new ArrayList<WorkspaceApplicationsWithType>();
         workspaceApplicationsWithTypes.addAll(getJdbcTemplate().query(
                 "select " +
                         "UWS.S_ID as WSID, " +
