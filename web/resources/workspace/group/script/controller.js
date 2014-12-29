@@ -33,6 +33,7 @@
 	// просмотр конкретной группы
 	singleGroupCtrl.$inject = ['$scope', 'dataService', '$routeParams'];
 	function singleGroupCtrl($scope, dataService, $routeParams) {
+		$scope.disableEdit = true;
 		$scope.title = "Просмотр группы";
 
 		dataService.getGroup($routeParams.groupId, function (data) {
@@ -41,18 +42,17 @@
 	}
 
 	// создание новой группы
-	createGroupCtrl.$inject = ['$scope', 'dataService'];
-	function createGroupCtrl($scope, dataService) {
+	createGroupCtrl.$inject = ['$scope', 'dataService', '$location'];
+	function createGroupCtrl($scope, dataService, $location) {
 		$scope.title = "Создание группы";
 		$scope.finishButton = "Создать";
-
-
 
 		$scope.modifyGroup = function (item) {
 			item.groupPicturePath = $scope.image;
 
 			dataService.createGroup(item, function() {
-				console.log('created!1');
+				console.log("СОЗДАЛ!!!");
+				$location.path("#/");
 			});
 		};
 
@@ -65,6 +65,8 @@
 	// редатирование группы
 	updateGroupCtrl.$inject = ['$scope', 'dataService', '$routeParams'];
 	function updateGroupCtrl($scope, dataService, $routeParams) {
+		$scope.disableEdit = false;
+
 		dataService.getGroup($routeParams.groupId, function (data) {
 			$scope.item = data;
 		});
