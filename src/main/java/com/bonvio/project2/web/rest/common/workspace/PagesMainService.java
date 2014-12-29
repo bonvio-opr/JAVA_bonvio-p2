@@ -206,7 +206,7 @@ public class PagesMainService {
     @RequestMapping(value="/getwindow/{unitId}", method=RequestMethod.POST)
     @ResponseBody
     public Window getWindow (@PathVariable("unitId") int unitId) {
-        System.out.println("НЛО прилетело");
+
 
         return dao.getWindow(unitId);
     }
@@ -256,6 +256,7 @@ public class PagesMainService {
 
     @RequestMapping(value="/proceed", method = RequestMethod.POST)
     public ModelAndView goProceed(@RequestParam("lnum") String number, @RequestParam("lcode") String code, HttpServletRequest request, Model mdl) {
+        System.out.println("lnum=" + number + ", lcode=" + code);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("lastconfirmationnum", number);
         if(dao.checkConfirmationCode(number, code)==0) {
