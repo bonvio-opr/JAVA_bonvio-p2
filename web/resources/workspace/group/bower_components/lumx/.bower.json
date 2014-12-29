@@ -59,5 +59,6 @@
   },
   "_source": "git://github.com/lumapps/lumX.git",
   "_target": "~0.2.35",
-  "_originalSource": "lumx"
+  "_originalSource": "lumx",
+  "_direct": true
 }

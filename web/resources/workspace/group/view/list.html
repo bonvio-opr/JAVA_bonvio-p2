@@ -22,13 +22,13 @@
       <td>
         <div lx-thumbnail="" thumbnail-src="{{item.groupPicturePath}}" thumbnail-width="60" thumbnail-height="60"></div>
       </td>
-      <td><span>{{item.groupName}}</span></td>
+      <td><a href="#/view{{item.groupId}}">{{item.groupName}}</a></td>
       <td>
         <lx-dropdown position="right" from-top="">
           <button lx-ripple="" lx-dropdown-toggle="" class="btn btn--l btn--black btn--icon"><i class="mdi mdi--more-vert"></i></button>
           <lx-dropdown-menu>
             <ul>
-              <li><a class="dropdown-link">Редактировать</a></li>
+              <li><a href="#/edit{{item.groupId}}" class="dropdown-link">Редактировать</a></li>
               <li><a ng-click="openDialog('modal', item.groupId)" class="dropdown-link tc-red-500">Удалить</a></li>
             </ul>
           </lx-dropdown-menu>

@@ -20,14 +20,15 @@ div.card.bgc-indigo-500
 		tr.data-table__clickable-row(ng-repeat="item in groups")
 			td
 				div(lx-thumbnail="" thumbnail-src="{{item.groupPicturePath}}" thumbnail-width="60" thumbnail-height="60")
-			td: span {{item.groupName}}
+			td
+				a(href="#/view{{item.groupId}}") {{item.groupName}}
 			td
 				lx-dropdown(position="right", from-top="")
 					button.btn.btn--l.btn--black.btn--icon(lx-ripple="", lx-dropdown-toggle="")
 						i.mdi.mdi--more-vert
 					lx-dropdown-menu: ul
 						li
-							a.dropdown-link Редактировать
+							a.dropdown-link(href="#/edit{{item.groupId}}") Редактировать
 						li
 							a.dropdown-link.tc-red-500(ng-click="openDialog('modal', item.groupId)") Удалить
 //Модальное окошко
