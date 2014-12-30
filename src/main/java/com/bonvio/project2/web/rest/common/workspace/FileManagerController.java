@@ -89,4 +89,11 @@ public class FileManagerController {
         fileManagerDao.getFile(fileId, userId, response);
         return 0;
     }
+
+    @RequestMapping(value = "/getfilejson/{fileId}",  method = RequestMethod.GET)
+    @ResponseBody
+    public String getFile (@PathVariable("fileId") long fileId, HttpServletRequest request) {
+        String userId = request.getSession().getAttribute("userId").toString();
+        return fileManagerDao.getFileInJson(fileId, userId);
+    }
 }

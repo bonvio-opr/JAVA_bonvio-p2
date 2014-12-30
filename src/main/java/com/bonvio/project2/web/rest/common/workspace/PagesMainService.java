@@ -202,6 +202,15 @@ public class PagesMainService {
         return "workspace/imageview";
     }
 
+    @RequestMapping(value="/audio", method = RequestMethod.GET)
+    public String audio() {
+        return "workspace/audio";
+    }
+
+    @RequestMapping(value="/excel", method = RequestMethod.GET)
+    public String excel() {
+        return "workspace/excel";
+    }
 
     @RequestMapping(value="/getwindow/{unitId}", method=RequestMethod.POST)
     @ResponseBody

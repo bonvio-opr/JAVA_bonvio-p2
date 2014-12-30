@@ -2,6 +2,10 @@ package com.bonvio.project2.dao.common.workspace.implementation;
 
 import com.bonvio.project2.classes.common.workspace.Folder;
 import com.bonvio.project2.dao.BaseDao;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.LobRetrievalFailureException;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -218,6 +223,84 @@ public class FileManagerDaoImpl extends BaseDao {
         }
         return 0;
     }
+
+    public String getFileInJson (long id, String userId) {
+
+        LobHandler lobHandler = new DefaultLobHandler();
+
+        String result = null;
+
+        try {
+            String query = "select s_file from s_folders where s_id = ? and s_owner_id = ?";
+
+            final String res3 = result;
+
+            getJdbcTemplate().query(query, new AbstractLobStreamingResultSetExtractor() {
+                protected void handleNoRowFound() throws LobRetrievalFailureException {
+                    throw new IncorrectResultSizeDataAccessException("Ошибка при чтении файла из базы", 1, 0);
+                }
+
+                public void streamData(ResultSet rs) throws SQLException, IOException {
+                    InputStream is = lobHandler.getBlobAsBinaryStream(rs, 1);
+                    if (is != null) {
+                        try {
+                            System.out.println("объект не налл");
+                            Workbook workbook = WorkbookFactory.create(is);
+                            // Get the first Sheet.
+                            Sheet sheet = workbook.getSheetAt( 0 );
+
+                            // Start constructing JSON.
+                            JSONObject json = new JSONObject();
+
+                            // Iterate through the rows.
+                            JSONArray rows = new JSONArray();
+                            for ( Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); )
+                            {
+                                Row row = rowsIT.next();
+                                JSONObject jRow = new JSONObject();
+
+                                // Iterate through the cells.
+                                JSONArray cells = new JSONArray();
+                                for ( Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); )
+                                {
+                                    Cell cell = cellsIT.next();
+                                    cells.add(cell.getStringCellValue());
+                                }
+                                jRow.put( "cell", cells );
+                                rows.add(jRow);
+                            }
+
+                            // Create the JSON.
+                            json.put( "rows", rows );
+
+                            System.out.println("json.toString()=" + json.toString());
+
+                            //res3 = json.toString();
+
+                            String res2 = res3;
+                            res2 = json.toString();
+
+                        } catch (InvalidFormatException e) {
+                            System.out.println("ошибка в WorkbookFactory");
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }, id, userId);
+
+        } catch(Exception e) {
+            System.out.println("ошибка в запросе вроде как?");
+            e.printStackTrace();
+            return "";
+        }
+
+        return result;
+
+
+
+    }
+
+
 
 
 
