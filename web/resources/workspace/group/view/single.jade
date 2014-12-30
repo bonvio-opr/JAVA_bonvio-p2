@@ -28,7 +28,11 @@ lx-tabs
 				textarea(ng-model="item.groupInfo")
 			button(class="btn btn--m btn--raised bgc-indigo-500 tc-black", lx-ripple="purple-500", ng-submit="", ng-click="modifyGroup(item)") {{finishButton}}
 	/////////////////////////////////////////////////////////////////
-	//TODO: вкладка ломается все очень плохо
+	lx-tab(heading='Точки')
+		p.p Lorem Ipsum Content 3
+	lx-tab(heading="Рабочие места")
+		p.p Lorem Ipsum Content 3
+	/////////////////////////////////////////////////////////////////
 	lx-tab(heading="Участники")
 		div.data-table-container
 			table.data-table.data-table--bordered.data-table--has-primary.data-table--has-secondary
@@ -40,14 +44,12 @@ lx-tabs
 						button.btn.btn--m.btn--blue.btn--fab
 							i.mdi.mdi--close(modal-window="{modalId: item.id, modalBtnOk: 'deleteM', modalTitle: 'Удаление', modalContent: 'Эне падай дарагой!'}")
 	/////////////////////////////////////////////////////////////////
-	lx-tab(heading='Точки')
-		p.p Lorem Ipsum Content 3
-	lx-tab(heading="Рабочие места")
-		p.p Lorem Ipsum Content 3
-	/////////////////////////////////////////////////////////////////
 	lx-tab(heading="Кандидаты")
 		div.data-table-container
 			table.data-table.data-table--bordered.data-table--has-primary.data-table--has-secondary
+				tr: td(colspan="3")
+					// Поиск
+					lx-search-filter(filter-width="100%")
 				tr.data-table__clickable-row(ng-repeat="item in inviters")
 					td
 						div(lx-thumbnail="" thumbnail-src="/CM/resources/workspace/images/no-avatar.jpg" thumbnail-width="60" thumbnail-height="60")
