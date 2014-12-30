@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-excel
+<iframe height="100%" width="100%" style="border: 0; margin: 0; padding: 0" src="http://wijmo.com/demo/spreadjs/samples/ExcelLikeSample/spreadsheet.html"></iframe>
 </body>
 </html>
